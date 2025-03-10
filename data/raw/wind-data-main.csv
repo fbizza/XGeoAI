@@ -1,0 +1,256 @@
+Number;Asset;Main Owner;Development Status;Province Name;Latitude;Longitude;Capacity, MW_ac
+1;Rangoon Energy Park North;Meridian Energy;Concept;New South Wales;-29,9455;151,6916;65
+2;Rangoon Energy Park South;Meridian Energy;Concept;New South Wales;-29,9455;151,6916;65
+3;Mumbil Wind Farm (Epuron);Epuron;Concept;New South Wales;-32,7167;149,05;100
+4;Boco Rock Stage 2;CWP Renewables;Concept;New South Wales;-36,5764;149,127;106
+5;Alectown Wind Farm;Neoen;Concept;New South Wales;-32,8806;148,4798;120
+6;Elysian Wind Farm;Alinta Energy;Concept;New South Wales;-36,4412;149,4067;200
+7;Doughboy Wind Farm;Epuron;Concept;New South Wales;-30,4131;152,1351;300
+8;Burrawong Wind Farm;Windlab;Concept;New South Wales;-34,6167;143,5667;321
+9;Barney's Reef Wind Farm;RES;Concept;New South Wales;-32,2269;149,5345;340
+10;Thunderbolt Energy Hub (Wind);Neoen;Concept;New South Wales;-30,8018;151,2896;380
+11;Jeremiah Wind Farm;CWP Renewables;Concept;New South Wales;-35,0154;148,4661;400
+12;Spicers Creek Wind Farm;CWP Renewables;Concept;New South Wales;-32,3123;149,1606;400
+13;Tara Springs Wind Farm;RES;Concept;New South Wales;-30,8043;151,3947;400
+14;Project Neo (Wind);Infinite Blue Energy;Concept;New South Wales;-31,9492;150,8215;500
+15;Kerrs Creek Wind Farm;RES;Concept;New South Wales;-33,046;149,0482;650
+16;Winterbourne Wind Farm;Vestas;Concept;New South Wales;-30,9773;151,7106;700
+17;Valley of the Winds;UPC Renewables;Concept;New South Wales;-31,8221;149,6116;800
+18;Dinawan Energy Hub (Wind);Spark Renewables;Concept;New South Wales;-35,35;145,7333;833,33
+19;Eden Offshore Wind Farm;Oceanex;Concept;New South Wales;-37,1191;150,1036;1800
+20;Newcastle Offshore Wind Farm;Oceanex;Concept;New South Wales;-32,9253;152,1113;1800
+21;Ulladulla Offshore Wind Farm;Oceanex;Concept;New South Wales;-35,4444;150,6904;1800
+22;Illawarra Offshore Wind Farm;Oceanex;Concept;New South Wales;-34,4593;151,194;2000
+23;Walcha Energy Project (Wind);Mirus Wind;Concept;New South Wales;-30,9773;151,7106;2700
+24;Bango;Partners Group;Construction;New South Wales;-34,4995;148,7454;244
+25;Rye Park;Tilt Renewables;Construction;New South Wales;-34,5261;148,9797;396
+26;Bowman's Creek;Epuron;DA Application;New South Wales;-32,2667;150,9;336
+27;Burrendong;Epuron;DA Application;New South Wales;-32,677;149,246;400
+28;Hills of Gold;Wind Energy Partners;DA Application;New South Wales;-31,6276;151,1316;420
+29;Black Springs;Wind Corporation;DA Approved;New South Wales;-33,8408;149,7103;18,9
+30;Conroy's Gap;Epuron;DA Approved;New South Wales;-34,7695;148,7241;30
+31;Crookwell 3;Naturgy;DA Approved;New South Wales;-34,5595;149,5602;58
+32;Glen Innes;Nexif;DA Approved;New South Wales;-29,7314;151,6058;75
+33;Upper Hunter Energy Park Stage 1 (Wind);Pamada;DA Approved;New South Wales;-32,0798;150,5689;100
+34;Granite Hills;Akuo Energy;DA Approved;New South Wales;-36,5736;149,3824;120,75
+35;Capital 2;Infigen Energy;DA Approved;New South Wales;-35,1654;149,5185;143,5
+36;White Rock Wind Farm Stage 2;CECEP Wind-Power Corporation;DA Approved;New South Wales;-29,7851;151,5479;147,5
+37;Flyers Creek;Infigen Energy;DA Approved;New South Wales;-33,5681;149,0628;155
+38;Coppabella;Goldwind;DA Approved;New South Wales;-34,7709;148,6392;255
+39;Uungula;CWP Renewables;DA Approved;New South Wales;-32,5856;149,157;400
+40;Liverpool Range;Tilt Renewables;DA Approved;New South Wales;-31,8889;149,9304;1000
+41;Hampton;Wind Corporation;Operating;New South Wales;-33,638;150,0501;1,32
+42;Blayney;Tilt Renewables;Operating;New South Wales;-33,6235;149,2077;9,9
+43;Cullerin Range;EDCL;Operating;New South Wales;-34,8097;149,4007;30
+44;Gunning Wind;Acciona;Operating;New South Wales;-34,6972;149,385;46,5
+45;Woodlawn;Infigen Energy;Operating;New South Wales;-35,0803;149,5662;48,3
+46;Crookwell 2;Naturgy;Operating;New South Wales;-34,5541;149,5998;91
+47;Taralga;Pacific Hydro;Operating;New South Wales;-34,4222;149,864;107
+48;Biala;Beijing Jingneng Clean Energy;Operating;New South Wales;-34,5886;149,3559;108,5
+49;Boco Rock;EGCO;Operating;New South Wales;-36,5764;149,1268;113
+50;Bodangora;Infigen Energy;Operating;New South Wales;-32,431;149,031;113,2
+51;Crudine Ridge;Partners Group;Operating;New South Wales;-32,9885;149,621;135
+52;Capital;Infigen Energy;Operating;New South Wales;-35,1654;149,5185;140,7
+53;Gullen Range;Beijing Jingneng Clean Energy;Operating;New South Wales;-34,6144;149,4594;165,5
+54;White Rock Wind Farm Stage 1;CECEP Wind-Power Corporation;Operating;New South Wales;-29,7851;151,5479;175
+55;Silverton;Powering Australian Renewables;Operating;New South Wales;-31,82;141,2322;200
+56;Collector;RATCH Group;Operating;New South Wales;-34,8415;149,401;228
+57;Sapphire;Partners Group;Operating;New South Wales;-29,7417;151,4339;270
+58;High Road;RATCH Group;Concept;Queensland;-17,5628;145,3864;34
+59;Archer Point Wind Farm;Wind Power Queensland;Concept;Queensland;-15,58;145,31;120
+60;Diamondy;Yellow Solar;Concept;Queensland;-26,944;151,5565;130
+61;Goomeri Wind Farm;Renewable Energy Partners;Concept;Queensland;-26,9334;151,6005;130
+62;Kidston (Wind);Genex Power;Concept;Queensland;-18,8921;144,143;150
+63;Desailly Renewable Energy Park (Wind);DP Energy;Concept;Queensland;-16,5192;145,1003;300
+64;North Creek Wind Farm;Tilt Renewables;Concept;Queensland;-22,45;149,1226;330
+65;Mt Fox Energy Park;Mount Fox Energy Park;Concept;Queensland;-18,8418;145,8048;342
+66;Lotus Creek;Epuron;Concept;Queensland;-22,365;149,274;360
+67;Razorback Wind Farm;Epuron;Concept;Queensland;-23,66;150,285;360
+68;Specimen Hill Wind Farm;Epuron;Concept;Queensland;-24,245;150,79;360
+69;Ravesnhoe;Epuron;Concept;Queensland;-17,813;145,463;400
+70;Moah Creek Renewable Energy Project (Wind);RES;Concept;Queensland;-23,5757;150,1905;414
+71;Eungella Wind Farm;Renewable Energy Partners;Concept;Queensland;-23,4397;144,886;500
+72;Urannah Renewable Energy Hub (Wind);Renewable Energy Partners;Concept;Queensland;-20,9426;148,3493;500
+73;Chalumbin Wind Farm;Epuron;Concept;Queensland;-17,813;145,463;665
+74;Kennedy Energy Park Phase II (Wind);Windlab;Concept;Queensland;-20,8707;144,333;900
+75;Central Queensland Power Project (Wind);RES;Concept;Queensland;-23,8489;151,2625;1000
+76;Mount James Wind Farm;NQREZ;Concept;Queensland;-20,8438;144,1986;1000
+77;Kaban Green Power Hub (Wind);Neoen;Construction;Queensland;-17,5598;145,414;157
+78;Dulacca Renewable Energy Project (Wind);RES;Construction;Queensland;-26,6406;149,8004;180
+79;Upper Burdekin Wind Farm;Windlab;DA Application;Queensland;-18,64;145,8842;600
+80;Mannuem Wind Farm;Australian Energy Wind Farm;DA Approved;Queensland;-26,5333;151,8333;64
+81;Forsayth;Iberdrola;DA Approved;Queensland;-18,7139;143,9788;70
+82;Lakeland (Wind);Windlab;DA Approved;Queensland;-15,8329;144,8427;100
+83;MacIntyre Wind Farm (CleanCo);CleanCo;DA Approved;Queensland;-28,2152;152,0352;103
+84;Banana Range Wind Farm;Lacour Energy;DA Approved;Queensland;-24,4027;150,3014;180
+85;Clarke Creek (Lacour) (Wind) Phase-2;Lacour Energy;DA Approved;Queensland;-22,6062;149,7687;350
+86;Clarke Creek (Lacour) (Wind) Phase-1;Lacour Energy;DA Approved;Queensland;-22,6062;149,7687;450
+87;Wambo Wind Farm;Cubico Sustainable Investments;DA Approved;Queensland;-26,9334;151,6005;500
+88;MacIntyre Wind Farm;Acciona;DA Approved;Queensland;-28,2152;152,0352;1026
+89;Wide Bay Wind Farm;Forest Wind Holidings;DA Approved;Queensland;-25,8463;152,7257;1200
+90;Windy Hill;RATCH Group;Operating;Queensland;-17,5939;145,5299;12
+91;Kennedy Energy Park (Wind);Windlab;Operating;Queensland;-20,8707;144,333;43,2
+92;Mt Emerald;RATCH Group;Operating;Queensland;-17,1785;145,3891;180,5
+93;Coopers Gap;Powering Australian Renewables;Operating;Queensland;-26,7752;151,4607;453
+94;Exmoor Wind Farm;Acciona;Concept;South Australia;-36,8193;140,7179;144
+95;Lake Hawdon Wind Farm;Wind Power Australia;Concept;South Australia;-37,2174;139,9263;250
+96;Carmody's Hill;Pacific Hydro;Concept;South Australia;-33,36;138,483;270
+97;Keilira Wind Farm;Wind Power Australia;Concept;South Australia;-36,6904;140,1485;300
+98;South Australia Offshore Wind Farm;Australis Energy;Concept;South Australia;-38,0986;140,4936;600
+99;Port Augusta Renewable Energy Park (Wind);Iberdrola;Construction;South Australia;-32,5478;137,8565;210
+100;Lincoln Gap Stage-3;Nexif;DA Application;South Australia;-32,5886;137,555;252
+101;Goyder South Stage-2 (Wind);Neoen;DA Application;South Australia;-33,727;138,9741;400
+102;Goyder South Stage-3 (Wind);Neoen;DA Application;South Australia;-33,727;138,9741;400
+103;Stony Gap;Palisade;DA Approved;South Australia;-33,7308;138,917;105
+104;Barn Hill Wind Farm;AGL Energy;DA Approved;South Australia;-33,5913;138,2802;124
+105;Crystal Brook Energy Park (Wind);Neoen;DA Approved;South Australia;-33,302;138,2186;125
+106;Mt Benson;Infigen Energy;DA Approved;South Australia;-36,9816;139,7543;150
+107;Twin Creek;RES;DA Approved;South Australia;-33,712;139,1737;185
+108;Woakwine;Infigen Energy;DA Approved;South Australia;-37,5715;140,211;300
+109;Palmer;Tilt Renewables;DA Approved;South Australia;-34,6943;139,214;375
+110;Goyder South Stage-1 (Wind);Neoen;DA Approved;South Australia;-33,727;138,9741;400
+111;Yorke Peninsula Wind Farm;Senvion;DA Approved;South Australia;-34,6079;137,6868;630
+112;Coober Pedy Renewable Hybrid Project (Wind);EDCL;Operating;South Australia;-29,0227;134,769;4
+113;Starfish Hill;RATCH Group;Operating;South Australia;-35,5699;138,131;34,5
+114;Lake Bonney Wind Farm Stage 3;Infigen Energy;Operating;South Australia;-37,7381;140,3878;39
+115;Canunda;ENGIE;Operating;South Australia;-37,6686;140,3314;46
+116;Hallet 5 Wind Farm;Eurus Energy;Operating;South Australia;-33,3756;138,8023;52,5
+117;Clements Gap;Pacific Hydro;Operating;South Australia;-33,5129;138,1181;58
+118;Cathedral Rocks;EnergyAustralia;Operating;South Australia;-34,8505;135,5943;66
+119;Mt Millar;Meridian Energy;Operating;South Australia;-33,6255;136,7038;70
+120;Hallet 2 Wind Farm;Infrastructure Capital Group;Operating;South Australia;-33,5566;138,8626;71
+121;Lake Bonney Wind Farm Stage 1;Infigen Energy;Operating;South Australia;-37,7381;140,3878;80,5
+122;Lincoln Gap Stage 2;Nexif;Operating;South Australia;-32,5886;137,555;86
+123;Wattle Point;Infrastructure Capital Group;Operating;South Australia;-35,1287;137,6992;90,75
+124;Hallet 1 Wind Farm;Palisade;Operating;South Australia;-33,3555;138,7262;94,5
+125;Hornsdale Wind Farm Stage 1;Neoen;Operating;South Australia;-33,037;138,5553;100
+126;Snowtown Stage 1;Tilt Renewables;Operating;South Australia;-33,83;138,1187;101
+127;Hornsdale Wind Farm Stage 2;Neoen;Operating;South Australia;-33,037;138,5553;102,4
+128;Hornsdale Wind Farm Stage 3;Neoen;Operating;South Australia;-33,037;138,5553;112
+129;Willogoleche;ENGIE;Operating;South Australia;-33,3021;138,7226;119
+130;Lincoln Gap Stage 1;Nexif;Operating;South Australia;-32,5886;137,555;126
+131;Waterloo;Palisade;Operating;South Australia;-34,0014;138,9109;131
+132;Hallet 4 Wind Farm;Osaka Gas;Operating;South Australia;-33,2859;138,723;132
+133;Lake Bonney Wind Farm Stage 2;Infigen Energy;Operating;South Australia;-37,7381;140,3878;159
+134;Snowtown Stage 2;Palisade;Operating;South Australia;-33,83;138,1187;270
+135;Hellyer;Epuron;Concept;Tasmania;-41,2667;145,7833;150
+136;Jim's Plain;UPC Renewables;Concept;Tasmania;-40,681;144,9533;240
+137;Guildford;Epuron;Concept;Tasmania;-41,4167;145,6833;300
+138;St Patricks Plains;Epuron;Concept;Tasmania;-42,2062;146,8837;300
+139;Bass Offshore Wind Farm Phase 1;Brookvale Energy;Concept;Tasmania;-40,9146;145,9028;500
+140;Bass Offshore Wind Farm Phase 2;Brookvale Energy;Concept;Tasmania;-40,9146;145,9028;700
+141;Bass Offshore Wind Farm Phase 3;Brookvale Energy;Concept;Tasmania;-40,9146;145,9028;800
+142;Robbins Island;UPC Renewables;Concept;Tasmania;-40,681;144,9533;800
+143;Project Renewable Future (Wind);West Coast Renewable Energy;Concept;Tasmania;-41,8833;145,3333;2150
+144;Port Latta;Nekon;Construction;Tasmania;-40,8579;145,3744;25
+145;Western Plains;Epuron;DA Application;Tasmania;-40,7667;145,3;50,4
+146;Low Head;Low Head Wind Farm;DA Approved;Tasmania;-41,0419;146,8498;30
+147;Bluff Point;Woolnorth;Operating;Tasmania;-40,7187;144,6974;65
+148;Studland Bay;Woolnorth;Operating;Tasmania;-40,7864;144,7385;75
+149;Granville Harbour;Palisade;Operating;Tasmania;-41,7436;145,0022;112
+150;Wild Cattle Hill;PowerChina Resources;Operating;Tasmania;-42,1613;146,7149;144
+151;Musselroe;Woolnorth;Operating;Tasmania;-40,787;148,0269;168
+152;St Clair;Synergy;Concept;Victoria;-38,5786;145,6527;45
+153;Tarrone;Naturgy;Concept;Victoria;-37,68;142,55;60
+154;Bushy Creek Wind Farm;Tilt Renewables;Concept;Victoria;-37,8791;142,6056;150
+155;Warracknabeal Wind Farm;WestWind Energy;Concept;Victoria;-36,25;142,4167;300
+156;Watta Wella Renewable Energy Hub (Wind);RES;Concept;Victoria;-37,05;142,7667;315
+157;Darlington;Naturgy;Concept;Victoria;-38,0041;142,9911;375
+158;Victoria Offshore Wind Farm;Australis Energy;Concept;Victoria;-38,2102;141,1211;495
+159;Navarre Wind Farm;Neoen;Concept;Victoria;-36,9;143,1133;526
+160;Hexham Wind Farm;WPO;Concept;Victoria;-38,033;142,5834;700
+161;Kentbruck Green Power Hub;Neoen;Concept;Victoria;-38,0362;141,0646;900
+162;Seadragon;Unknown;Concept;Victoria;-38,3326;147,6366;1500
+163;Star of the South;Offshore Energy;Concept;Victoria;-38,7454;146,9714;2000
+164;Nhill;BayWa re;Construction;Victoria;-36,328;141,4308;6,8
+165;Woolsthorpe;Wind Farm Developments;Construction;Victoria;-38,1867;142,3995;72
+166;Murrawarra Stage 2;Partners Group;Construction;Victoria;-36,4233;142,438;209
+167;Stockyard Hill;Goldwind;Construction;Victoria;-37,5909;143,3187;530
+168;Wombelano Wind Farm;Wind Power Australia;DA Application;Victoria;-36,9961;141,5425;30
+169;Inverleigh;Wind Farm Developments;DA Application;Victoria;-38,1605;144,0608;76,8
+170;Delburn Wind Farm;OSMI Australia;DA Application;Victoria;-38,2884;146,2117;184,8
+171;Wimmera Plains Energy Facility;BayWa re;DA Application;Victoria;-36,5468;142,2921;302,4
+172;Willatook;WPO;DA Application;Victoria;-38,1361;142,1639;398,4
+173;Mt Fyans;Woolnorth;DA Application;Victoria;-37,9681;142,9212;400
+174;Jung Renewable Energy Facility Stage-1 (Wind);BayWa re;DA Approved;Victoria;-36,5537;142,304;8,4
+175;Rifle Butts;NewEn;DA Approved;Victoria;-36,8385;142,0835;42
+176;Berrimal;Acciona;DA Approved;Victoria;-36,4371;143,4157;72
+177;Hawksdale;Naturgy;DA Approved;Victoria;-38,2693;142,2123;104
+178;Berrybank Stage 2;Naturgy;DA Approved;Victoria;-37,9007;143,5078;107
+179;Ryan Corner;Naturgy;DA Approved;Victoria;-38,2592;142,0345;235
+180;Golden Plains;WestWind Energy;DA Approved;Victoria;-37,9259;143,7584;800
+181;Hepburn;Hepburn Community Wind Park;Operating;Victoria;-37,4272;144,1219;4,1
+182;Chepstowe;BayWa re;Operating;Victoria;-37,5979;143,4937;6,15
+183;Maroona;BayWa re;Operating;Victoria;-37,4208;142,8207;6,9
+184;Timboon West;Epic Energy;Operating;Victoria;-38,5305;142,9194;7,2
+185;Yawong;Epic Energy;Operating;Victoria;-36,4799;143,3699;7,2
+186;Ferguson;BayWa re;Operating;Victoria;-38,6157;143,1748;10,8
+187;Wonthaggi;EDCL;Operating;Victoria;-38,602;145,5465;12
+188;Codrington;Pacific Hydro;Operating;Victoria;-38,2861;141,9738;18,2
+189;Mortons Lane;CGN Wind Energy;Operating;Victoria;-37,8245;142,4696;19,5
+190;Coonooer Bridge;Windlab;Operating;Victoria;-36,4375;143,3591;19,8
+191;Toora;Transfield Holdings;Operating;Victoria;-38,6535;146,3402;21
+192;Cape Nelson North;Pacific Hydro;Operating;Victoria;-38,3692;141,5411;22,5
+193;Cape Sir William Grant;Pacific Hydro;Operating;Victoria;-38,3905;141,5987;24,7
+194;Yaloak South;Pacific Hydro;Operating;Victoria;-37,7154;144,2424;28,7
+195;Yambuk;Pacific Hydro;Operating;Victoria;-38,3127;142,0175;30
+196;Kiata;John Laing;Operating;Victoria;-36,4;141,76;31,5
+197;Cape Nelson South;Pacific Hydro;Operating;Victoria;-38,4139;141,5266;44
+198;Challicum Hills;Pacific Hydro;Operating;Victoria;-37,3897;143,114;52,5
+199;Salt Creek;Tilt Renewables;Operating;Victoria;-37,9498;142,8062;54
+200;Cherry Tree;John Laing;Operating;Victoria;-37,0851;145,2188;57,6
+201;Cape Bridgewater;Pacific Hydro;Operating;Victoria;-38,3731;141,3804;59
+202;Oaklands Hill;Challenger Life;Operating;Victoria;-37,6815;142,5524;63
+203;Crowlands;Pacific Hydro;Operating;Victoria;-37,0735;143,1376;80
+204;Lal Lal (Elaine);Northleaf Capital;Operating;Victoria;-37,7531;144,0132;83,59999
+205;Bald Hills;Infrastructure Capital Group;Operating;Victoria;-38,7468;145,9491;109
+206;Mount Mercer;Meridian Energy;Operating;Victoria;-37,8319;143,8884;131
+207;Mt Gellibrand;Acciona;Operating;Victoria;-38,2336;143,7686;132
+208;Lal Lal (Yendon);Northleaf Capital;Operating;Victoria;-37,6315;144,0311;144
+209;Mortlake South;Acciona;Operating;Victoria;-38,1097;142,8016;157,5
+210;Berrybank Stage 1;Naturgy;Operating;Victoria;-37,9007;143,5078;180
+211;Waubra;Acciona;Operating;Victoria;-37,356;143,6059;192
+212;Bulgana Green Power Hub (Wind);Neoen;Operating;Victoria;-37,0967;142,9743;194
+213;Murrawarra Stage 1;Partners Group;Operating;Victoria;-36,4233;142,438;226
+214;Ararat;OPTrust;Operating;Victoria;-37,2454;143,0426;240
+215;Moorabool;Goldwind;Operating;Victoria;-37,7632;144,1512;312
+216;Dundonnell;Tilt Renewables;Operating;Victoria;-37,8526;142,9595;336
+217;Macarthur;Malakoff;Operating;Victoria;-38,0647;142,1843;420
+218;Nilgen;Pacific Hydro;Concept;Western Australia;-31,0121;115,489;104,5
+219;Cliff Head / Geraldton / Eneabba Phase 1;Pilot Energy;Concept;Western Australia;-28,7951;114,5028;140
+220;Cliff Head / Geraldton / Eneabba Phase 3;Pilot Energy;Concept;Western Australia;-28,7951;114,5028;280
+221;Western Australia Offshore Wind Farm;Australis Energy;Concept;Western Australia;-33,0918;115,6346;300
+222;Cliff Head / Geraldton / Eneabba Phase 4;Pilot Energy;Concept;Western Australia;-28,7951;114,5028;308
+223;Cliff Head / Geraldton / Eneabba Phase 2;Pilot Energy;Concept;Western Australia;-28,7951;114,5028;364
+224;Walkaway 2 & 3;RPV Developments;Concept;Western Australia;-28,9303;114,8657;400
+225;Geraldton Hybrid Project (Wind);Lightsource BP;Concept;Western Australia;-28,7744;114,6089;1000
+226;Oakjee Strategic Industrial Area (Wind);Western Australian Government;Concept;Western Australia;-28,602;114,612;1250
+227;HyEnergy Renewable Hydrogen Project (Wind);Province Resources;Concept;Western Australia;-25,1066;113,8022;1525
+228;Bunbury Offshore Wind Farm;Oceanex;Concept;Western Australia;-33,1794;115,3374;2000
+229;Murchinson Renewable Hydrogen Project (Wind);Hydrogen Renewables Australia;Concept;Western Australia;-27,6467;114,2397;2500
+230;Western Green Hub (Wind);InterContinental Energy;Concept;Western Australia;-31,907;128,0617;30000
+231;Esperance Hybrid Project (Wind);Pacific Energy;Construction;Western Australia;-33,8611;121,8919;9
+232;Arrowsmith Hydrogen Project (Wind);Infinite Blue Energy;DA Approved;Western Australia;-29,251;114,934;75
+233;Waddi Wind Farm;Tilt Renewables;DA Approved;Western Australia;-30,6022;115,5462;145
+234;Kondinin (Wind);Lacour Energy;DA Approved;Western Australia;-32,4541;118,2743;207
+235;Asian Renewable Energy Hub (Wind) Phase-2;InterContinental Energy;DA Approved;Western Australia;-19,8468;120,7589;6132
+236;Asian Renewable Energy Hub (Wind);InterContinental Energy;DA Approved;Western Australia;-19,8468;120,7589;10220
+237;Hopetoun;Synergy;Operating;Western Australia;-33,9062;120,1233;1,2
+238;Hopetown Wind-Diesel Hybrid;Verve Energy;Operating;Western Australia;-33,9079;120,129;1,2
+239;Denmark Community;Denmark Community;Operating;Western Australia;-35,037;117,3212;1,6
+240;Kalbarri;Synergy;Operating;Western Australia;-27,7194;114,176;1,6
+241;Mt Barker;Mt Barker Power;Operating;Western Australia;-34,6013;117,6462;2,4
+242;Port Gregory (Wind);Advanced Energy Resources;Operating;Western Australia;-28,1983;114,265;2,5
+243;Nine Mile;Synergy;Operating;Western Australia;-33,8952;121,781;3,6
+244;Karakin Wind Farm;Blair Fox;Operating;Western Australia;-31,0642;115,4303;5
+245;West Hills Wind Farm;Blair Fox;Operating;Western Australia;-30,8777;115,4067;5
+246;Grasmere Wind Farm;Bright Energy Investments;Operating;Western Australia;-35,0659;117,8;14
+247;Agnew Mine Hybrid Project (Wind);EDL;Operating;Western Australia;-27,9931;120,4958;18
+248;Albany;Bright Energy Investments;Operating;Western Australia;-35,0659;117,7996;21
+249;Mumbida;Infrastructure Capital Group;Operating;Western Australia;-28,9296;114,9093;55
+250;Emu Downs Wind;APA;Operating;Western Australia;-30,5015;115,1346;80
+251;Walkaway 1;Infigen Energy;Operating;Western Australia;-28,9042;114,9727;89
+252;Badgingarra;APA;Operating;Western Australia;-30,5008;115,5763;130
+253;Warradarge;DIF Capital Partners;Operating;Western Australia;-29,8143;115,262;180
+254;Collgar;Rest;Operating;Western Australia;-31,5424;118,4564;206
+255;Yandin Wind Farm;RATCH Group;Operating;Western Australia;-30,7397;115,5647;214
