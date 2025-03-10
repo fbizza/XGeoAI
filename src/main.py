@@ -1,12 +1,28 @@
-from dash import Dash, html
+import plotly.graph_objects as go
+import pandas as pd
 
-app = Dash(__name__)
+df = pd.read_csv('../data/processed/wind-farms.csv')
 
-app.layout = html.Div(children=[
-     html.H1(children='Hello dash!'),
-     html.Div(children='''
-         XGeoAI first commit
-     '''),
- ])
-if __name__ == '__main__':
-    app.run_server(debug=True)
+fig = go.Figure()
+
+fig.add_trace(go.Scattermap(
+    mode="markers",
+    lon=df["Longitude"],
+    lat=df["Latitude"],
+    marker=dict(size=7, color="orangered"),
+    text=df["Asset"],
+    hoverinfo="text"
+))
+
+fig.update_layout(
+    autosize=True,
+    map=dict(
+        center=dict(
+            lat=-29,
+            lon=135
+        ),
+        zoom=3
+    ),
+)
+
+fig.show()
