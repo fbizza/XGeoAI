@@ -1,0 +1,7 @@
+Electricity Transmission Lines: https://digital.atlas.gov.au/datasets/6f951c75fa8249618640d6decda9b690_2/explore?location=-23.506886%2C-47.000000%2C3.94
+
+Power stations: https://digital.atlas.gov.au/datasets/69a72d06363d4aadbe816f8d25d0c098_1/explore?location=-22.764476%2C-47.000000%2C3.80
+
+Wind Turbines map (Ecogeneration 2023): https://www.ecogeneration.com.au/wp-content/uploads/2023/03/2023_WindMap.pdf 
+
+Geoscience Australia - National Electricity Transmission Lines 2016: https://adp-access.aurin.org.au/dataset/au-govt-ga-national-electricity-transmission-lines-2016-na
