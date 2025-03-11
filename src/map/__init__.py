@@ -1,3 +1,3 @@
-from .layers import add_wind_farms
+from .layers import add_wind_farms, add_grid
 
-__all__ = ["add_wind_farms"]
+__all__ = ["add_wind_farms", "add_grid"]

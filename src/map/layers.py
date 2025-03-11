@@ -38,3 +38,48 @@ def add_wind_farms (df):
     )
 
     return fig
+
+geo_df = gpd.read_file('../data/raw/Electricity_Transmission_Lines.geojson')
+
+def handle():
+    lats = []
+    lons = []
+    names = []
+
+    for feature, name in tqdm(zip(geo_df.geometry, geo_df.get("name", ["Transmission Line"])),
+                              total=len(geo_df), desc="Processing transmission lines"):
+
+        if isinstance(feature, shapely.geometry.LineString):
+            line_coords = [feature]
+        elif isinstance(feature, shapely.geometry.MultiLineString):
+            line_coords = feature.geoms
+        else:
+            continue
+
+        for line in line_coords:
+            x, y = line.xy
+            lons.extend(x)
+            lats.extend(y)
+            names.extend([name] * len(y))  # TODO: perhaps divided names?
+            lons.append(None)
+            lats.append(None)
+            names.append(None)
+
+    lats = np.array(lats)
+    lons = np.array(lons)
+    names = np.array(names)
+    return lats, lons, names
+
+def add_grid(fig):
+
+
+    lats, lons, names = handle()
+
+    fig.add_trace(go.Scattermap(
+        mode="lines",
+        lon=lons,
+        lat=lats,
+        line=dict(width=2, color="red"),
+        name="Transmission Lines",
+        hoverinfo="text"
+    ))
