@@ -11,8 +11,8 @@ import dash
 from dash import dcc, html
 
 df = pd.read_csv('../data/processed/wind-farms.csv')
-fig = go.Figure()
-fig = add_wind_farms(fig, df)
+
+fig = add_wind_farms(df)
 
 # def handle():
 #     geo_df = gpd.read_file('../data/raw/Electricity_Transmission_Lines.geojson')

@@ -9,9 +9,8 @@ from tqdm import tqdm
 
 
 path_to_csv = '../data/processed/wind-farms.csv'
-df = pd.read_csv(path_to_csv)
-
-def add_wind_farms (fig, df):
+def add_wind_farms (df):
+    df = pd.read_csv(path_to_csv)
 
     fig = px.scatter_map(df,
                          lon=df['Longitude'],
@@ -37,6 +36,5 @@ def add_wind_farms (fig, df):
             font_family="Rockwell"
         )
     )
-
 
     return fig
