@@ -11,12 +11,19 @@ import dash
 from dash import dcc, html
 
 df = pd.read_csv('../data/processed/wind-farms.csv')
+path = '../data/processed/georef-australia-local-government-area-ids.geojson'
+lga_df = pd.read_csv('../data/processed/lgas_values.csv')
+fig = add_choroplet(path, lga_df)
 
-fig = add_wind_farms(df)
-#add_grid(fig)
-fig = add_choroplet(fig)
 
+fig = add_wind_farms(df, fig)
+
+fig = add_grid(fig)
 fig.show()
+
+
+
+
 
 # TODO: make it interactive using Dash
 # app = dash.Dash(__name__)

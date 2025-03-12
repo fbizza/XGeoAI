@@ -1,4 +1,6 @@
 import json
+import os
+import pandas as pd
 
 def load_json(path):
     try:
@@ -16,3 +18,11 @@ def load_json(path):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return None
+
+def line_coords(path):
+    # to handle geojson lines in a dash friendly way
+    if os.path.exists(path):
+        df = pd.read_csv(path)
+        return df['lat'].values, df['lon'].values, df['name'].values
+    else:
+        raise FileNotFoundError(f"{path} not found")
