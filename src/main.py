@@ -6,22 +6,23 @@ import pandas as pd
 import numpy as np
 import shapely.geometry
 from tqdm import tqdm
-from src.map import add_wind_farms, add_grid, add_choroplet
+from src.map import add_wind_farms, add_grid, add_choroplet, add_centroids_layer
 import dash
 from dash import dcc, html
 
 df = pd.read_csv('../data/processed/wind-farms.csv')
 path = '../data/processed/georef-australia-local-government-area-ids.geojson'
 lga_df = pd.read_csv('../data/processed/lgas_values.csv')
-fig = add_choroplet(path, lga_df)
+# fig = add_choroplet(path, lga_df)
+#
+#
+# fig = add_wind_farms(df, fig)
+#
+# fig = add_grid(fig)
+# fig.show()
 
 
-fig = add_wind_farms(df, fig)
-
-fig = add_grid(fig)
-fig.show()
-
-
+add_centroids_layer()
 
 
 

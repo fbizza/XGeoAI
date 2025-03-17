@@ -59,13 +59,33 @@ def add_choroplet(geojson_path, df):
     geojson = load_json(geojson_path)
 
     layer = px.choropleth_map(df, geojson=geojson, locations='lga', color='value',
-                            color_continuous_scale="mygbm",
-                            range_color=(0, 10),
-                            map_style="carto-positron",
+                            color_continuous_scale="Teal",
+                            range_color=(0, 11),
                             zoom=3, center={"lat": -29, "lon": 135},
-                            opacity=0.4,
-                            labels={'value': 'a certain metric'}
+                            opacity=0.5,
+                            labels={'value': 'A certain metric'},
+                            custom_data=['lga', 'value']
                             )
+    layer.update_traces(
+        hovertemplate="<br>".join([
+            "<b>%{customdata[0]}</b>",
+            "A certain metric: %{customdata[1]}",
+        ])
+    )
+    layer.update_layout(map_style="dark")
 
     #fig = fig.add_trace(layer.data[0])
     return layer
+
+def add_centroids_layer():
+    df = pd.read_csv('../data/processed/australian-LGAs-centroids.csv')
+
+    fig = px.scatter_map(df,
+                         lon='Longitude',
+                         lat='Latitude',
+                         #custom_data=['Random Value'],
+                         center={'lat': -29, 'lon': 135},
+                         map_style='dark',
+                         opacity=0.7,
+                         zoom=3)
+    fig.show()
