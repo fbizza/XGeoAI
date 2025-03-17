@@ -10,19 +10,23 @@ from src.map import add_wind_farms, add_grid, add_choroplet, add_centroids_layer
 import dash
 from dash import dcc, html
 
-df = pd.read_csv('../data/processed/wind-farms.csv')
-path = '../data/processed/georef-australia-local-government-area-ids.geojson'
-lga_df = pd.read_csv('../data/processed/lgas_values.csv')
-# fig = add_choroplet(path, lga_df)
-#
-#
-# fig = add_wind_farms(df, fig)
-#
-# fig = add_grid(fig)
-# fig.show()
+
+CENTROIDS_DF = pd.read_csv('../data/processed/australian-LGAs-centroids.csv')
+WINDFARMS_DF = pd.read_csv('../data/processed/wind-farms.csv')
+LGAS = '../data/processed/georef-australia-local-government-area-ids.geojson'
+LGA_IDS_VALUES = pd.read_csv('../data/processed/lgas_values.csv')
+
+fig = add_choroplet(LGAS, LGA_IDS_VALUES)
+
+fig = add_wind_farms(WINDFARMS_DF, fig)
+
+fig = add_grid(fig)
+
+fig = add_centroids_layer(CENTROIDS_DF, fig)
+fig.show()
 
 
-add_centroids_layer()
+#add_centroids_layer(CENTROIDS_DF)
 
 
 

@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 from src.map.utils import load_json, line_coords
 
-def add_wind_farms (df, base):
+def add_wind_farms (df, map_figure):
 
     fig = px.scatter_map(df,
                          lon=df['Longitude'],
@@ -36,10 +36,10 @@ def add_wind_farms (df, base):
             font_family="Rockwell"
         )
     )
-    base.add_trace(fig.data[0])
-    return base
+    map_figure.add_trace(fig.data[0])
+    return map_figure
 
-def add_grid(fig):
+def add_grid(map_figure):
 
     lats, lons, _ = line_coords('../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
     layer = go.Scattermap(
@@ -51,8 +51,8 @@ def add_grid(fig):
         hoverinfo="text", #todo: add/remove source text
         opacity=0.4
     )
-    fig.add_trace(layer)
-    return fig
+    map_figure.add_trace(layer)
+    return map_figure
 
 def add_choroplet(geojson_path, df):
 
@@ -74,18 +74,18 @@ def add_choroplet(geojson_path, df):
     )
     layer.update_layout(map_style="dark")
 
-    #fig = fig.add_trace(layer.data[0])
+    #fig = fig.add_trace(layer.data[0]) its base layer (workaround)
     return layer
 
-def add_centroids_layer():
-    df = pd.read_csv('../data/processed/australian-LGAs-centroids.csv')
+def add_centroids_layer(df, map_figure):
 
-    fig = px.scatter_map(df,
+    layer = px.scatter_map(df,
                          lon='Longitude',
                          lat='Latitude',
-                         #custom_data=['Random Value'],
+                         #custom_data=['distance_from_electricity_grid'],
                          center={'lat': -29, 'lon': 135},
                          map_style='dark',
                          opacity=0.7,
                          zoom=3)
-    fig.show()
+    map_figure.add_trace(layer.data[0])
+    return map_figure
