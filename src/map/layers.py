@@ -62,7 +62,7 @@ def add_choroplet(geojson_path, df):
                             color_continuous_scale="Teal",
                             range_color=(0, 11),
                             zoom=3, center={"lat": -29, "lon": 135},
-                            opacity=0.5,
+                            opacity=0.1,
                             labels={'value': 'A certain metric'},
                             custom_data=['lga', 'value']
                             )
