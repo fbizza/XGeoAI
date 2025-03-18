@@ -55,6 +55,7 @@ def add_grid(map_figure):
     return map_figure
 
 def add_choroplet(geojson_path, df):
+    print(df.head())
 
     geojson = load_json(geojson_path)
 
@@ -79,13 +80,24 @@ def add_choroplet(geojson_path, df):
     return layer
 
 def add_centroids_layer(df, map_figure):
-    #quick fix for overseas territories
+    # quick fix for overseas territories and standardization TODO: think about something better
     largest_values = df["min_distance_to_grid_km"].nlargest(3).values
     non_outlier_mean = df.loc[~df["min_distance_to_grid_km"].isin(largest_values), "min_distance_to_grid_km"].mean()
     df.loc[df["min_distance_to_grid_km"].isin(largest_values), "min_distance_to_grid_km"] = non_outlier_mean
-    from sklearn.preprocessing import MinMaxScaler
-    scaler = MinMaxScaler()
+
+    from sklearn.preprocessing import StandardScaler
+    import matplotlib.pyplot as plt
+    df["min_distance_to_grid_km"] = np.log1p(df["min_distance_to_grid_km"])
+    scaler = StandardScaler()
     df["min_distance_to_grid_km"] = scaler.fit_transform(df[["min_distance_to_grid_km"]])
+
+    plt.figure(figsize=(8, 5))
+    plt.hist(df["min_distance_to_grid_km"], bins=10, color="blue", edgecolor="black", alpha=0.7)
+    plt.xlabel("Normalized Distance")
+    plt.ylabel("Frequency")
+    plt.title("Distribution of Normalized Distances")
+    plt.grid(axis="y", linestyle="--", alpha=0.7)
+    plt.show()
 
     layer = px.scatter_map(df,
                          lon='Longitude',

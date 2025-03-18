@@ -23,13 +23,14 @@ ELECTRICITY_GRID = '../data/raw/Electricity_Transmission_Lines.geojson'
 destination_path = '../data/processed/LGAs-centroids-distance-to-grid.csv'
 CENTROIDS_WITH_DISTANCES_DF = pd.read_csv('../data/processed/LGAs-centroids-distance-to-grid.csv')
 
+
 fig = add_choroplet(LGAS, LGA_IDS_VALUES)
 
 fig = add_wind_farms(WINDFARMS_DF, fig)
 
 fig = add_grid(fig)
 
-fig = add_centroids_layer(CENTROIDS_WITH_DISTANCES_DF, fig)
+#fig = add_centroids_layer(CENTROIDS_WITH_DISTANCES_DF, fig)
 fig.show()
 
 
