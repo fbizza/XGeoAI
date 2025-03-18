@@ -82,8 +82,8 @@ def add_centroids_layer(df, map_figure):
     layer = px.scatter_map(df,
                          lon='Longitude',
                          lat='Latitude',
-                         custom_data=['min_distance_to_grid_m'],
-                         color='min_distance_to_grid_m',
+                         custom_data=['min_distance_to_grid_km'],
+                         color='min_distance_to_grid_km',
                          color_continuous_scale=px.colors.cyclical.IceFire
 
                         )
