@@ -7,26 +7,29 @@ import numpy as np
 import shapely.geometry
 from tqdm import tqdm
 from src.map import add_wind_farms, add_grid, add_choroplet, add_centroids_layer
+from src.logic import *
 import dash
 from dash import dcc, html
 
 
+CENTROIDS_PATH = '../data/processed/australian-LGAs-centroids.csv'
 CENTROIDS_DF = pd.read_csv('../data/processed/australian-LGAs-centroids.csv')
 WINDFARMS_DF = pd.read_csv('../data/processed/wind-farms.csv')
 LGAS = '../data/processed/georef-australia-local-government-area-ids.geojson'
 LGA_IDS_VALUES = pd.read_csv('../data/processed/lgas_values.csv')
+ELECTRICITY_GRID = '../data/raw/Electricity_Transmission_Lines.geojson'
 
+
+df_distances = compute_distance(CENTROIDS_PATH, ELECTRICITY_GRID)
 fig = add_choroplet(LGAS, LGA_IDS_VALUES)
 
 fig = add_wind_farms(WINDFARMS_DF, fig)
 
 fig = add_grid(fig)
 
-fig = add_centroids_layer(CENTROIDS_DF, fig)
+fig = add_centroids_layer(df_distances, fig)
 fig.show()
 
-
-#add_centroids_layer(CENTROIDS_DF)
 
 
 

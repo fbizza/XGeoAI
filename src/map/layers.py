@@ -82,10 +82,18 @@ def add_centroids_layer(df, map_figure):
     layer = px.scatter_map(df,
                          lon='Longitude',
                          lat='Latitude',
-                         #custom_data=['distance_from_electricity_grid'],
-                         center={'lat': -29, 'lon': 135},
-                         map_style='dark',
-                         opacity=0.7,
-                         zoom=3)
+                         custom_data=['min_distance_to_grid_m'],
+                         color='min_distance_to_grid_m',
+                         color_continuous_scale=px.colors.cyclical.IceFire
+
+                        )
+    # layer2 = px.density_map(df, lat='Latitude', lon='Longitude', z='min_distance_to_grid_m', radius=30)
+    layer.update_traces(
+        hovertemplate="<br>".join([
+            "<b>Distance to grid: %{customdata[0]}</b>"
+        ]),
+        marker={'size': 5}
+    )
     map_figure.add_trace(layer.data[0])
+    # map_figure.add_trace(layer2.data[0])
     return map_figure
