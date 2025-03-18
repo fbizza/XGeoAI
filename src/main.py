@@ -12,6 +12,7 @@ from src.map import add_wind_farms, add_grid, add_choroplet, add_centroids_layer
 from src.logic import compute_distance
 import dash
 from dash import dcc, html
+from src.logic import modify_base_df
 
 
 CENTROIDS_PATH = '../data/processed/australian-LGAs-centroids.csv'
@@ -24,7 +25,9 @@ destination_path = '../data/processed/LGAs-centroids-distance-to-grid.csv'
 CENTROIDS_WITH_DISTANCES_DF = pd.read_csv('../data/processed/LGAs-centroids-distance-to-grid.csv')
 BASETABLE_DF = pd.read_csv('../data/basetables/LGAs-basetable.csv')
 
-fig = add_choroplet(LGAS, BASETABLE_DF)
+df = modify_base_df(BASETABLE_DF)
+
+fig = add_choroplet(LGAS, df)
 
 fig = add_wind_farms(WINDFARMS_DF, fig)
 
