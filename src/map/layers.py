@@ -61,7 +61,8 @@ def add_choroplet(geojson_path, df):
     layer = px.choropleth_map(df, geojson=geojson, locations='lga', color='value',
                             color_continuous_scale="Teal",
                             range_color=(0, 11),
-                            zoom=3, center={"lat": -29, "lon": 135},
+                            zoom=3,
+                            center={"lat": -29, "lon": 135},
                             opacity=0.1,
                             labels={'value': 'A certain metric'},
                             custom_data=['lga', 'value']
@@ -78,21 +79,25 @@ def add_choroplet(geojson_path, df):
     return layer
 
 def add_centroids_layer(df, map_figure):
+    #quick fix for overseas territories
+    largest_values = df["min_distance_to_grid_km"].nlargest(3).values
+    non_outlier_mean = df.loc[~df["min_distance_to_grid_km"].isin(largest_values), "min_distance_to_grid_km"].mean()
+    df.loc[df["min_distance_to_grid_km"].isin(largest_values), "min_distance_to_grid_km"] = non_outlier_mean
+    from sklearn.preprocessing import MinMaxScaler
+    scaler = MinMaxScaler()
+    df["min_distance_to_grid_km"] = scaler.fit_transform(df[["min_distance_to_grid_km"]])
 
     layer = px.scatter_map(df,
                          lon='Longitude',
                          lat='Latitude',
                          custom_data=['min_distance_to_grid_km'],
-                         color='min_distance_to_grid_km',
-                         color_continuous_scale=px.colors.cyclical.IceFire
-
                         )
     # layer2 = px.density_map(df, lat='Latitude', lon='Longitude', z='min_distance_to_grid_m', radius=30)
     layer.update_traces(
         hovertemplate="<br>".join([
             "<b>Distance to grid: %{customdata[0]}</b>"
         ]),
-        marker={'size': 5}
+        marker={'size': 8, 'opacity': 1, 'colorscale': 'Jet', 'color': df['min_distance_to_grid_km']}
     )
     map_figure.add_trace(layer.data[0])
     # map_figure.add_trace(layer2.data[0])

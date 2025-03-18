@@ -21,15 +21,15 @@ LGAS = '../data/processed/georef-australia-local-government-area-ids.geojson'
 LGA_IDS_VALUES = pd.read_csv('../data/processed/lgas_values.csv')
 ELECTRICITY_GRID = '../data/raw/Electricity_Transmission_Lines.geojson'
 destination_path = '../data/processed/LGAs-centroids-distance-to-grid.csv'
+CENTROIDS_WITH_DISTANCES_DF = pd.read_csv('../data/processed/LGAs-centroids-distance-to-grid.csv')
 
-df_distances = src.logic.compute_distance(CENTROIDS_PATH, ELECTRICITY_GRID, destination_path)
 fig = add_choroplet(LGAS, LGA_IDS_VALUES)
 
 fig = add_wind_farms(WINDFARMS_DF, fig)
 
 fig = add_grid(fig)
 
-fig = add_centroids_layer(df_distances, fig)
+fig = add_centroids_layer(CENTROIDS_WITH_DISTANCES_DF, fig)
 fig.show()
 
 
