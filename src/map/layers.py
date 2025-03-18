@@ -55,24 +55,28 @@ def add_grid(map_figure):
     return map_figure
 
 def add_choroplet(geojson_path, df):
-    print(df.head())
 
     geojson = load_json(geojson_path)
 
-    layer = px.choropleth_map(df, geojson=geojson, locations='lga', color='value',
+    layer = px.choropleth_map(df, geojson=geojson, locations='lga_id', color='min_distance_to_grid_km',
                             color_continuous_scale="Teal",
-                            range_color=(0, 11),
+                            range_color=(0, 250),
                             zoom=3,
                             center={"lat": -29, "lon": 135},
-                            opacity=0.1,
-                            labels={'value': 'A certain metric'},
-                            custom_data=['lga', 'value']
+                            opacity=0.8,
+                            custom_data=['lga_id', 'min_distance_to_grid_km']
                             )
+    # print(layer.layout)
+    # layer.update_layout({'coloraxis': {'colorbar': None}})
+
+    layer.update_layout(coloraxis_showscale=False)
+
     layer.update_traces(
         hovertemplate="<br>".join([
             "<b>%{customdata[0]}</b>",
-            "A certain metric: %{customdata[1]}",
-        ])
+            "Centroid min distance to grid: %{customdata[1]}",
+        ]),
+        showlegend = False
     )
     layer.update_layout(map_style="dark")
 
