@@ -59,11 +59,11 @@ def add_choroplet(geojson_path, df):
     geojson = load_json(geojson_path)
 
     layer = px.choropleth_map(df, geojson=geojson, locations='lga_id', color='final_value',
-                            color_continuous_scale="Teal",
-                            range_color=(0, 250),
+                            color_continuous_scale="Bluered",
+                            range_color=(0, 100),
                             zoom=3,
                             center={"lat": -29, "lon": 135},
-                            opacity=0.8,
+                            opacity=0.6,
                             custom_data=['lga_id', 'min_distance_to_grid_km', 'noise', 'final_value']
                             )
     # print(layer.layout)

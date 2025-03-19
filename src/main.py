@@ -1,17 +1,5 @@
-import plotly.express as px
-import numpy as np
-import plotly.graph_objects as go
-import geopandas as gpd
 import pandas as pd
-import numpy as np
-import shapely.geometry
-from tqdm import tqdm
-
-import src.logic
 from src.map import add_wind_farms, add_grid, add_choroplet, add_centroids_layer
-from src.logic import compute_distance
-import dash
-from dash import dcc, html
 from src.logic import modify_base_df
 
 
@@ -40,12 +28,3 @@ fig.show()
 
 
 # TODO: make it interactive using Dash
-# app = dash.Dash(__name__)
-#
-# app.layout = html.Div([
-#     html.H1("Wind Farms Map"),
-#     dcc.Graph(figure=fig)
-# ])
-#
-# if __name__ == '__main__':
-#     app.run_server(debug=True)
