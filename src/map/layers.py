@@ -49,7 +49,8 @@ def add_grid(map_figure):
         line=dict(width=1, color="red"),
         name="Transmission Lines",
         hoverinfo="text", #todo: add/remove source text
-        opacity=0.4
+        opacity=0.4,
+        showlegend=False
     )
     map_figure.add_trace(layer)
     return map_figure

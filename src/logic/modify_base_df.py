@@ -9,7 +9,6 @@ def modify_base_df(df, w_distance=0.1, w_noise=0.9):
     df['noise'] = noise
 
     df['final_value'] = w_distance * df['min_distance_to_grid_km'] + w_noise * df['noise']
-
     print(df.head())
 
     return df
