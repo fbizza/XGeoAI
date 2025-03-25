@@ -55,23 +55,38 @@ def add_grid(map_figure):
     map_figure.add_trace(layer)
     return map_figure
 
+import time
+
 def add_choroplet(geojson_path, df):
+    start_time = time.time()
 
+    # Step 1: Load GeoJSON
+    geojson_start = time.time()
     geojson = load_json(geojson_path)
+    geojson_time = time.time() - geojson_start
+    print(f"GeoJSON load time: {geojson_time:.4f} sec")
 
+    # Step 2: Create choropleth map
+    choropleth_start = time.time()
     layer = px.choropleth_map(df, geojson=geojson, locations='lga_id', color='final_value',
-                            color_continuous_scale="Bluered",
-                            range_color=(0, 100),
-                            zoom=3,
-                            center={"lat": -29, "lon": 135},
-                            opacity=0.6,
-                            custom_data=['lga_id', 'min_distance_to_grid_km', 'noise', 'final_value']
-                            )
-    # print(layer.layout)
-    # layer.update_layout({'coloraxis': {'colorbar': None}})
+                               color_continuous_scale="Bluered",
+                               range_color=(0, 100),
+                               zoom=3,
+                               center={"lat": -29, "lon": 135},
+                               opacity=0.6,
+                               custom_data=['lga_id', 'min_distance_to_grid_km', 'noise', 'final_value']
+                               )
+    choropleth_time = time.time() - choropleth_start
+    print(f"Choropleth map creation time: {choropleth_time:.4f} sec")
 
+    # Step 3: Update layout
+    layout_start = time.time()
     layer.update_layout(coloraxis_showscale=False)
+    layout_time = time.time() - layout_start
+    print(f"Layout update time: {layout_time:.4f} sec")
 
+    # Step 4: Update traces
+    traces_start = time.time()
     layer.update_traces(
         hovertemplate="<br>".join([
             "<b>%{customdata[0]}</b>",
@@ -79,12 +94,23 @@ def add_choroplet(geojson_path, df):
             "Noise: %{customdata[2]}",
             "final_value: %{customdata[3]}",
         ]),
-        showlegend = False
+        showlegend=False
     )
-    layer.update_layout(map_style="dark")
+    traces_time = time.time() - traces_start
+    print(f"Traces update time: {traces_time:.4f} sec")
 
-    #fig = fig.add_trace(layer.data[0]) its base layer (workaround)
+    # Step 5: Update map style
+    style_start = time.time()
+    layer.update_layout(map_style="dark")
+    style_time = time.time() - style_start
+    print(f"Map style update time: {style_time:.4f} sec")
+
+    # Total execution time
+    total_time = time.time() - start_time
+    print(f"Total add_choroplet execution time: {total_time:.4f} sec")
+
     return layer
+
 
 def add_centroids_layer(df, map_figure):
     # quick fix for overseas territories and standardization TODO: think about something better
