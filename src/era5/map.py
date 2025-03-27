@@ -67,6 +67,8 @@ data = {
 
 df = pd.DataFrame(data)
 
+#TODO: avg over 5 years, and use sqrt(u^2+v^2)
+
 app = dash.Dash(__name__)
 
 
