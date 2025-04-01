@@ -184,28 +184,107 @@ def plot_mean_correlation_map(data_filepath):
 
     return fig
 
-def plot_mean_correlation_distance_map(data_filepath):
-    """Loads the saved DataFrame and plots the mean wind correlation on a map."""
+# def plot_mean_correlation_distance_map(data_filepath):
+#     """Loads the saved DataFrame and plots the mean wind correlation on a map."""
+#     try:
+#         df = pd.read_csv(data_filepath)
+#     except FileNotFoundError:
+#         print(f"Error: File not found at {data_filepath}")
+#         return
+#
+#     fig = go.Figure(go.Scattermap(
+#         lat=df['Latitude'],
+#         lon=df['Longitude'],
+#         mode='markers',
+#         marker=dict(
+#             size=10,
+#             color=df['Mean Distance'],
+#             colorscale='Reds',
+#             colorbar=dict(title='Mean Distance'),
+#             opacity=0.8
+#         ),
+#         text=df['Mean Distance'],
+#     ))
+#
+#     fig.update_layout(
+#         map=dict(
+#             center=dict(
+#                 lat=-29,
+#                 lon=135
+#             ),
+#             zoom=2,
+#             style='dark'
+#         ),
+#         margin=dict(l=0, r=0, t=40, b=0)  # Adjust margins
+#     )
+#
+#     return fig
+
+
+def plot_mean_correlation_distance_map(data_filepath, wind_farms_filepath):
+    """Loads the saved mean correlation DataFrame and the operating wind farms DataFrame and plots them on a map."""
     try:
+        # Load the original mean correlation distance data
         df = pd.read_csv(data_filepath)
     except FileNotFoundError:
         print(f"Error: File not found at {data_filepath}")
         return
 
-    fig = go.Figure(go.Scattermap(
+    try:
+        # Load the operating wind farms data
+        wind_farms_df = pd.read_csv(wind_farms_filepath)
+    except FileNotFoundError:
+        print(f"Error: File not found at {wind_farms_filepath}")
+        return
+
+    # Create the map plot
+    fig = go.Figure()
+
+    # Add the mean correlation markers (existing ones, assume they are already handled in your data)
+    fig.add_trace(go.Scattermap(
         lat=df['Latitude'],
         lon=df['Longitude'],
         mode='markers',
         marker=dict(
             size=10,
-            color=df['Mean Distance'],
+            color=df['Mean Distance'],  # Assuming there's a 'Mean Distance' column
             colorscale='Reds',
             colorbar=dict(title='Mean Distance'),
             opacity=0.8
         ),
         text=df['Mean Distance'],
+        name="Mean Distance Locations"
     ))
 
+    # Add operating wind farm markers (purple)
+    fig.add_trace(go.Scattermap(
+        lat=wind_farms_df['Latitude'],
+        lon=wind_farms_df['Longitude'],
+        mode='markers',
+        marker=dict(
+            size=10,
+            color='purple',
+            opacity=0.8,
+        ),
+        text=wind_farms_df['Asset'],  # Display asset name on hover
+        name='Wind Farms'
+    ))
+
+    # Add closest land location markers (green)
+    fig.add_trace(go.Scattermap(
+        lat=wind_farms_df['Closest ERA5 Land Latitude'],
+        lon=wind_farms_df['Closest ERA5 Land Longitude'],
+        mode='markers',
+        marker=dict(
+            size=10,
+            color='green',
+            opacity=0.8,
+        ),
+        text=wind_farms_df['Asset'],  # Display asset name on hover
+        name='Closest Land Locations'
+    ))
+
+    # Update map layout
     fig.update_layout(
         map=dict(
             center=dict(
@@ -215,7 +294,9 @@ def plot_mean_correlation_distance_map(data_filepath):
             zoom=2,
             style='dark'
         ),
-        margin=dict(l=0, r=0, t=40, b=0)  # Adjust margins
+        title="Mean Distance and Operating Wind Farms with Closest Land Locations",
+        margin=dict(l=0, r=0, t=40, b=0),  # Adjust margins
+        legend=dict(x=0.01, y=0.99),  # Position the legend
     )
 
     return fig

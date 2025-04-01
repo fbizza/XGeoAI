@@ -141,7 +141,7 @@ def render_page_content(pathname):
                 html.Div("Error loading mean correlation data.")
             ], fluid=True)
     elif pathname == "/mean_correlation_distance":
-        mean_corr_fig = plot_mean_correlation_distance_map(data_filepath='../data/basetables/mean_wind_correlation_distance_df')
+        mean_corr_fig = plot_mean_correlation_distance_map(data_filepath='../data/basetables/mean_wind_correlation_distance_df', wind_farms_filepath='../data/processed/wind-farms-with-ERA5_coordinates.csv')
         if mean_corr_fig:
             return dbc.Container([
                 html.H1("Mean Wind Correlation Map", className='text-center my-4'),
