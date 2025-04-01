@@ -1,5 +1,7 @@
 import pandas as pd
-from src.map import add_wind_farms, add_grid, add_choroplet, add_centroids_layer, plot_mean_correlation_map, plot_mean_correlation_distance_map
+from src.map import (add_wind_farms, add_grid, add_choroplet, add_centroids_layer,
+                     plot_mean_correlation_map, plot_mean_correlation_distance_map,
+                     plot_vs_operating_map)
 from src.logic import modify_base_df
 import dash
 from dash import dcc, html
@@ -50,6 +52,7 @@ sidebar = html.Div(
                 dbc.NavLink("Map", href="/", active="exact"),
                 dbc.NavLink("Mean Correlation", href="/mean_correlation", active="exact"),
                 dbc.NavLink("Mean Correlation Distance", href="/mean_correlation_distance", active="exact"),
+                dbc.NavLink("vs operating wind farms", href="/vs_operating_wind_farms", active="exact"),
                 dbc.NavLink("Documentation", href="/documentation", active="exact"),
             ],
             vertical=True,
@@ -128,6 +131,7 @@ def render_page_content(pathname):
                 ], width=12, className='d-flex justify-content-center')
             ])
         ], fluid=True)
+
     elif pathname == "/mean_correlation":
         mean_corr_fig = plot_mean_correlation_map(data_filepath='../data/basetables/mean_wind_correlation_df')
         if mean_corr_fig:
@@ -140,11 +144,12 @@ def render_page_content(pathname):
                 html.H1("Mean Wind Correlation Map", className='text-center my-4'),
                 html.Div("Error loading mean correlation data.")
             ], fluid=True)
+
     elif pathname == "/mean_correlation_distance":
-        mean_corr_fig = plot_mean_correlation_distance_map(data_filepath='../data/basetables/mean_wind_correlation_distance_df', wind_farms_filepath='../data/processed/wind-farms-with-ERA5_coordinates.csv')
+        mean_corr_fig = plot_mean_correlation_distance_map(data_filepath='../data/basetables/mean_wind_correlation_distance_df')
         if mean_corr_fig:
             return dbc.Container([
-                html.H1("Mean Wind Correlation Map", className='text-center my-4'),
+                html.H1("Mean Wind Correlation Ditance Map", className='text-center my-4'),
                 dcc.Graph(figure=mean_corr_fig, style={'height': '70vh', 'width': '100%'})
             ], fluid=True)
         else:
@@ -152,6 +157,20 @@ def render_page_content(pathname):
                 html.H1("Mean Wind Correlation Distance Map", className='text-center my-4'),
                 html.Div("Error loading mean correlation distance data.")
             ], fluid=True)
+
+    elif pathname == "/vs_operating_wind_farms":
+        vs_operating_fig = plot_vs_operating_map(data_filepath='../data/basetables/mean_wind_correlation_distance_df', wind_farms_filepath='../data/processed/wind-farms-with-ERA5_coordinates.csv')
+        if vs_operating_fig:
+            return dbc.Container([
+                html.H1("vs operating wind farms", className='text-center my-4'),
+                dcc.Graph(figure=vs_operating_fig, style={'height': '70vh', 'width': '100%'})
+            ], fluid=True)
+        else:
+            return dbc.Container([
+                html.H1("vs operating wind farms", className='text-center my-4'),
+                html.Div("Error loading mean correlation distance data.")
+            ], fluid=True)
+
     elif pathname == "/documentation":
         return html.P("To do: add documentation or instructions")
     return html.Div([

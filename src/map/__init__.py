@@ -1,3 +1,6 @@
-from .layers import add_wind_farms, add_grid, add_choroplet, add_centroids_layer, plot_mean_correlation_map, plot_mean_correlation_distance_map
+from .layers import (add_wind_farms, add_grid, add_choroplet,
+                     add_centroids_layer, plot_mean_correlation_map, plot_mean_correlation_distance_map,
+                     plot_vs_operating_map)
 
-__all__ = ["add_wind_farms", "add_grid", "add_choroplet", "add_centroids_layer", "plot_mean_correlation_map", "plot_mean_correlation_distance_map"]
+__all__ = ["add_wind_farms", "add_grid", "add_choroplet", "add_centroids_layer", "plot_mean_correlation_map",
+           "plot_mean_correlation_distance_map", "plot_vs_operating_map"]

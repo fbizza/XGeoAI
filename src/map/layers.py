@@ -184,44 +184,44 @@ def plot_mean_correlation_map(data_filepath):
 
     return fig
 
-# def plot_mean_correlation_distance_map(data_filepath):
-#     """Loads the saved DataFrame and plots the mean wind correlation on a map."""
-#     try:
-#         df = pd.read_csv(data_filepath)
-#     except FileNotFoundError:
-#         print(f"Error: File not found at {data_filepath}")
-#         return
-#
-#     fig = go.Figure(go.Scattermap(
-#         lat=df['Latitude'],
-#         lon=df['Longitude'],
-#         mode='markers',
-#         marker=dict(
-#             size=10,
-#             color=df['Mean Distance'],
-#             colorscale='Reds',
-#             colorbar=dict(title='Mean Distance'),
-#             opacity=0.8
-#         ),
-#         text=df['Mean Distance'],
-#     ))
-#
-#     fig.update_layout(
-#         map=dict(
-#             center=dict(
-#                 lat=-29,
-#                 lon=135
-#             ),
-#             zoom=2,
-#             style='dark'
-#         ),
-#         margin=dict(l=0, r=0, t=40, b=0)  # Adjust margins
-#     )
-#
-#     return fig
+def plot_mean_correlation_distance_map(data_filepath):
+    """Loads the saved DataFrame and plots the mean wind correlation on a map."""
+    try:
+        df = pd.read_csv(data_filepath)
+    except FileNotFoundError:
+        print(f"Error: File not found at {data_filepath}")
+        return
+
+    fig = go.Figure(go.Scattermap(
+        lat=df['Latitude'],
+        lon=df['Longitude'],
+        mode='markers',
+        marker=dict(
+            size=10,
+            color=df['Mean Distance'],
+            colorscale='Reds',
+            colorbar=dict(title='Mean Distance'),
+            opacity=0.8
+        ),
+        text=df['Mean Distance'],
+    ))
+
+    fig.update_layout(
+        map=dict(
+            center=dict(
+                lat=-29,
+                lon=135
+            ),
+            zoom=2,
+            style='dark'
+        ),
+        margin=dict(l=0, r=0, t=40, b=0)  # Adjust margins
+    )
+
+    return fig
 
 
-def plot_mean_correlation_distance_map(data_filepath, wind_farms_filepath):
+def plot_vs_operating_map(data_filepath, wind_farms_filepath):
     """Loads the saved mean correlation DataFrame and the operating wind farms DataFrame and plots them on a map."""
     try:
         # Load the original mean correlation distance data
@@ -262,7 +262,7 @@ def plot_mean_correlation_distance_map(data_filepath, wind_farms_filepath):
         lon=wind_farms_df['Longitude'],
         mode='markers',
         marker=dict(
-            size=10,
+            size=6,
             color='purple',
             opacity=0.8,
         ),
@@ -276,11 +276,11 @@ def plot_mean_correlation_distance_map(data_filepath, wind_farms_filepath):
         lon=wind_farms_df['Closest ERA5 Land Longitude'],
         mode='markers',
         marker=dict(
-            size=10,
+            size=6,
             color='green',
             opacity=0.8,
         ),
-        text=wind_farms_df['Asset'],  # Display asset name on hover
+        text=wind_farms_df['Asset'],
         name='Closest Land Locations'
     ))
 
