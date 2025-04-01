@@ -1,5 +1,5 @@
 import pandas as pd
-from src.map import add_wind_farms, add_grid, add_choroplet, add_centroids_layer, plot_mean_correlation_map
+from src.map import add_wind_farms, add_grid, add_choroplet, add_centroids_layer, plot_mean_correlation_map, plot_mean_correlation_distance_map
 from src.logic import modify_base_df
 import dash
 from dash import dcc, html
@@ -49,6 +49,7 @@ sidebar = html.Div(
             [
                 dbc.NavLink("Map", href="/", active="exact"),
                 dbc.NavLink("Mean Correlation", href="/mean_correlation", active="exact"),
+                dbc.NavLink("Mean Correlation Distance", href="/mean_correlation_distance", active="exact"),
                 dbc.NavLink("Documentation", href="/documentation", active="exact"),
             ],
             vertical=True,
@@ -138,6 +139,18 @@ def render_page_content(pathname):
             return dbc.Container([
                 html.H1("Mean Wind Correlation Map", className='text-center my-4'),
                 html.Div("Error loading mean correlation data.")
+            ], fluid=True)
+    elif pathname == "/mean_correlation_distance":
+        mean_corr_fig = plot_mean_correlation_distance_map(data_filepath='../data/basetables/mean_wind_correlation_distance_df')
+        if mean_corr_fig:
+            return dbc.Container([
+                html.H1("Mean Wind Correlation Map", className='text-center my-4'),
+                dcc.Graph(figure=mean_corr_fig, style={'height': '70vh', 'width': '100%'})
+            ], fluid=True)
+        else:
+            return dbc.Container([
+                html.H1("Mean Wind Correlation Distance Map", className='text-center my-4'),
+                html.Div("Error loading mean correlation distance data.")
             ], fluid=True)
     elif pathname == "/documentation":
         return html.P("To do: add documentation or instructions")

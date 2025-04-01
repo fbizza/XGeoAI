@@ -163,11 +163,47 @@ def plot_mean_correlation_map(data_filepath):
         marker=dict(
             size=10,
             color=df['Mean Correlation'],
-            colorscale='RdBu',
+            colorscale='Reds',
             colorbar=dict(title='Mean Correlation'),
             opacity=0.8
         ),
         text=df['Mean Correlation'],
+    ))
+
+    fig.update_layout(
+        map=dict(
+            center=dict(
+                lat=-29,
+                lon=135
+            ),
+            zoom=2,
+            style='dark'
+        ),
+        margin=dict(l=0, r=0, t=40, b=0)  # Adjust margins
+    )
+
+    return fig
+
+def plot_mean_correlation_distance_map(data_filepath):
+    """Loads the saved DataFrame and plots the mean wind correlation on a map."""
+    try:
+        df = pd.read_csv(data_filepath)
+    except FileNotFoundError:
+        print(f"Error: File not found at {data_filepath}")
+        return
+
+    fig = go.Figure(go.Scattermap(
+        lat=df['Latitude'],
+        lon=df['Longitude'],
+        mode='markers',
+        marker=dict(
+            size=10,
+            color=df['Mean Distance'],
+            colorscale='Reds',
+            colorbar=dict(title='Mean Distance'),
+            opacity=0.8
+        ),
+        text=df['Mean Distance'],
     ))
 
     fig.update_layout(
