@@ -147,3 +147,39 @@ def add_centroids_layer(df, map_figure):
     map_figure.add_trace(layer.data[0])
     # map_figure.add_trace(layer2.data[0])
     return map_figure
+
+def plot_mean_correlation_map(data_filepath):
+    """Loads the saved DataFrame and plots the mean wind correlation on a map."""
+    try:
+        df = pd.read_csv(data_filepath)
+    except FileNotFoundError:
+        print(f"Error: File not found at {data_filepath}")
+        return
+
+    fig = go.Figure(go.Scattermap(
+        lat=df['Latitude'],
+        lon=df['Longitude'],
+        mode='markers',
+        marker=dict(
+            size=10,
+            color=df['Mean Correlation'],
+            colorscale='RdBu',
+            colorbar=dict(title='Mean Correlation'),
+            opacity=0.8
+        ),
+        text=df['Mean Correlation'],
+    ))
+
+    fig.update_layout(
+        map=dict(
+            center=dict(
+                lat=-29,
+                lon=135
+            ),
+            zoom=2,
+            style='dark'
+        ),
+        margin=dict(l=0, r=0, t=40, b=0)  # Adjust margins
+    )
+
+    return fig
