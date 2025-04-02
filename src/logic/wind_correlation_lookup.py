@@ -97,7 +97,7 @@ class WindCorrelationLookup:
         correlation_value = self.rlsmcs5Wmnavg[lat_idx1, lat_idx2]
         return correlation_value
 
-    def plot_scztter_map(self, df, value_column):
+    def plot_scatter_map(self, df, value_column):
         """Plots a general map using Plotly, given a DataFrame with latitude, longitude, and a value column.
 
         Parameters:
