@@ -42,11 +42,12 @@ class WindCorrelationLookup:
         self.mean_correlation_map[land_coords] = correlations
 
     def _find_nearest_index(self, lat, lon):
-        """Finds the index of the nearest point on the grid by calculating the Euclidean distance."""
-
-        lat_grid, lon_grid = np.meshgrid(self.latitude, self.longitude, indexing='ij')
-        distances = np.sqrt((lat_grid - lat) ** 2 + (lon_grid - lon) ** 2)
-        lat_idx, lon_idx = np.unravel_index(np.argmin(distances), distances.shape)
+        """Finds the index of the nearest point on the grid"""
+        lat_idx = np.abs(self.latitude - lat).argmin()
+        lon_idx = np.abs(self.longitude - lon).argmin()
+        # lat_grid, lon_grid = np.meshgrid(self.latitude, self.longitude, indexing='ij')
+        # distances = np.sqrt((lat_grid - lat) ** 2 + (lon_grid - lon) ** 2)
+        # lat_idx, lon_idx = np.unravel_index(np.argmin(distances), distances.shape)
 
         return lat_idx, lon_idx
 
