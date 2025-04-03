@@ -21,7 +21,9 @@ correlation_values = analyzer.get_correlation_values(target_coords)
 
 # Visualize results
 if correlation_values is not None:
-    Plotter.create_wind_correlation_figure(analyzer.latitude, analyzer.longitude, analyzer.land_coords, correlation_values)
+
+    df = WindAnalyzer.get_correlation_df(analyzer.latitude, analyzer.longitude, analyzer.land_coords, correlation_values)
+    Plotter.create_wind_correlation_figure(df)
 
 Plotter.plot_user_locations(target_coords)
 

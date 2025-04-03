@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 class WindAnalyzer:
     def __init__(self, lsmdf, lsmc, correlation_matrix):
@@ -21,7 +22,7 @@ class WindAnalyzer:
         return land_index[0], self.latitude[lat_index], self.longitude[lon_index]
 
     def get_correlation_values(self, target_coords):
-        """Get correlation values for multiple target locations."""
+        """Get the mean of correlation values for multiple target locations."""
         correlation_values = np.zeros((len(self.land_coords[0]), len(target_coords)))
 
         for i, (lat, lon) in enumerate(target_coords):
@@ -31,3 +32,12 @@ class WindAnalyzer:
             correlation_values[:, i] = self.correlation_matrix[land_index, :]
 
         return np.mean(correlation_values, axis=1)
+
+    @staticmethod
+    def get_correlation_df(latitude, longitude, land_coords, correlation_values):
+        df = pd.DataFrame({
+            'Latitude': latitude[land_coords[0]],
+            'Longitude': longitude[land_coords[1]],
+            'Mean Correlation': correlation_values
+        })
+        return df

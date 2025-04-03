@@ -3,13 +3,8 @@ import plotly.graph_objects as go
 
 class Plotter:
     @staticmethod
-    def create_wind_correlation_figure(latitude, longitude, land_coords, correlation_values):
+    def create_wind_correlation_figure(df):
         """Plot wind correlation on a map."""
-        df = pd.DataFrame({
-            'Latitude': latitude[land_coords[0]],
-            'Longitude': longitude[land_coords[1]],
-            'Mean Correlation': correlation_values
-        })
 
         data_filepath = "data/processed/wind-farms-with-ERA5_coordinates.csv"
 
