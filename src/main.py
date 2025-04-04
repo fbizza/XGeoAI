@@ -146,7 +146,7 @@ def render_page_content(pathname):
             ], fluid=True)
 
     elif pathname == "/mean_correlation_distance":
-        mean_corr_fig = plot_mean_correlation_distance_map(data_filepath='../data/basetables/mean_wind_correlation_distance_df')
+        mean_corr_fig = plot_mean_correlation_distance_map(data_filepath='../data/basetables/mean_wind_correlation_distance.csv')
         if mean_corr_fig:
             return dbc.Container([
                 html.H1("Mean Wind Correlation Ditance Map", className='text-center my-4'),
@@ -159,7 +159,7 @@ def render_page_content(pathname):
             ], fluid=True)
 
     elif pathname == "/vs_operating_wind_farms":
-        vs_operating_fig = plot_vs_operating_map(data_filepath='../data/basetables/mean_wind_correlation_distance_df', wind_farms_filepath='../data/processed/wind-farms-with-ERA5_coordinates.csv')
+        vs_operating_fig = plot_vs_operating_map(data_filepath='../data/basetables/mean_wind_correlation_distance.csv', wind_farms_filepath='../data/processed/wind-farms-with-ERA5_coordinates.csv')
         if vs_operating_fig:
             return dbc.Container([
                 html.H1("vs operating wind farms", className='text-center my-4'),

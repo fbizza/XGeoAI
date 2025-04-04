@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 import os
+from sklearn.metrics import pairwise_distances
 
 from data.data_loader import DataLoader
-from visualization.plotter import Plotter
 
 class WindAnalyzer:
     def __init__(self, lsmdf, lsmc, correlation_matrix):
@@ -53,7 +53,7 @@ class WindAnalyzer:
         })
         return df
 
-    def save_correlation(self, data_folder, target_coords=None):
+    def save_correlation_data(self, data_folder, target_coords=None):
         """
         Computes and saves the mean correlation. If target_coords is provided, computes
         correlation for those targets, otherwise computes for the full dataset.
@@ -71,6 +71,40 @@ class WindAnalyzer:
 
         df.to_csv(output_filepath, index=False)
 
+    def compute_mean_correlation_distance(self):
+        """
+        Computes the mean pairwise Euclidean distances in the correlation space and returns them.
+        """
+        # Compute the pairwise distances in the correlation matrix (Euclidean distance)
+        pairwise_distances_matrix = pairwise_distances(self.correlation_matrix)
+        mean_distances = np.mean(pairwise_distances_matrix, axis=1)
+
+        return mean_distances
+
+    def save_correlation_distance_data(self, data_folder):
+        """
+        Computes and saves the mean Euclidean distances in correlation space. The output file is saved as:
+        - `mean_wind_correlation_distance.csv`
+        """
+        mean_distances = self.compute_mean_correlation_distance()
+
+        # Create the map for mean distances
+        mean_distances_map_flat = np.full(self.lsmc.size, np.nan)
+        mean_distances_map_flat[self.land_indices.flatten()] = mean_distances
+        mean_distances_land = mean_distances_map_flat[self.land_indices.flatten()]
+
+        # Build the DataFrame to save
+        df = pd.DataFrame({
+            'Latitude': self.latitude[self.land_coords[0]],
+            'Longitude': self.longitude[self.land_coords[1]],
+            'Mean Distance': mean_distances_land
+        })
+
+        # Save the DataFrame to the specified file
+        output_filepath = os.path.join(data_folder, "mean_wind_correlation_distance.csv")
+        df.to_csv(output_filepath, index=False)
+
+
 if __name__ == "__main__":
     data_path = "../data/raw"
     target_locations_path = "../data/processed/wind-farms-with-ERA5_coordinates.csv"  # a dataset with Longitude and Latitude columns
@@ -82,9 +116,12 @@ if __name__ == "__main__":
     lsmdf, lsmc, correlation_matrix = loader.load_wind_correlation_data()
     csv_data = loader.load_csv(target_locations_path)
     target_coords = list(zip(csv_data[lat_col], csv_data[lon_col]))
-    #target_coords = [(-37.65, 147), (-33.75, 116.75), (-15, 132)]
 
-    # Build basetables
+    # Build analyzer
     analyzer = WindAnalyzer(lsmdf, lsmc, correlation_matrix)
-    analyzer.save_correlation("../data/basetables", target_coords)
-    analyzer.save_correlation("../data/basetables", )
+
+    # Save correlation data
+    analyzer.save_correlation_data("../data/basetables", target_coords)
+
+    # Save the mean correlation distance
+    analyzer.save_correlation_distance_data("../data/basetables")
