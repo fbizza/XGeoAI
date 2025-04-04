@@ -11,10 +11,11 @@ class DataLoader:
             return pickle.load(f)
 
     def load_csv(self, file_path):
+        #TODO: adjust, use data fodler and file name
         """Load a CSV file."""
         return pd.read_csv(file_path)
 
-    def load_wind_data(self):
+    def load_wind_correlation_data(self):
         """Load all required wind datasets."""
         lsmdf = self.load_pickle("aus_region_mask.pkl")
         lsmc = self.load_pickle("aus_region_mask_lsmc.pkl")

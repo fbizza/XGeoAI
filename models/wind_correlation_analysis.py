@@ -1,7 +1,9 @@
 import numpy as np
 import pandas as pd
 import os
-import pickle
+
+from data.data_loader import DataLoader
+from visualization.plotter import Plotter
 
 class WindAnalyzer:
     def __init__(self, lsmdf, lsmc, correlation_matrix):
@@ -69,3 +71,20 @@ class WindAnalyzer:
 
         df.to_csv(output_filepath, index=False)
 
+if __name__ == "__main__":
+    data_path = "../data/raw"
+    target_locations_path = "../data/processed/wind-farms-with-ERA5_coordinates.csv"  # a dataset with Longitude and Latitude columns
+    lat_col = "Closest ERA5 Land Latitude"  # name of the Latitude column
+    lon_col = "Closest ERA5 Land Longitude"  # name of the Longitude column
+
+    # Load data
+    loader = DataLoader(data_path)
+    lsmdf, lsmc, correlation_matrix = loader.load_wind_correlation_data()
+    csv_data = loader.load_csv(target_locations_path)
+    target_coords = list(zip(csv_data[lat_col], csv_data[lon_col]))
+    #target_coords = [(-37.65, 147), (-33.75, 116.75), (-15, 132)]
+
+    # Build basetables
+    analyzer = WindAnalyzer(lsmdf, lsmc, correlation_matrix)
+    analyzer.save_correlation("../data/basetables", target_coords)
+    analyzer.save_correlation("../data/basetables", )
