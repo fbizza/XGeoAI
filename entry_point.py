@@ -6,12 +6,33 @@ data_path = "data/raw"
 
 loader = DataLoader(data_path)
 
-#correlation_to_plot = "data/basetables/all_locations_mean_correlation.csv"
-correlation_to_plot = "data/basetables/target_mean_correlation.csv"
+#data_to_plot = "data/basetables/all_locations_mean_correlation.csv"
+data_to_plot = "data/basetables/target_mean_correlation.csv"
+#data_to_plot = "data/basetables/mean_wind_correlation_distance.csv"
 
-df = loader.load_csv(correlation_to_plot)
+df = loader.load_csv(data_to_plot)
 
-Plotter.create_wind_correlation_figure(df)
+windfarms_df = loader.load_csv("data/processed/wind-farms-with-ERA5_coordinates.csv")
 
+#fig = Plotter.create_wind_correlation_figure(df)
+fig1 = Plotter.create_scattermap_figure(df, marker_size=5, colorscale='RdBu', uniform_color=False)
+fig2 = Plotter.create_scattermap_figure(windfarms_df, marker_size=3, value_column_name="Asset", uniform_color="teal")
+
+fig = Plotter.add_map_layer(fig1, fig2)
+fig.update_layout(
+            map=dict(
+                center=dict(
+                    lat=-29,
+                    lon=135
+                ),
+                zoom=2,
+                style='dark'
+            ),
+            title="Wind correlation with operating farms locations",
+            margin=dict(l=0, r=0, t=40, b=0),  # Adjust margins
+            legend=dict(x=0.01, y=0.99),  # Position the legend
+            gjoi=1,
+        )
+Plotter.show_figure(fig)
 #Plotter.plot_user_locations(target_coords)
 

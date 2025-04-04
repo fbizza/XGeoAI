@@ -3,6 +3,45 @@ import plotly.graph_objects as go
 
 class Plotter:
     @staticmethod
+    def add_map_layer(fig1, fig2=None):
+        if fig2:
+            fig1.add_trace(fig2.data[0])
+            return fig1
+        return fig1
+
+    @staticmethod
+    def show_figure(fig):
+        fig.show()
+
+    @staticmethod
+    def create_scattermap_figure(df, value_column_name=None, marker_size=5, colorscale='RdBu', uniform_color=None):
+        if value_column_name:
+            column_name = value_column_name
+        else:
+            other_columns = [col for col in df.columns if col not in ['Latitude', 'Longitude']]
+            if not other_columns:
+                raise ValueError("No suitable columns found in the dataframe for plotting.")
+
+            column_name = other_columns[0]
+
+        fig = go.Figure(go.Scattermap(
+            lat=df['Latitude'],
+            lon=df['Longitude'],
+            mode='markers',
+            marker=dict(
+                size=marker_size,
+                color=uniform_color if uniform_color else df[column_name],
+                colorscale=colorscale if not uniform_color else None,
+                colorbar=dict(title=column_name) if not uniform_color else None,
+                opacity=0.8
+            ),
+            name=column_name
+        ))
+
+        return fig
+
+
+
     def create_wind_correlation_figure(df):
         """Plot wind correlation on a map."""
 
@@ -15,18 +54,24 @@ class Plotter:
             print(f"Error: File not found at {data_filepath}")
             return
 
+        other_columns = [col for col in df.columns if col not in ['Latitude', 'Longitude']]
+        if not other_columns:
+            raise ValueError("No suitable columns found in the dataframe for plotting.")
+
+        column_name = other_columns[0]
+
         fig = go.Figure(go.Scattermap(
             lat=df['Latitude'],
             lon=df['Longitude'],
             mode='markers',
             marker=dict(
                 size=7,
-                color=df['Mean Correlation'],
+                color=df[column_name],
                 colorscale='RdBu',
-                colorbar=dict(title='Mean Correlation'),
+                colorbar=dict(title=column_name),
                 opacity=0.8
             ),
-            name="Wind Correlation"
+            name=column_name
         ))
 
         fig.add_trace(go.Scattermap(
@@ -43,6 +88,7 @@ class Plotter:
         ))
 
         fig.update_layout(
+
             map=dict(
                 center=dict(
                     lat=-29,
@@ -58,35 +104,3 @@ class Plotter:
 
         fig.show()
 
-    @staticmethod
-    def plot_user_locations(target_coords):
-        pass
-        # """Plot user locations."""
-        # df = pd.DataFrame(target_coords, columns=['Latitude', 'Longitude'])
-        #
-        # fig = go.Figure(go.Scattergeo(
-        #     lat=df['Latitude'],
-        #     lon=df['Longitude'],
-        #     mode='markers',
-        #     marker=dict(
-        #         size=8,
-        #         color='black',
-        #         symbol='x',
-        #         opacity=0.8
-        #     ),
-        #     name="User Locations"
-        # ))
-        #
-        # fig.update_layout(
-        #     title="User Locations on Map",
-        #     geo=dict(
-        #         scope='world',
-        #         showland=True,
-        #         landcolor="rgb(229, 229, 229)",
-        #         center=dict(lat=-25, lon=135),
-        #         projection_scale=5
-        #     ),
-        #     margin=dict(l=0, r=0, t=40, b=0)
-        # )
-        #
-        # fig.show()
