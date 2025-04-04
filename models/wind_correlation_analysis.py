@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import os
+import pickle
 
 class WindAnalyzer:
     def __init__(self, lsmdf, lsmc, correlation_matrix):
@@ -21,8 +23,15 @@ class WindAnalyzer:
             return None  # No land found
         return land_index[0], self.latitude[lat_index], self.longitude[lon_index]
 
-    def get_correlation_values(self, target_coords):
-        """Get the mean of correlation values for multiple target locations."""
+    def compute_mean_correlation(self, target_coords=None):
+        """
+        Extract the mean wind correlations for inland Australian locations.
+        If target_coords is provided, it computes the mean correlation with those specific locations.
+        If target_coords is None, it computes the mean correlation for all locations.
+        """
+        if target_coords is None:
+            return np.mean(self.correlation_matrix, axis=1)  # Global mean correlation
+
         correlation_values = np.zeros((len(self.land_coords[0]), len(target_coords)))
 
         for i, (lat, lon) in enumerate(target_coords):
@@ -34,10 +43,29 @@ class WindAnalyzer:
         return np.mean(correlation_values, axis=1)
 
     @staticmethod
-    def get_correlation_df(latitude, longitude, land_coords, correlation_values):
+    def build_correlation_df(latitude, longitude, land_coords, correlation_values):
         df = pd.DataFrame({
             'Latitude': latitude[land_coords[0]],
             'Longitude': longitude[land_coords[1]],
             'Mean Correlation': correlation_values
         })
         return df
+
+    def save_correlation(self, data_folder, target_coords=None):
+        """
+        Computes and saves the mean correlation. If target_coords is provided, computes
+        correlation for those targets, otherwise computes for the full dataset.
+
+        The output file is saved in `data_folder`:
+        - `all_locations_mean_correlation.csv` for global analysis.
+        - `target_mean_correlation.csv` for target-specific analysis.
+        """
+        mean_correlations = self.compute_mean_correlation(target_coords)
+
+        filename = "target_mean_correlation.csv" if target_coords else "all_locations_mean_correlation.csv"
+        output_filepath = os.path.join(data_folder, filename)
+
+        df = self.build_correlation_df(self.latitude, self.longitude, self.land_coords, mean_correlations)
+
+        df.to_csv(output_filepath, index=False)
+

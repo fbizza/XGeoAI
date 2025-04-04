@@ -1,7 +1,7 @@
 import pandas as pd
 from src.map import (add_wind_farms, add_grid, add_choroplet, add_centroids_layer,
-                     plot_mean_correlation_map, plot_mean_correlation_distance_map,
-                     plot_vs_operating_map)
+                    plot_mean_correlation_map, plot_mean_correlation_distance_map,
+                    plot_vs_operating_map)
 from src.logic import modify_base_df
 import dash
 from dash import dcc, html
@@ -133,7 +133,7 @@ def render_page_content(pathname):
         ], fluid=True)
 
     elif pathname == "/mean_correlation":
-        mean_corr_fig = plot_mean_correlation_map(data_filepath='../data/basetables/mean_wind_correlation_df')
+        mean_corr_fig = plot_mean_correlation_map(data_filepath='../data/basetables/all_locations_mean_correlation.csv')
         if mean_corr_fig:
             return dbc.Container([
                 html.H1("Mean Wind Correlation Map", className='text-center my-4'),

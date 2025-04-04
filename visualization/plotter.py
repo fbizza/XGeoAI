@@ -8,7 +8,6 @@ class Plotter:
 
         data_filepath = "data/processed/wind-farms-with-ERA5_coordinates.csv"
 
-
         try:
             # Load the operating wind farms data
             wind_farms_df = pd.read_csv(data_filepath)

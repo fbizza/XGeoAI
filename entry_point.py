@@ -17,13 +17,14 @@ target_coords = list(zip(csv_data[lat_col], csv_data[lon_col]))
 
 # Run analysis
 analyzer = WindAnalyzer(lsmdf, lsmc, correlation_matrix)
-correlation_values = analyzer.get_correlation_values(target_coords)
+analyzer.save_correlation("data/basetables", target_coords)
+correlation_values = analyzer.compute_mean_correlation(target_coords)
 
 # Visualize results
 if correlation_values is not None:
-
-    df = WindAnalyzer.get_correlation_df(analyzer.latitude, analyzer.longitude, analyzer.land_coords, correlation_values)
+    df = loader.load_csv("data/basetables/target_mean_correlation.csv")
+    #df = WindAnalyzer.build_correlation_df(analyzer.latitude, analyzer.longitude, analyzer.land_coords, correlation_values)
     Plotter.create_wind_correlation_figure(df)
 
-Plotter.plot_user_locations(target_coords)
+#Plotter.plot_user_locations(target_coords)
 
