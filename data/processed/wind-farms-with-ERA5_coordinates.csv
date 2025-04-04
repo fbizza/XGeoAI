@@ -1,0 +1,106 @@
+Asset,Main Owner,Development Status,Province Name,Latitude,Longitude,Capacity (MW_ac),Closest ERA5 Land Latitude,Closest ERA5 Land Longitude
+Hampton,Wind Corporation,Operating,New South Wales,-33.638,150.0501,1.32,-33.75,150.0
+Blayney,Tilt Renewables,Operating,New South Wales,-33.6235,149.2077,9.9,-33.5,149.25
+Cullerin Range,EDCL,Operating,New South Wales,-34.8097,149.4007,30.0,-34.75,149.5
+Gunning Wind,Acciona,Operating,New South Wales,-34.6972,149.385,46.5,-34.75,149.5
+Woodlawn,Infigen Energy,Operating,New South Wales,-35.0803,149.5662,48.3,-35.0,149.5
+Crookwell 2,Naturgy,Operating,New South Wales,-34.5541,149.5998,91.0,-34.5,149.5
+Taralga,Pacific Hydro,Operating,New South Wales,-34.4222,149.864,107.0,-34.5,149.75
+Biala,Beijing Jingneng Clean Energy,Operating,New South Wales,-34.5886,149.3559,108.5,-34.5,149.25
+Boco Rock,EGCO,Operating,New South Wales,-36.5764,149.1268,113.0,-36.5,149.25
+Bodangora,Infigen Energy,Operating,New South Wales,-32.431,149.031,113.2,-32.5,149.0
+Crudine Ridge,Partners Group,Operating,New South Wales,-32.9885,149.621,135.0,-33.0,149.5
+Capital,Infigen Energy,Operating,New South Wales,-35.1654,149.5185,140.7,-35.25,149.5
+Gullen Range,Beijing Jingneng Clean Energy,Operating,New South Wales,-34.6144,149.4594,165.5,-34.5,149.5
+White Rock Wind Farm Stage 1,CECEP Wind-Power Corporation,Operating,New South Wales,-29.7851,151.5479,175.0,-29.75,151.5
+Silverton,Powering Australian Renewables,Operating,New South Wales,-31.82,141.2322,200.0,-31.75,141.25
+Collector,RATCH Group,Operating,New South Wales,-34.8415,149.401,228.0,-34.75,149.5
+Sapphire,Partners Group,Operating,New South Wales,-29.7417,151.4339,270.0,-29.75,151.5
+Windy Hill,RATCH Group,Operating,Queensland,-17.5939,145.5299,12.0,-17.5,145.5
+Kennedy Energy Park (Wind),Windlab,Operating,Queensland,-20.8707,144.333,43.2,-20.75,144.25
+Mt Emerald,RATCH Group,Operating,Queensland,-17.1785,145.3891,180.5,-17.25,145.5
+Coopers Gap,Powering Australian Renewables,Operating,Queensland,-26.7752,151.4607,453.0,-26.75,151.5
+Coober Pedy Renewable Hybrid Project (Wind),EDCL,Operating,South Australia,-29.0227,134.769,4.0,-29.0,134.75
+Starfish Hill,RATCH Group,Operating,South Australia,-35.5699,138.131,34.5,-35.25,138.25
+Lake Bonney Wind Farm Stage 3,Infigen Energy,Operating,South Australia,-37.7381,140.3878,39.0,-37.75,140.5
+Canunda,ENGIE,Operating,South Australia,-37.6686,140.3314,46.0,-37.75,140.25
+Hallet 5 Wind Farm,Eurus Energy,Operating,South Australia,-33.3756,138.8023,52.5,-33.5,138.75
+Clements Gap,Pacific Hydro,Operating,South Australia,-33.5129,138.1181,58.0,-33.5,138.0
+Cathedral Rocks,EnergyAustralia,Operating,South Australia,-34.8505,135.5943,66.0,-34.75,135.5
+Mt Millar,Meridian Energy,Operating,South Australia,-33.6255,136.7038,70.0,-33.75,136.75
+Hallet 2 Wind Farm,Infrastructure Capital Group,Operating,South Australia,-33.5566,138.8626,71.0,-33.5,138.75
+Lake Bonney Wind Farm Stage 1,Infigen Energy,Operating,South Australia,-37.7381,140.3878,80.5,-37.75,140.5
+Lincoln Gap Stage 2,Nexif,Operating,South Australia,-32.5886,137.555,86.0,-32.5,137.5
+Wattle Point,Infrastructure Capital Group,Operating,South Australia,-35.1287,137.6992,90.75,-34.75,137.75
+Hallet 1 Wind Farm,Palisade,Operating,South Australia,-33.3555,138.7262,94.5,-33.25,138.75
+Hornsdale Wind Farm Stage 1,Neoen,Operating,South Australia,-33.037,138.5553,100.0,-33.0,138.5
+Snowtown Stage 1,Tilt Renewables,Operating,South Australia,-33.83,138.1187,101.0,-33.75,138.0
+Hornsdale Wind Farm Stage 2,Neoen,Operating,South Australia,-33.037,138.5553,102.4,-33.0,138.5
+Hornsdale Wind Farm Stage 3,Neoen,Operating,South Australia,-33.037,138.5553,112.0,-33.0,138.5
+Willogoleche,ENGIE,Operating,South Australia,-33.3021,138.7226,119.0,-33.25,138.75
+Lincoln Gap Stage 1,Nexif,Operating,South Australia,-32.5886,137.555,126.0,-32.5,137.5
+Waterloo,Palisade,Operating,South Australia,-34.0014,138.9109,131.0,-34.0,139.0
+Hallet 4 Wind Farm,Osaka Gas,Operating,South Australia,-33.2859,138.723,132.0,-33.25,138.75
+Lake Bonney Wind Farm Stage 2,Infigen Energy,Operating,South Australia,-37.7381,140.3878,159.0,-37.75,140.5
+Snowtown Stage 2,Palisade,Operating,South Australia,-33.83,138.1187,270.0,-33.75,138.0
+Bluff Point,Woolnorth,Operating,Tasmania,-40.7187,144.6974,65.0,-40.75,144.75
+Studland Bay,Woolnorth,Operating,Tasmania,-40.7864,144.7385,75.0,-40.75,144.75
+Granville Harbour,Palisade,Operating,Tasmania,-41.7436,145.0022,112.0,-41.75,145.0
+Wild Cattle Hill,PowerChina Resources,Operating,Tasmania,-42.1613,146.7149,144.0,-42.25,146.75
+Musselroe,Woolnorth,Operating,Tasmania,-40.787,148.0269,168.0,-40.75,148.0
+Hepburn,Hepburn Community Wind Park,Operating,Victoria,-37.4272,144.1219,4.1,-37.5,144.0
+Chepstowe,BayWa re,Operating,Victoria,-37.5979,143.4937,6.15,-37.5,143.5
+Maroona,BayWa re,Operating,Victoria,-37.4208,142.8207,6.9,-37.5,142.75
+Timboon West,Epic Energy,Operating,Victoria,-38.5305,142.9194,7.2,-38.5,143.0
+Yawong,Epic Energy,Operating,Victoria,-36.4799,143.3699,7.2,-36.5,143.25
+Ferguson,BayWa re,Operating,Victoria,-38.6157,143.1748,10.8,-38.5,143.25
+Wonthaggi,EDCL,Operating,Victoria,-38.602,145.5465,12.0,-38.5,145.5
+Codrington,Pacific Hydro,Operating,Victoria,-38.2861,141.9738,18.2,-38.25,142.0
+Mortons Lane,CGN Wind Energy,Operating,Victoria,-37.8245,142.4696,19.5,-37.75,142.5
+Coonooer Bridge,Windlab,Operating,Victoria,-36.4375,143.3591,19.8,-36.5,143.25
+Toora,Transfield Holdings,Operating,Victoria,-38.6535,146.3402,21.0,-38.75,146.25
+Cape Nelson North,Pacific Hydro,Operating,Victoria,-38.3692,141.5411,22.5,-38.25,141.5
+Cape Sir William Grant,Pacific Hydro,Operating,Victoria,-38.3905,141.5987,24.7,-38.5,141.5
+Yaloak South,Pacific Hydro,Operating,Victoria,-37.7154,144.2424,28.7,-37.75,144.25
+Yambuk,Pacific Hydro,Operating,Victoria,-38.3127,142.0175,30.0,-38.25,142.0
+Kiata,John Laing,Operating,Victoria,-36.4,141.76,31.5,-36.5,141.75
+Cape Nelson South,Pacific Hydro,Operating,Victoria,-38.4139,141.5266,44.0,-38.5,141.5
+Challicum Hills,Pacific Hydro,Operating,Victoria,-37.3897,143.114,52.5,-37.5,143.0
+Salt Creek,Tilt Renewables,Operating,Victoria,-37.9498,142.8062,54.0,-38.0,142.75
+Cherry Tree,John Laing,Operating,Victoria,-37.0851,145.2188,57.6,-37.0,145.25
+Cape Bridgewater,Pacific Hydro,Operating,Victoria,-38.3731,141.3804,59.0,-38.25,141.5
+Oaklands Hill,Challenger Life,Operating,Victoria,-37.6815,142.5524,63.0,-37.75,142.5
+Crowlands,Pacific Hydro,Operating,Victoria,-37.0735,143.1376,80.0,-37.0,143.25
+Lal Lal (Elaine),Northleaf Capital,Operating,Victoria,-37.7531,144.0132,83.59999,-37.75,144.0
+Bald Hills,Infrastructure Capital Group,Operating,Victoria,-38.7468,145.9491,109.0,-38.75,146.0
+Mount Mercer,Meridian Energy,Operating,Victoria,-37.8319,143.8884,131.0,-37.75,144.0
+Mt Gellibrand,Acciona,Operating,Victoria,-38.2336,143.7686,132.0,-38.25,143.75
+Lal Lal (Yendon),Northleaf Capital,Operating,Victoria,-37.6315,144.0311,144.0,-37.75,144.0
+Mortlake South,Acciona,Operating,Victoria,-38.1097,142.8016,157.5,-38.0,142.75
+Berrybank Stage 1,Naturgy,Operating,Victoria,-37.9007,143.5078,180.0,-38.0,143.5
+Waubra,Acciona,Operating,Victoria,-37.356,143.6059,192.0,-37.25,143.5
+Bulgana Green Power Hub (Wind),Neoen,Operating,Victoria,-37.0967,142.9743,194.0,-37.0,143.0
+Murrawarra Stage 1,Partners Group,Operating,Victoria,-36.4233,142.438,226.0,-36.5,142.5
+Ararat,OPTrust,Operating,Victoria,-37.2454,143.0426,240.0,-37.25,143.0
+Moorabool,Goldwind,Operating,Victoria,-37.7632,144.1512,312.0,-37.75,144.25
+Dundonnell,Tilt Renewables,Operating,Victoria,-37.8526,142.9595,336.0,-37.75,143.0
+Macarthur,Malakoff,Operating,Victoria,-38.0647,142.1843,420.0,-38.0,142.25
+Hopetoun,Synergy,Operating,Western Australia,-33.9062,120.1233,1.2,-34.0,120.0
+Hopetown Wind-Diesel Hybrid,Verve Energy,Operating,Western Australia,-33.9079,120.129,1.2,-34.0,120.25
+Denmark Community,Denmark Community,Operating,Western Australia,-35.037,117.3212,1.6,-35.0,117.25
+Kalbarri,Synergy,Operating,Western Australia,-27.7194,114.176,1.6,-27.75,114.25
+Mt Barker,Mt Barker Power,Operating,Western Australia,-34.6013,117.6462,2.4,-34.5,117.75
+Port Gregory (Wind),Advanced Energy Resources,Operating,Western Australia,-28.1983,114.265,2.5,-28.25,114.25
+Nine Mile,Synergy,Operating,Western Australia,-33.8952,121.781,3.6,-34.0,121.75
+Karakin Wind Farm,Blair Fox,Operating,Western Australia,-31.0642,115.4303,5.0,-31.0,115.5
+West Hills Wind Farm,Blair Fox,Operating,Western Australia,-30.8777,115.4067,5.0,-31.0,115.5
+Grasmere Wind Farm,Bright Energy Investments,Operating,Western Australia,-35.0659,117.8,14.0,-35.0,117.75
+Agnew Mine Hybrid Project (Wind),EDL,Operating,Western Australia,-27.9931,120.4958,18.0,-28.0,120.5
+Albany,Bright Energy Investments,Operating,Western Australia,-35.0659,117.7996,21.0,-35.0,117.75
+Mumbida,Infrastructure Capital Group,Operating,Western Australia,-28.9296,114.9093,55.0,-29.0,115.0
+Emu Downs Wind,APA,Operating,Western Australia,-30.5015,115.1346,80.0,-30.5,115.25
+Walkaway 1,Infigen Energy,Operating,Western Australia,-28.9042,114.9727,89.0,-29.0,115.0
+Badgingarra,APA,Operating,Western Australia,-30.5008,115.5763,130.0,-30.5,115.5
+Warradarge,DIF Capital Partners,Operating,Western Australia,-29.8143,115.262,180.0,-29.75,115.25
+Collgar,Rest,Operating,Western Australia,-31.5424,118.4564,206.0,-31.5,118.5
+Yandin Wind Farm,RATCH Group,Operating,Western Australia,-30.7397,115.5647,214.0,-30.75,115.5
