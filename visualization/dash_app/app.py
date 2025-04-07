@@ -1,15 +1,14 @@
 from dash import Dash, html, dcc, Input, Output
 import dash_bootstrap_components as dbc
 
-from dash_app.layout.sidebar import sidebar
-from dash_app.layout.pages import (
-    home, mean_correlation, mean_correlation_distance,
-    vs_operating_wind_farms, documentation
+from visualization.dash_app.layout.sidebar import sidebar
+from visualization.dash_app.layout.pages import (
+    mean_correlation, vs_operating_wind_farms, documentation
 )
-from dash_app.callbacks.main_callbacks import register_callbacks
+from visualization.dash_app.layout.pages import home, mean_correlation_distance
+from visualization.dash_app.callbacks.main_callbacks import register_callbacks
 
 app = Dash(__name__,
-           suppress_callback_exceptions=True,
            external_stylesheets=[dbc.themes.DARKLY])
 
 app.title = "XGeoAI"
@@ -24,8 +23,6 @@ app.layout = html.Div([
     sidebar,
     html.Div(id="page-content", className="content")
 ])
-
-
 
 register_callbacks(app)
 
