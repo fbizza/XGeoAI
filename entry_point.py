@@ -15,8 +15,8 @@ df = loader.load_csv(data_to_plot)
 windfarms_df = loader.load_csv("data/processed/wind-farms-with-ERA5_coordinates.csv")
 
 #fig = Plotter.create_wind_correlation_figure(df)
-fig1 = Plotter.create_scattermap_figure(df, marker_size=5, colorscale='RdBu', uniform_color=False)
-fig2 = Plotter.create_scattermap_figure(windfarms_df, marker_size=3, value_column_name="Asset", uniform_color="teal")
+fig1 = Plotter.create_scattermap_figure(df, marker_size=7, colorscale='RdBu', uniform_color=False)
+fig2 = Plotter.create_scattermap_figure(windfarms_df, marker_size=5, value_column_name="Asset", uniform_color="teal")
 
 fig = Plotter.add_map_layer(fig1, fig2)
 fig.update_layout(
@@ -31,7 +31,7 @@ fig.update_layout(
             title="Wind correlation with operating farms locations",
             margin=dict(l=0, r=0, t=40, b=0),  # Adjust margins
             legend=dict(x=0.01, y=0.99),  # Position the legend
-            gjoi=1,
+            #gjoi=1,
         )
 Plotter.show_figure(fig)
 #Plotter.plot_user_locations(target_coords)

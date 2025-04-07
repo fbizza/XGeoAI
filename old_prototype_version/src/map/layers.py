@@ -1,13 +1,9 @@
 import plotly.express as px
-import numpy as np
 import plotly.graph_objects as go
-import geopandas as gpd
 import pandas as pd
 import numpy as np
-import shapely.geometry
-from tqdm import tqdm
 
-from src.map.utils import load_json, line_coords
+from old_prototype_version.src.map.utils import load_json, line_coords
 
 def add_wind_farms (df, map_figure):
 
@@ -41,7 +37,7 @@ def add_wind_farms (df, map_figure):
 
 def add_grid(map_figure):
 
-    lats, lons, _ = line_coords('../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
+    lats, lons, _ = line_coords('../../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
     layer = go.Scattermap(
         mode="lines",
         lon=lons,
@@ -79,7 +75,7 @@ def add_choroplet(geojson_path, df):
     choropleth_time = time.time() - choropleth_start
     print(f"Choropleth map creation time: {choropleth_time:.4f} sec")
 
-    # Step 3: Update layout
+    # Step 3: Update components
     layout_start = time.time()
     layer.update_layout(coloraxis_showscale=False)
     layout_time = time.time() - layout_start
@@ -284,7 +280,7 @@ def plot_vs_operating_map(data_filepath, wind_farms_filepath):
         name='Closest Land Locations'
     ))
 
-    # Update map layout
+    # Update map components
     fig.update_layout(
         map=dict(
             center=dict(

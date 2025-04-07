@@ -131,13 +131,13 @@ class WindCorrelationAnalysis:
 # ================================
 if __name__ == "__main__":
     # Path to the data
-    data_path = '../../data/raw'
+    data_path = '../../../data/raw'
 
     # Initialize the WindCorrelationAnalysis class
     analysis = WindCorrelationAnalysis(data_path)
 
     # Load locations from user dataset
-    file_path = "../../data/processed/wind-farms-with-ERA5_coordinates.csv"
+    file_path = "../../../data/processed/wind-farms-with-ERA5_coordinates.csv"
     lat_col = "Closest ERA5 Land Latitude"
     lon_col = "Closest ERA5 Land Longitude"
 

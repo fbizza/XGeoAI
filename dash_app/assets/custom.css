@@ -1,0 +1,69 @@
+/* General body styling */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #121212;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Sidebar styling */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 240px;
+    padding: 2rem 1rem;
+    background-color: #1e1e2f;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    overflow-x: hidden;
+}
+
+/* Collapsed sidebar hides fully */
+.sidebar.collapsed {
+    width: 0;
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Hide content inside sidebar when collapsed */
+.sidebar.collapsed #sidebar-content {
+    display: none;
+}
+
+/* Toggle button that is always visible */
+.toggle-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1100;
+}
+
+/* Main content styling */
+.content {
+    margin-left: 240px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+/* When sidebar is collapsed, expand content to full width */
+.sidebar.collapsed ~ .content {
+    margin-left: 0;
+}
+
+/* Navigation links */
+.nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+}
+
+/* Active nav item */
+.nav-link.active {
+    background-color: #17a2b8 !important;
+    color: #000 !important;
+}

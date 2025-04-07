@@ -4,7 +4,7 @@ import webbrowser
 
 def get_era5_api_key():
     try:
-        with open("../../api-keys", "r") as file:
+        with open("../../../api-keys", "r") as file:
             api_keys = json.load(file)
 
         era5_api_key = api_keys.get("ERA5_API_KEY")
