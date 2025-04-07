@@ -16,11 +16,15 @@ app.title = "XGeoAI"
 app.layout = html.Div([
     dcc.Location(id="url"),
     html.Div(id="toggle-container", children=[
-        dbc.Button("☰", id="btn-toggle", color="secondary", className="toggle-btn")
+        dbc.Button("☰", id="btn-toggle", color="secondary", className="menu-btn"),
+        dbc.Button("Button 1", id="btn-1", color="secondary", className="menu-btn"),
+        dbc.Button("Button 2", id="btn-2", color="secondary", className="menu-btn"),
+        dbc.Button("Button 3", id="btn-3", color="secondary", className="menu-btn"),
     ]),
     sidebar,
     html.Div(id="page-content", className="content")
 ])
+
 
 
 register_callbacks(app)

@@ -10,14 +10,13 @@ body {
 /* Sidebar styling */
 .sidebar {
     position: fixed;
-    top: 0;
+    top: 60px; /* Push the sidebar below the buttons */
     left: 0;
     bottom: 0;
     width: 240px;
     padding: 2rem 1rem;
     background-color: #1e1e2f;
     transition: all 0.3s ease;
-    z-index: 1000;
     overflow-x: hidden;
 }
 
@@ -34,12 +33,23 @@ body {
     display: none;
 }
 
-/* Toggle button that is always visible */
-.toggle-btn {
+/* Container for all menu buttons */
+#toggle-container {
     position: fixed;
     top: 10px;
     left: 10px;
-    z-index: 1100;
+    display: flex; /* Align buttons horizontally */
+    gap: 10px; /* Space between buttons */
+}
+
+/* Styling for all buttons inside the container */
+.menu-btn {
+    padding: 10px 20px;
+    background-color: #1e1e2f;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 /* Main content styling */
