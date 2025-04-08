@@ -24,12 +24,30 @@ grid_fig.update_layout(
             paper_bgcolor="#121212",
             margin=dict(l=0, r=0, t=0, b=0),
         )
+grid_fig.update_traces(name='Electrical grid')  # set the name for the legend
+locations_fig.update_traces(name='Distance')  # set the name for the legend
 
 locations_fig.update_traces(marker_reversescale=True, selector=dict(type='scattermap'))
 
 fig = add_map_layer(grid_fig, locations_fig)
 fig.update_traces(marker_showscale=False, selector=dict(type='scattermap')) # to remove colorscale
-fig.update_layout(showlegend=False)
+
+#fig.update_layout(showlegend=True)
+fig.update_layout(legend=dict(
+    yanchor="top",
+    y=0.99,
+    xanchor="left",
+    x=0.01,
+    font=dict(
+        size=12,
+        color="white"
+    ),
+    bgcolor="#1E1E2F",
+    grouptitlefont=dict(
+        color="white"
+    ),
+    itemsizing='constant'
+))
 
 layout = html.Div([
 dbc.Container([

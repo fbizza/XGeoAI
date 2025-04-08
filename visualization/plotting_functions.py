@@ -51,9 +51,8 @@ def create_lines_figure(df, latitude_column_name, longitude_column_name):
         lat=latitudes,
         lon=longitudes,
         line=dict(width=1, color="red"),
-        name="Transmission Lines",
         opacity=0.4,
-        showlegend=False
+        name=None
     ))
     return fig
 

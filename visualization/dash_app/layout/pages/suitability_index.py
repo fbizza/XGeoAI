@@ -31,7 +31,9 @@ def create_map_figure(weight_km, weight_corr, zoom=3, center={'lat': -29, 'lon':
         paper_bgcolor="#121212",
         margin=dict(l=0, r=0, t=0, b=0),
     )
-    fig.update_traces(marker_reversescale=True, selector=dict(type='scattermap'))
+    fig.update_traces(marker_reversescale=False, selector=dict(type='scattermap'))
+    fig.update_traces(marker_colorbar_title_font_color="white", selector=dict(type='scattermap'))
+    fig.update_traces(marker_colorbar_tickfont_color="white", selector=dict(type='scattermap'))
     fig.update_layout(showlegend=False)
     return fig
 
@@ -53,7 +55,7 @@ layout = html.Div([
                         min=0,
                         max=1,
                         step=0.01,
-                        value=0.5,
+                        value=0.69,
                         tooltip={"placement": "top"},
                         marks=None
                     ),
@@ -64,7 +66,7 @@ layout = html.Div([
                             min=0,
                             max=1,
                             step=0.01,
-                            value=0.5,
+                            value=0.69,
                             className='input-box',
                             style={"width": "15%", "textAlign": "center"}
                         ),
@@ -81,7 +83,7 @@ layout = html.Div([
                         id='slider-2',
                         min=0,
                         max=1,
-                        value=0.5,
+                        value=0.31,
                         tooltip={"placement": "top"},
                         marks=None
                     ),
@@ -92,7 +94,7 @@ layout = html.Div([
                             min=0,
                             max=1,
                             step=0.01,
-                            value=0.5,
+                            value=0.31,
                             className='input-box',
                             style={"width": "15%", "textAlign": "center"}
                         ),
