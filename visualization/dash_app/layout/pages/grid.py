@@ -3,21 +3,33 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 from visualization.plotting_functions import *
 
-df = pd.read_csv('../../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
-fig = create_lines_figure(df, latitude_column_name="lat", longitude_column_name="lon")
+grid_df = pd.read_csv('../../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
+locations_df = pd.read_csv('../../data/basetables/distance_from_grid')
 
-fig.update_layout(
+
+
+grid_fig = create_lines_figure(grid_df, latitude_column_name="lat", longitude_column_name="lon")
+locations_fig = create_scattermap_figure(df=locations_df, value_column_name="min_distance_to_line_km",
+                                         colorscale="RdBu", opacity=0.5, marker_size=4)
+
+grid_fig.update_layout(
             map=dict(
                 center=dict(
                     lat=-29,
                     lon=135
                 ),
-                zoom=2,
+                zoom=3,
                 style='dark',
             ),
             paper_bgcolor="#121212",
             margin=dict(l=0, r=0, t=0, b=0),
         )
+
+locations_fig.update_traces(marker_reversescale=True, selector=dict(type='scattermap'))
+
+fig = add_map_layer(grid_fig, locations_fig)
+fig.update_traces(marker_showscale=False, selector=dict(type='scattermap')) # to remove colorscale
+fig.update_layout(showlegend=False)
 
 layout = html.Div([
 dbc.Container([

@@ -77,3 +77,32 @@ body {
     background-color: #17a2b8 !important;
     color: #000 !important;
 }
+
+/* Styling for input boxes */
+.input-box {
+    border-radius: 10px;  /* Rounded borders */
+    background-color: #f0f0f0;  /* Background color */
+    border: 1px solid #17A2B8;  /* Optional border */
+    padding: 1px;  /* Padding inside the input box */
+    font-size: 16px;  /* Font size */
+    font-weight: bold;  /* Make the text bold */
+    color: #17A2B8;  /* Text color */
+    width: 100%;  /* Make sure input takes full width of the container */
+}
+
+/* Optional: Focus styling */
+.input-box:focus {
+    outline: none;  /* Remove default focus outline */
+    border-color: #17a2b8;  /* Change border color on focus */
+    background-color: #e6f7ff;  /* Light blue background on focus */
+}
+/* to hide input spinbox */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}

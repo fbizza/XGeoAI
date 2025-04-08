@@ -1,6 +1,8 @@
-from dash import html, Input, Output
+from dash import html, Input, Output, callback_context
+from dash.exceptions import PreventUpdate
 from visualization.dash_app.layout.pages import (
-    grid, mean_correlation_distance, mean_correlation, vs_operating_wind_farms, documentation, home
+    home, mean_correlation_distance, mean_correlation,
+    vs_operating_wind_farms, grid, suitability_index, documentation
 )
 
 
@@ -17,14 +19,42 @@ def register_callbacks(app):
     def render_page_content(pathname):
         if pathname == "/":
             return home.layout
-        elif pathname == "/grid":
-            return grid.layout
         elif pathname == "/mean_correlation":
             return mean_correlation.layout
         elif pathname == "/mean_correlation_distance":
             return mean_correlation_distance.layout
         elif pathname == "/vs_operating_wind_farms":
             return vs_operating_wind_farms.layout
+        elif pathname == "/grid":
+            return grid.layout
+        elif pathname == "/suitability_index":
+            return suitability_index.layout
         elif pathname == "/documentation":
             return documentation.layout
         return html.Div([html.H1("404 - Page not found")])
+
+    @app.callback(
+        Output('slider-1', 'value'),
+        Output('input-1', 'value'),
+        Input('slider-1', 'value'),
+        Input('input-1', 'value'),
+    )
+    def sync_slider_1(slider_val, input_val):
+        ctx = callback_context
+        if not ctx.triggered:
+            raise PreventUpdate
+        triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        return (slider_val, slider_val) if triggered_id == 'slider-1' else (input_val, input_val)
+
+    @app.callback(
+        Output('slider-2', 'value'),
+        Output('input-2', 'value'),
+        Input('slider-2', 'value'),
+        Input('input-2', 'value'),
+    )
+    def sync_slider_2(slider_val, input_val):
+        ctx = callback_context
+        if not ctx.triggered:
+            raise PreventUpdate
+        triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        return (slider_val, slider_val) if triggered_id == 'slider-2' else (input_val, input_val)

@@ -13,7 +13,8 @@ def show_figure(fig):
     fig.show()
 
 
-def create_scattermap_figure(df, value_column_name=None, marker_size=5, colorscale='RdBu', uniform_color=None, cmin=None, cmax=None, cmid=None):
+def create_scattermap_figure(df, value_column_name=None, marker_size=5, colorscale='RdBu', uniform_color=None,
+                             cmin=None, cmax=None, cmid=None, opacity=0.8):
     if value_column_name:
         column_name = value_column_name
     else:
@@ -32,7 +33,7 @@ def create_scattermap_figure(df, value_column_name=None, marker_size=5, colorsca
             color=uniform_color if uniform_color else df[column_name],
             colorscale=colorscale if not uniform_color else None,
             colorbar=dict(title=column_name) if not uniform_color else None,
-            opacity=0.8,
+            opacity=opacity,
             cmin=cmin,
             cmax=cmax,
             cmid=cmid,
