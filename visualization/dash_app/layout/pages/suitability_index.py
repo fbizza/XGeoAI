@@ -2,18 +2,18 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 from visualization.plotting_functions import *
 
-# Load the data
+
 grid_df = pd.read_csv('../../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
 locations_df = pd.read_csv('../../data/basetables/distance_from_grid')
 suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable.csv')
 
-# Function to add linear combination column based on weights
+
 def add_linear_combination_column(df, weight_km, weight_corr):
     df['suitability_index'] = (df['normalized_km'] * weight_km) + (df['normalized_corr'] * weight_corr)
     return df
 
-# Initial plot creation function
-def create_map_figure(weight_km, weight_corr):
+
+def create_map_figure(weight_km, weight_corr, zoom=3, center={'lat': -29, 'lon': 135}):
     df = add_linear_combination_column(suitability_index_df, weight_km, weight_corr)
     fig = create_scattermap_figure(
         df=df,
@@ -24,11 +24,8 @@ def create_map_figure(weight_km, weight_corr):
     )
     fig.update_layout(
         map=dict(
-            center=dict(
-                lat=-29,
-                lon=135
-            ),
-            zoom=3,
+            center=center,
+            zoom=zoom,
             style='dark',
         ),
         paper_bgcolor="#121212",
@@ -38,10 +35,10 @@ def create_map_figure(weight_km, weight_corr):
     fig.update_layout(showlegend=False)
     return fig
 
-# Initial figure
+
 fig = create_map_figure(weight_km=0.1, weight_corr=0.9)
 
-# Layout definition with sliders
+
 layout = html.Div([
     dbc.Container([
         html.H1("Suitability Index", className='text-center my-4'),
@@ -105,7 +102,6 @@ layout = html.Div([
             ], width=5),
         ], justify='center', className="mb-4"),
 
-        # Graph section
         dcc.Graph(id='map-figure', figure=fig, style={'height': '70vh', 'width': '100%'})
     ])
 ])

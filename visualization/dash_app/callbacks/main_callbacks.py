@@ -60,13 +60,24 @@ def register_callbacks(app):
         triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
         return (slider_val, slider_val) if triggered_id == 'slider-2' else (input_val, input_val)
 
-    # Dash callback to update the figure based on slider input
+    # suitability_index callback:
     @app.callback(
         Output('map-figure', 'figure'),
-        [Input('input-1', 'value'), Input('input-2', 'value')]
+        [Input('input-1', 'value'), Input('input-2', 'value'),
+         Input('map-figure', 'relayoutData')]
     )
-    def update_map(input_1_value, input_2_value):
+    def update_map(input_1_value, input_2_value, relayout_data):
+        zoom = 3
+        center = {'lat': -29, 'lon': 135}
+
+
+        if relayout_data:
+            zoom = relayout_data.get('map.zoom', zoom)
+            center = relayout_data.get('map.center', center)
+
         weight_km = input_2_value
         weight_corr = input_1_value
-        return create_map_figure(weight_km, weight_corr)
+
+        return create_map_figure(weight_km, weight_corr, zoom, center)
+
 
