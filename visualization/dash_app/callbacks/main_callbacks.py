@@ -1,6 +1,6 @@
 from dash import html, Input, Output
 from visualization.dash_app.layout.pages import (
-    home, mean_correlation_distance, mean_correlation, vs_operating_wind_farms, documentation
+    grid, mean_correlation_distance, mean_correlation, vs_operating_wind_farms, documentation, home
 )
 
 
@@ -17,6 +17,8 @@ def register_callbacks(app):
     def render_page_content(pathname):
         if pathname == "/":
             return home.layout
+        elif pathname == "/grid":
+            return grid.layout
         elif pathname == "/mean_correlation":
             return mean_correlation.layout
         elif pathname == "/mean_correlation_distance":

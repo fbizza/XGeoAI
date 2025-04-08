@@ -12,6 +12,7 @@ sidebar = html.Div([
                 dbc.NavLink("Mean Correlation Distance", href="/mean_correlation_distance", active="exact"),
                 dbc.NavLink("Vs Operating Wind Farms", href="/vs_operating_wind_farms", active="exact"),
                 dbc.NavLink("Documentation", href="/documentation", active="exact"),
+                dbc.NavLink("Grid", href="/grid", active="exact"),
             ],
             vertical=True,
             pills=True,

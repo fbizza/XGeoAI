@@ -42,67 +42,18 @@ def create_scattermap_figure(df, value_column_name=None, marker_size=5, colorsca
 
     return fig
 
-
-
-def create_wind_correlation_figure(df):
-    """Plot wind correlation on a map."""
-
-    data_filepath = "data/processed/wind-farms-with-ERA5_coordinates.csv"
-
-    try:
-        # Load the operating wind farms data
-        wind_farms_df = pd.read_csv(data_filepath)
-    except FileNotFoundError:
-        print(f"Error: File not found at {data_filepath}")
-        return
-
-    other_columns = [col for col in df.columns if col not in ['Latitude', 'Longitude']]
-    if not other_columns:
-        raise ValueError("No suitable columns found in the dataframe for plotting.")
-
-    column_name = other_columns[0]
-
+def create_lines_figure(df, latitude_column_name, longitude_column_name):
+    latitudes = df[latitude_column_name]
+    longitudes = df[longitude_column_name]
     fig = go.Figure(go.Scattermap(
-        lat=df['Latitude'],
-        lon=df['Longitude'],
-        mode='markers',
-        marker=dict(
-            size=7,
-            color=df[column_name],
-            colorscale='RdBu',
-            colorbar=dict(title=column_name),
-            opacity=0.8
-        ),
-        name=column_name
+        mode="lines",
+        lat=latitudes,
+        lon=longitudes,
+        line=dict(width=1, color="red"),
+        name="Transmission Lines",
+        opacity=0.4,
+        showlegend=False
     ))
-
-    fig.add_trace(go.Scattermap(
-        lat=wind_farms_df['Latitude'],
-        lon=wind_farms_df['Longitude'],
-        mode='markers',
-        marker=dict(
-            size=4,
-            color='teal',
-            opacity=0.8,
-        ),
-        text=wind_farms_df['Asset'],  # Display asset name on hover
-        name='Wind Farms'
-    ))
-
-    fig.update_layout(
-
-        map=dict(
-            center=dict(
-                lat=-29,
-                lon=135
-            ),
-            zoom=2,
-            style='dark'
-        ),
-        title="Wind correlation with operating farms locations",
-        margin=dict(l=0, r=0, t=40, b=0),  # Adjust margins
-        legend=dict(x=0.01, y=0.99),  # Position the legend
-    )
-
     return fig
+
 
