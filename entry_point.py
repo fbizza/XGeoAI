@@ -8,7 +8,7 @@ loader = DataLoader(data_path)
 
 #data_to_plot = "data/basetables/all_locations_mean_correlation.csv"
 data_to_plot = "data/basetables/target_mean_correlation.csv"
-data_to_plot = "data/basetables/mean_wind_correlation_distance.csv"
+#data_to_plot = "data/basetables/mean_wind_correlation_distance.csv"
 
 df = loader.load_csv(data_to_plot)
 
