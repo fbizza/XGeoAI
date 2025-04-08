@@ -1,42 +1,53 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
-import pandas as pd
 from visualization.plotting_functions import *
 
+# Load the data
 grid_df = pd.read_csv('../../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
 locations_df = pd.read_csv('../../data/basetables/distance_from_grid')
+suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable.csv')
 
+# Function to add linear combination column based on weights
+def add_linear_combination_column(df, weight_km, weight_corr):
+    df['suitability_index'] = (df['normalized_km'] * weight_km) + (df['normalized_corr'] * weight_corr)
+    return df
 
-
-grid_fig = create_lines_figure(grid_df, latitude_column_name="lat", longitude_column_name="lon")
-locations_fig = create_scattermap_figure(df=locations_df, value_column_name="min_distance_to_line_km",
-                                         colorscale="RdBu", opacity=0.5, marker_size=4)
-
-grid_fig.update_layout(
-            map=dict(
-                center=dict(
-                    lat=-29,
-                    lon=135
-                ),
-                zoom=3,
-                style='dark',
+# Initial plot creation function
+def create_map_figure(weight_km, weight_corr):
+    df = add_linear_combination_column(suitability_index_df, weight_km, weight_corr)
+    fig = create_scattermap_figure(
+        df=df,
+        value_column_name="suitability_index",
+        colorscale="RdBu",
+        opacity=0.5,
+        marker_size=4
+    )
+    fig.update_layout(
+        map=dict(
+            center=dict(
+                lat=-29,
+                lon=135
             ),
-            paper_bgcolor="#121212",
-            margin=dict(l=0, r=0, t=0, b=0),
-        )
+            zoom=3,
+            style='dark',
+        ),
+        paper_bgcolor="#121212",
+        margin=dict(l=0, r=0, t=0, b=0),
+    )
+    fig.update_traces(marker_reversescale=True, selector=dict(type='scattermap'))
+    fig.update_layout(showlegend=False)
+    return fig
 
-locations_fig.update_traces(marker_reversescale=True, selector=dict(type='scattermap'))
+# Initial figure
+fig = create_map_figure(weight_km=0.1, weight_corr=0.9)
 
-fig = add_map_layer(grid_fig, locations_fig)
-fig.update_traces(marker_showscale=False, selector=dict(type='scattermap')) # to remove colorscale
-fig.update_layout(showlegend=False)
-
+# Layout definition with sliders
 layout = html.Div([
     dbc.Container([
         html.H1("Suitability Index", className='text-center my-4'),
 
         dbc.Row([
-            # Slider 1 block
+            # Slider 1 block (Wind correlation)
             dbc.Col([
                 html.Div([
                     html.Label("Wind correlation", className="text-center w-100 mb-2"),
@@ -58,17 +69,14 @@ layout = html.Div([
                             step=0.01,
                             value=0.5,
                             className='input-box',
-                            style={
-                                "width": "15%",
-                                "textAlign": "center"
-                            }
+                            style={"width": "15%", "textAlign": "center"}
                         ),
                         className="d-flex justify-content-center mt-2"
                     )
                 ])
             ], width=5),
 
-            # Slider 2 block
+            # Slider 2 block (Distance from grid)
             dbc.Col([
                 html.Div([
                     html.Label("Distance from grid", className="text-center w-100 mb-2"),
@@ -89,10 +97,7 @@ layout = html.Div([
                             step=0.01,
                             value=0.5,
                             className='input-box',
-                            style={
-                                "width": "15%",
-                                "textAlign": "center"
-                            }
+                            style={"width": "15%", "textAlign": "center"}
                         ),
                         className="d-flex justify-content-center mt-2"
                     )
@@ -101,9 +106,6 @@ layout = html.Div([
         ], justify='center', className="mb-4"),
 
         # Graph section
-        dcc.Graph(figure=fig, style={'height': '70vh', 'width': '100%'})
+        dcc.Graph(id='map-figure', figure=fig, style={'height': '70vh', 'width': '100%'})
     ])
 ])
-
-
-

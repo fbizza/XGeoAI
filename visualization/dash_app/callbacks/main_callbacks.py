@@ -4,6 +4,7 @@ from visualization.dash_app.layout.pages import (
     home, mean_correlation_distance, mean_correlation,
     vs_operating_wind_farms, grid, suitability_index, documentation
 )
+from visualization.dash_app.layout.pages.suitability_index import create_map_figure
 
 
 def register_callbacks(app):
@@ -58,3 +59,14 @@ def register_callbacks(app):
             raise PreventUpdate
         triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
         return (slider_val, slider_val) if triggered_id == 'slider-2' else (input_val, input_val)
+
+    # Dash callback to update the figure based on slider input
+    @app.callback(
+        Output('map-figure', 'figure'),
+        [Input('input-1', 'value'), Input('input-2', 'value')]
+    )
+    def update_map(input_1_value, input_2_value):
+        weight_km = input_2_value
+        weight_corr = input_1_value
+        return create_map_figure(weight_km, weight_corr)
+
