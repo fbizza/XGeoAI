@@ -2,7 +2,7 @@ from dash import html, Input, Output, callback_context
 from dash.exceptions import PreventUpdate
 from visualization.dash_app.layout.pages import (
     home, mean_correlation_distance, mean_correlation,
-    vs_operating_wind_farms, grid, suitability_index, documentation
+    vs_operating_wind_farms, grid, suitability_index, clusters, documentation
 )
 from visualization.dash_app.layout.pages.suitability_index import create_map_figure
 
@@ -30,6 +30,8 @@ def register_callbacks(app):
             return grid.layout
         elif pathname == "/suitability_index":
             return suitability_index.layout
+        elif pathname == "/clusters":
+            return clusters.layout
         elif pathname == "/documentation":
             return documentation.layout
         return html.Div([html.H1("404 - Page not found")])
