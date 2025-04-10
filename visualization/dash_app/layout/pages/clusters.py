@@ -1,21 +1,42 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
-from visualization.plotting_functions import *
 import geopandas as gpd
 import plotly.express as px
 import json
 import pandas as pd
 
+def enrich_with_distances(gdf: pd.DataFrame) -> pd.DataFrame:
+    """
+    Enriches a GeoDataFrame by expanding the 'distances' column into separate
+    numeric columns (e.g., distance_from_0, distance_from_1, ...), making the
+    data more accessible and friendly for Plotly Dash visualizations.
+
+    Parameters:
+    - gdf: A GeoDataFrame with a 'distances' column containing dictionaries
+           (or JSON-formatted strings) of distances to other clusters.
+
+    Returns:
+    - Enriched GeoDataFrame with new columns: distance_from_{cluster_id}
+    """
+
+    gdf['distances'] = gdf['distances'].apply(
+        lambda x: json.loads(x) if isinstance(x, str) else x
+    )
+    distances_df = pd.json_normalize(gdf['distances'])
+    distances_df.columns = [f'distance_from_{col}' for col in distances_df.columns]
+    enriched_gdf = pd.concat([gdf, distances_df], axis=1)
+
+    return enriched_gdf
+
 gdf = gpd.read_file('../../data/processed/clusters_cohesion.geojson')
 
-# Create the Plotly choropleth map using the loaded GeoDataFrame
 fig = px.choropleth_map(
     gdf,
     geojson=json.loads(gdf.to_json()),
     locations="cluster_id",
     featureidkey="properties.cluster_id",
     color="cohesion",
-    color_continuous_scale="RdBu",
+    color_continuous_scale="Viridis",
     map_style="carto-positron",
     center={"lat": 23, "lon": 54},
     zoom=4.5,

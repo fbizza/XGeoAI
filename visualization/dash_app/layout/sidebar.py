@@ -14,6 +14,7 @@ sidebar = html.Div([
                 dbc.NavLink("Grid", href="/grid", active="exact"),
                 dbc.NavLink("Suitability Index", href="/suitability_index", active="exact"),
                 dbc.NavLink("Clusters", href="/clusters", active="exact"),
+                dbc.NavLink("Interactive Clusters", href="/interactive_clusters", active="exact"),
                 dbc.NavLink("Documentation", href="/documentation", active="exact"),
             ],
             vertical=True,
