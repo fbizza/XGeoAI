@@ -3,8 +3,8 @@ import dash_bootstrap_components as dbc
 from visualization.plotting_functions import *
 import geopandas as gpd
 import plotly.express as px
-import numpy as np
 import json
+import pandas as pd
 
 gdf = gpd.read_file('../../data/processed/clusters_cohesion.geojson')
 
@@ -12,7 +12,8 @@ gdf = gpd.read_file('../../data/processed/clusters_cohesion.geojson')
 fig = px.choropleth_map(
     gdf,
     geojson=json.loads(gdf.to_json()),
-    locations=gdf.index,
+    locations="cluster_id",
+    featureidkey="properties.cluster_id",
     color="cohesion",
     color_continuous_scale="RdBu",
     map_style="carto-positron",
