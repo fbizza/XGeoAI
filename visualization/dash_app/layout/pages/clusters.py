@@ -6,10 +6,7 @@ import plotly.express as px
 import numpy as np
 import json
 
-
-gdf = gpd.read_file('../../data/processed/cluster_cohesion.geojson')
-
-cohesion_map = np.load('../../data/processed/cohesion_map.npy')
+gdf = gpd.read_file('../../data/processed/clusters_cohesion.geojson')
 
 # Create the Plotly choropleth map using the loaded GeoDataFrame
 fig = px.choropleth_map(
