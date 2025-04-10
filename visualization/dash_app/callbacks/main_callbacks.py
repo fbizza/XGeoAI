@@ -1,4 +1,4 @@
-from dash import html, Input, Output, callback_context
+from dash import html, Input, Output, State, callback_context
 from dash.exceptions import PreventUpdate
 from visualization.dash_app.layout.pages import (
     home, mean_correlation_distance, mean_correlation,
@@ -65,8 +65,9 @@ def register_callbacks(app):
     # suitability_index callback:
     @app.callback(
         Output('map-figure', 'figure'),
-        [Input('input-1', 'value'), Input('input-2', 'value'),
-         Input('map-figure', 'relayoutData')]
+        Input('input-1', 'value'),
+        Input('input-2', 'value'),
+        State('map-figure', 'relayoutData')
     )
     def update_map(input_1_value, input_2_value, relayout_data):
         zoom = 3
