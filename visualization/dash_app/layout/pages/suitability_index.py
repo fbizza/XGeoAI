@@ -5,7 +5,7 @@ from visualization.plotting_functions import *
 
 grid_df = pd.read_csv('../../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
 locations_df = pd.read_csv('../../data/basetables/distance_from_grid')
-suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable.csv')
+suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_in_land.csv')
 
 
 def add_linear_combination_column(df, weight_km, weight_corr):

@@ -43,11 +43,11 @@ def filter_points_within_polygon(
     return df_filtered
 
 if __name__ == "__main__":
-    df = pd.read_csv("basetables/avg_wind_speed.csv")
+    df = pd.read_csv("basetables/avg_capacity_factor.csv")
     df_filtered = filter_points_within_polygon(
         df,
         geojson_path="raw/australia_land.json",
-        output_path="basetables/avg_wind_speed_land_only.csv"
+        output_path="basetables/avg_capacity_factor_land_only.csv"
     )
 
     print("Filtered shape:", df_filtered.shape)
