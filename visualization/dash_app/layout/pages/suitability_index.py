@@ -5,16 +5,21 @@ from visualization.plotting_functions import *
 
 grid_df = pd.read_csv('../../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
 locations_df = pd.read_csv('../../data/basetables/distance_from_grid')
-suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_in_land.csv')
+suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_in_land2.csv')
 
 
-def add_linear_combination_column(df, weight_km, weight_corr):
-    df['suitability_index'] = (df['normalized_km'] * weight_km) + (df['normalized_corr'] * weight_corr)
+def add_linear_combination_column(df, weight_km, weight_corr, weight_wind_capacity_factor):
+    df['suitability_index'] = ((df['normalized_km'] * weight_km) +
+                               (df['normalized_corr'] * weight_corr) +
+                               (df['normalized_wind_capacity_factor'] * weight_wind_capacity_factor))
     return df
 
 
-def create_map_figure(weight_km, weight_corr, zoom=3, center={'lat': -29, 'lon': 135}):
-    df = add_linear_combination_column(suitability_index_df, weight_km, weight_corr)
+def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, zoom=3, center={'lat': -29, 'lon': 135}):
+    df = add_linear_combination_column(suitability_index_df,
+                                       weight_km,
+                                       weight_corr,
+                                       weight_wind_capacity_factor)
     fig = create_scattermap_figure(
         df=df,
         value_column_name="suitability_index",
@@ -38,7 +43,7 @@ def create_map_figure(weight_km, weight_corr, zoom=3, center={'lat': -29, 'lon':
     return fig
 
 
-fig = create_map_figure(weight_km=0.1, weight_corr=0.9)
+fig = create_map_figure(weight_km=0.2, weight_corr=0.2, weight_wind_capacity_factor=0.6)
 
 
 layout = html.Div([
@@ -55,7 +60,7 @@ layout = html.Div([
                         min=0,
                         max=1,
                         step=0.01,
-                        value=0.69,
+                        value=0.2,
                         tooltip={"placement": "top"},
                         marks=None
                     ),
@@ -66,14 +71,14 @@ layout = html.Div([
                             min=0,
                             max=1,
                             step=0.01,
-                            value=0.69,
+                            value=0.2,
                             className='input-box',
                             style={"width": "15%", "textAlign": "center"}
                         ),
                         className="d-flex justify-content-center mt-2"
                     )
                 ])
-            ], width=5),
+            ], width=3),
 
             # Slider 2 block (Distance from grid)
             dbc.Col([
@@ -83,7 +88,7 @@ layout = html.Div([
                         id='slider-2',
                         min=0,
                         max=1,
-                        value=0.31,
+                        value=0.2,
                         tooltip={"placement": "top"},
                         marks=None
                     ),
@@ -94,14 +99,42 @@ layout = html.Div([
                             min=0,
                             max=1,
                             step=0.01,
-                            value=0.31,
+                            value=0.2,
                             className='input-box',
                             style={"width": "15%", "textAlign": "center"}
                         ),
                         className="d-flex justify-content-center mt-2"
                     )
                 ])
-            ], width=5),
+            ], width=3),
+
+            # Slider 3 Wind Capacity Factor
+            dbc.Col([
+                            html.Div([
+                                html.Label("Average Wind Capacity Factor", className="text-center w-100 mb-2"),
+                                dcc.Slider(
+                                    id='slider-3',
+                                    min=0,
+                                    max=1,
+                                    value=0.6,
+                                    tooltip={"placement": "top"},
+                                    marks=None
+                                ),
+                                html.Div(
+                                    dcc.Input(
+                                        id='input-3',
+                                        type='number',
+                                        min=0,
+                                        max=1,
+                                        step=0.01,
+                                        value=0.6,
+                                        className='input-box',
+                                        style={"width": "15%", "textAlign": "center"}
+                                    ),
+                                    className="d-flex justify-content-center mt-2"
+                                )
+                            ])
+                        ], width=3),
         ], justify='center', className="mb-4"),
 
         dcc.Graph(id='map-figure', figure=fig, style={'height': '70vh', 'width': '100%'})

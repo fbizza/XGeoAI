@@ -70,14 +70,28 @@ def register_callbacks(app):
         triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
         return (slider_val, slider_val) if triggered_id == 'slider-2' else (input_val, input_val)
 
+    @app.callback(
+        Output('slider-3', 'value'),
+        Output('input-3', 'value'),
+        Input('slider-3', 'value'),
+        Input('input-3', 'value'),
+    )
+    def sync_slider_3(slider_val, input_val):
+        ctx = callback_context
+        if not ctx.triggered:
+            raise PreventUpdate
+        triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        return (slider_val, slider_val) if triggered_id == 'slider-3' else (input_val, input_val)
+
     # suitability_index callback:
     @app.callback(
         Output('map-figure', 'figure'),
         Input('input-1', 'value'),
         Input('input-2', 'value'),
-        State('map-figure', 'relayoutData')
+        Input('input-3', 'value'),
+        State('map-figure', 'relayoutData')  # to keep the same zoom of the figure after update
     )
-    def update_map(input_1_value, input_2_value, relayout_data):
+    def update_map(input_1_value, input_2_value, input_3_value, relayout_data):
         zoom = 3
         center = {'lat': -29, 'lon': 135}
 
@@ -88,8 +102,13 @@ def register_callbacks(app):
 
         weight_km = input_2_value
         weight_corr = input_1_value
+        weight_wind_capacity_factor = input_3_value
 
-        return create_map_figure(weight_km, weight_corr, zoom, center)
+        return create_map_figure(weight_km,
+                                 weight_corr,
+                                 weight_wind_capacity_factor,
+                                 zoom,
+                                 center=center)
 
 
     # interactive_clusters_callback:
