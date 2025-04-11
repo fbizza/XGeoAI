@@ -75,15 +75,16 @@ def normalize_column(series: pd.Series, invert: bool = True) -> pd.Series:
 def process_data(df: pd.DataFrame) -> pd.DataFrame:
     df['normalized_km'] = normalize_column(df['min_distance_to_line_km'], invert=True)
 
-    df['abs_correlation'] = df['Mean Correlation'].abs()
-    df['normalized_corr'] = normalize_column(df['Mean Correlation'], invert=True)
+    df['normalized_corr'] = normalize_column(df['Mean Correlation'].abs(), invert=True)
+
+    df['normalized_wind_capacity_factor'] = normalize_column(df['avg_capacity_factor'], invert=False)
 
     return df
 
 
 # ---------- Step 7: Build Final Table ----------
 def build_basetable(df: pd.DataFrame) -> pd.DataFrame:
-    return df[['Latitude', 'Longitude', 'normalized_km', 'normalized_corr',]]
+    return df[['Latitude', 'Longitude', 'normalized_km', 'normalized_corr', 'normalized_wind_capacity_factor']]
 
 
 # ---------- Step 8: Save ----------
@@ -122,12 +123,11 @@ if __name__ == "__main__":
         file_paths=[
             "basetables/distance_from_grid",
             "basetables/target_mean_correlation.csv",
-            "basetables/avg_wind_speed.csv",
             "basetables/avg_capacity_factor.csv",
         ],
         geojson_path="raw/australia_land.json",
         filter_land_only=True,
-        output_path="basetables/suitability_index_basetable_in_land.csv"
+        output_path="basetables/suitability_index_basetable_in_land2.csv"
     )
 
     run_pipeline(config)
