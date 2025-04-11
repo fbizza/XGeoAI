@@ -1,36 +1,76 @@
 import pandas as pd
-
-distance_from_grid_df = pd.read_csv("basetables/distance_from_grid")
-wind_correlation_df = pd.read_csv("basetables/target_mean_correlation.csv")
-print(len(wind_correlation_df))
-print(len(wind_correlation_df))
-print(distance_from_grid_df.head(5))
-print(wind_correlation_df.head(5))
+from typing import List
 
 
-merged_df = pd.merge(distance_from_grid_df, wind_correlation_df,
-                     on=["Latitude", "Longitude"],
-                     how="inner")
+def load_data(paths: List[str]) -> List[pd.DataFrame]:
+    return [pd.read_csv(path) for path in paths]
 
 
-print(f"Length of merged dataframe: {len(merged_df)}")
-print(merged_df.head(5))
+def validate_all_lat_lon_match(dfs: List[pd.DataFrame]):
+    coord_sets = [set(zip(df['Latitude'], df['Longitude'])) for df in dfs]
+    base_coords = coord_sets[0]
 
-# Normalize the km_distance column (inverted so lower values are better)
-km_min = merged_df['min_distance_to_line_km'].min()
-km_max = merged_df['min_distance_to_line_km'].max()
-merged_df['normalized_km'] = 1 - ((merged_df['min_distance_to_line_km'] - km_min) / (km_max - km_min))
+    for i, coords in enumerate(coord_sets[1:], start=1):
+        if coords != base_coords:
+            missing_in_i = base_coords - coords
+            extra_in_i = coords - base_coords
+            raise ValueError(f"Lat/Lon mismatch in dataset {i + 1}:\n"
+                             f"  - Missing coords: {len(missing_in_i)}\n"
+                             f"  - Unexpected coords: {len(extra_in_i)}")
 
-# Normalize the absolute value of the correlation column (inverted so lower absolute values are better)
-merged_df['abs_correlation'] = merged_df['Mean Correlation'].abs()
-corr_min = merged_df['Mean Correlation'].min()
-corr_max = merged_df['Mean Correlation'].max()
-merged_df['normalized_corr'] = 1 - ((merged_df['Mean Correlation'] - corr_min) / (corr_max - corr_min))
 
-pd.set_option("display.max_columns", None)
+def merge_multiple_datasets(dfs: List[pd.DataFrame]) -> pd.DataFrame:
+    merged_df = dfs[0]
+    for i, df in enumerate(dfs[1:], start=2):
+        merged_df = pd.merge(merged_df, df, on=["Latitude", "Longitude"], how="inner")
+        print(f"Merged with dataset {i}, resulting rows: {len(merged_df)}")
+    return merged_df
 
-basetable = merged_df[['Latitude', 'Longitude', 'normalized_km', 'normalized_corr']]
 
-print(basetable.head(5))
+def normalize_column(series: pd.Series, invert: bool = True) -> pd.Series:
+    min_val, max_val = series.min(), series.max()
+    normalized = (series - min_val) / (max_val - min_val)
+    return 1 - normalized if invert else normalized
 
-basetable.to_csv('basetables/suitability_index_basetable.csv', index=False)
+
+def process_data(merged_df: pd.DataFrame) -> pd.DataFrame:
+    merged_df['normalized_km'] = normalize_column(merged_df['min_distance_to_line_km'], invert=True)
+
+    merged_df['abs_correlation'] = merged_df['Mean Correlation'].abs()
+    merged_df['normalized_corr'] = normalize_column(merged_df['Mean Correlation'], invert=True)
+
+    return merged_df
+
+
+def build_basetable(merged_df: pd.DataFrame) -> pd.DataFrame:
+    return merged_df[['Latitude', 'Longitude', 'normalized_km', 'normalized_corr', "avg_capacity_factor", "avg_wind_speed"]]
+
+
+def save_basetable(df: pd.DataFrame, output_path: str):
+    df.to_csv(output_path, index=False)
+
+
+def main():
+    paths = [
+        "basetables/distance_from_grid",
+        "basetables/target_mean_correlation.csv",
+        "basetables/avg_wind_speed.csv",
+        "basetables/avg_capacity_factor.csv",
+    ]
+
+    datasets = load_data(paths)
+    validate_all_lat_lon_match(datasets)
+
+    merged_df = merge_multiple_datasets(datasets)
+    print(f"Final merged dataset length: {len(merged_df)}")
+
+    processed_df = process_data(merged_df)
+    basetable = build_basetable(processed_df)
+
+    print(basetable.head())
+
+    save_basetable(basetable, "basetables/suitability_index_basetable2.csv")
+
+
+if __name__ == "__main__":
+    main()

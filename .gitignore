@@ -3,3 +3,5 @@
 folium/folium_map.html
 /api-keys
 /data/raw/wind_correlation_matrix.pkl
+/data/raw/wind_speed_daily.pkl
+/data/raw/wind_capacity_factor_daily.pkl

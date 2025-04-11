@@ -6,18 +6,22 @@ class DataLoader:
         self.data_path = data_path
 
     def load_pickle(self, filename):
-        """Load a pickle file."""
         with open(f"{self.data_path}/{filename}", "rb") as f:
             return pickle.load(f)
 
     def load_csv(self, file_path):
         #TODO: adjust, use data fodler and file name
-        """Load a CSV file."""
         return pd.read_csv(file_path)
 
     def load_wind_correlation_data(self):
-        """Load all required wind datasets."""
         lsmdf = self.load_pickle("aus_region_mask.pkl")
         lsmc = self.load_pickle("aus_region_mask_lsmc.pkl")
         rlsmcs5Wmnavg = self.load_pickle("wind_correlation_matrix.pkl")
         return lsmdf, lsmc, rlsmcs5Wmnavg
+
+    def load_wind_speed_data(self):
+        lsmdf = self.load_pickle("aus_region_mask.pkl")
+        lsmc = self.load_pickle("aus_region_mask_lsmc.pkl")
+        wind_speed_daily = self.load_pickle("wind_speed_daily.pkl")
+        wind_capacity_factor_daily = self.load_pickle("wind_capacity_factor_daily.pkl")
+        return lsmdf, lsmc, wind_speed_daily, wind_capacity_factor_daily
