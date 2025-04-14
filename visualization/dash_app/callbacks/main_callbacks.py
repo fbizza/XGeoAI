@@ -2,7 +2,7 @@ from dash import html, Input, Output, State, callback_context
 from dash.exceptions import PreventUpdate
 from visualization.dash_app.layout.pages import (
     home, mean_correlation_distance, mean_correlation,
-    vs_operating_wind_farms, grid, suitability_index, clusters,
+    vs_operating_wind_farms, grid, suitability_index, gunn_clusters, clusters,
     interactive_clusters, avg_wind_speed, avg_wind_capacity_factor, documentation
 )
 from visualization.dash_app.layout.pages.suitability_index import create_map_figure
@@ -32,6 +32,8 @@ def register_callbacks(app):
             return grid.layout
         elif pathname == "/suitability_index":
             return suitability_index.layout
+        elif pathname == "/gunn_clusters":
+            return gunn_clusters.layout
         elif pathname == "/clusters":
             return clusters.layout
         elif pathname == "/interactive_clusters":
@@ -92,7 +94,7 @@ def register_callbacks(app):
         State('map-figure', 'relayoutData')  # to keep the same zoom of the figure after update
     )
     def update_map(input_1_value, input_2_value, input_3_value, relayout_data):
-        zoom = 3
+        zoom = 2.5
         center = {'lat': -29, 'lon': 135}
 
 

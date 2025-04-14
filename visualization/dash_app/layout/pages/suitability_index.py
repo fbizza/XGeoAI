@@ -15,7 +15,7 @@ def add_linear_combination_column(df, weight_km, weight_corr, weight_wind_capaci
     return df
 
 
-def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, zoom=3, center={'lat': -29, 'lon': 135}):
+def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, zoom=2.5, center={'lat': -29, 'lon': 135}):
     df = add_linear_combination_column(suitability_index_df,
                                        weight_km,
                                        weight_corr,

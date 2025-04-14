@@ -61,7 +61,7 @@ fig.update_layout(
 
 layout = html.Div([
 dbc.Container([
-                html.H1("Clusters Cohesion", className='text-center my-4'),
+                html.H1("Gunn's Clusters Cohesion", className='text-center my-4'),
                 dcc.Graph(figure=fig, style={'height': '70vh', 'width': '100%'})
             ], fluid=True)
 ])
