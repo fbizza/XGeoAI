@@ -13,9 +13,29 @@ app.layout = html.Div([
     dcc.Location(id="url"),
     html.Div(id="toggle-container", children=[
         dbc.Button("☰", id="btn-toggle", color="secondary", className="menu-btn"),
-        dbc.Button("Button 1", id="btn-1", color="secondary", className="menu-btn"),
-        dbc.Button("Button 2", id="btn-2", color="secondary", className="menu-btn"),
-        dbc.Button("Button 3", id="btn-3", color="secondary", className="menu-btn"),
+        html.A(
+            dbc.Button(
+                html.Img(src="assets/images/github_logo.png", height="25px"),
+                id="btn-2",
+                color="secondary",
+                className="menu-btn"
+            ),
+            href="https://github.com/fbizza/XGeoAI",
+            target="_blank",
+            style={"textDecoration": "none"}
+        ),
+        html.A(
+            dbc.Button(
+                html.Img(src="assets/images/monash_uni_logo.png", height="25px"),
+                id="btn-3",
+                color="secondary",
+                className="menu-btn"
+            ),
+            href="https://www.monash.edu/it",
+            target="_blank",
+            style={"textDecoration": "none"}
+        ),
+        # dbc.Button("Button 3", id="btn-3", color="secondary", className="menu-btn"),
     ]),
     sidebar,
     html.Div(id="page-content", className="content")

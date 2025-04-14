@@ -49,11 +49,11 @@ def create_interactive_clusters_map_figure(gdf, cluster_number):
 
     fig.update_traces(
         hovertemplate="<br>".join([
-            "<b>Cluster number:  %{customdata[0]}</b>",
-            "Distnace from selected cluster: %{customdata[1]}",
+            "<b>Cluster number: %{customdata[0]}</b>",
+            "Distance from selected cluster: %{customdata[1]:.0f}",
         ]),
         marker_line_width=0.35,
-        marker_line_color="white"
+        marker_line_color="black"
     )
     fig.update_layout(
         hoverlabel=dict(

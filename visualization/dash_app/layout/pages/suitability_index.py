@@ -25,7 +25,7 @@ def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, zoom=
         value_column_name="suitability_index",
         colorscale="RdBu",
         opacity=0.5,
-        marker_size=4
+        marker_size=7
     )
     fig.update_layout(
         map=dict(

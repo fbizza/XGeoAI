@@ -13,7 +13,7 @@ body {
     top: 60px; /* Push the sidebar below the buttons */
     left: 0;
     bottom: 0;
-    width: 240px;
+    width: 270px;
     padding: 2rem 1rem;
     background-color: #1e1e2f;
     transition: all 0.3s ease;
