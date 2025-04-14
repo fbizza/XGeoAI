@@ -81,10 +81,10 @@ def create_interactive_clusters_map_figure(gdf, cluster_number):
 
     return fig
 
-gdf = gpd.read_file('../../data/processed/wind_clusters/clusters_cohesion.geojson')
+gdf = gpd.read_file('../../data/processed/wind_clusters/30_clusters.geojson')
 gdf = enrich_with_distances(gdf)
 
-fig = create_interactive_clusters_map_figure(gdf=gdf, cluster_number=5)
+fig = create_interactive_clusters_map_figure(gdf=gdf, cluster_number=1)
 
 
 

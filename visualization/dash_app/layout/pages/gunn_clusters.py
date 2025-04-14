@@ -28,7 +28,7 @@ def enrich_with_distances(gdf: pd.DataFrame) -> pd.DataFrame:
 
     return enriched_gdf
 
-gdf = gpd.read_file('../../data/processed/wind_clusters/clusters_cohesion.geojson')
+gdf = gpd.read_file('../../data/processed/wind_clusters/15_clusters.geojson')
 
 fig = px.choropleth_map(
     gdf,
