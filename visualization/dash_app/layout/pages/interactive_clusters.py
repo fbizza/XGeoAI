@@ -1,6 +1,5 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
-from visualization.plotting_functions import *
 import geopandas as gpd
 import plotly.express as px
 import json
@@ -87,11 +86,53 @@ gdf = enrich_with_distances(gdf)
 fig = create_interactive_clusters_map_figure(gdf=gdf, cluster_number=1)
 
 
-
-
 layout = html.Div([
-dbc.Container([
-                html.H1("Interactive clusters distances", className='text-center my-4'),
-                dcc.Graph(figure=fig, id="interactive-clusters-map", style={'height': '70vh', 'width': '100%'})
-            ], fluid=True)
+    dbc.Container([
+        # Centered Heading
+        html.H1("Interactive Clusters Distances",
+                className='text-center my-4',
+                style={'color': '#ffffff', 'font-size': '2.5rem', 'font-weight': 'bold'}),
+
+        # Row for the input box and button (both centered)
+        dbc.Row([
+            dbc.Col([
+                html.Label("Enter number of clusters (1–100):",
+                           className="text-center text-light mb-2",
+                           style={'font-size': '1.1rem'}),
+                dcc.Input(
+                    id="cluster-count-input",
+                    type="number",
+                    min=1,
+                    max=100,
+                    step=1,
+                    value=30,
+                    style={
+                        'width': '60%',  # Smaller input width
+                        'padding': '0.8rem',  # Padding for better usability
+                        'border-radius': '12px',  # Rounded corners
+                        'border': '1px solid #17A2B8',  # Accent border color
+                        'background-color': '#f0f0f0',  # Light background color
+                        'font-size': '16px',  # Font size for text
+                        'font-weight': 'bold',  # Bold text inside the input box
+                        'color': '#17A2B8'  # Text color inside the box
+                    }
+                ),
+                dbc.Button("Update Clusters",
+                           id="update-clusters-btn",
+                           style={
+                               'margin-top': '1rem',
+                               'width': '60%',  # Button takes 80% width
+                               'padding': '1rem',
+                               'border-radius': '12px',
+                               'font-size': '16px',
+                               'font-weight': 'bold',
+                               'text-align': 'center',
+                               'background-color': '#17a2b8'
+                           })
+            ], width=4, className="mx-auto")  # Center the column
+        ], justify="center", className="mb-4"),
+
+        # Map
+        dcc.Graph(figure=fig, id="interactive-clusters-map", style={'height': '70vh', 'width': '100%'})
+    ], fluid=True)
 ])

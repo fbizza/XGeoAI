@@ -84,7 +84,8 @@ def process_data(df: pd.DataFrame) -> pd.DataFrame:
 
 # ---------- Step 7: Build Final Table ----------
 def build_basetable(df: pd.DataFrame) -> pd.DataFrame:
-    return df[['Latitude', 'Longitude', 'normalized_km', 'normalized_corr', 'normalized_wind_capacity_factor']]
+    return df[['Latitude', 'Longitude', 'normalized_km', 'normalized_corr', 'normalized_wind_capacity_factor',
+               'Mean Correlation', 'min_distance_to_line_km','avg_capacity_factor']]
 
 
 # ---------- Step 8: Save ----------
