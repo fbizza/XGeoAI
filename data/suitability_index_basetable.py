@@ -79,13 +79,16 @@ def process_data(df: pd.DataFrame) -> pd.DataFrame:
 
     df['normalized_wind_capacity_factor'] = normalize_column(df['avg_capacity_factor'], invert=False)
 
+    df['normalized_solar_radiation'] = normalize_column(df['avg_solar_radiation'], invert=True)
+
     return df
 
 
 # ---------- Step 7: Build Final Table ----------
 def build_basetable(df: pd.DataFrame) -> pd.DataFrame:
     return df[['Latitude', 'Longitude', 'normalized_km', 'normalized_corr', 'normalized_wind_capacity_factor',
-               'Mean Correlation', 'min_distance_to_line_km','avg_capacity_factor']]
+               'Mean Correlation', 'min_distance_to_line_km','avg_capacity_factor', 'normalized_solar_radiation',
+               'avg_solar_radiation']]
 
 
 # ---------- Step 8: Save ----------
@@ -125,10 +128,12 @@ if __name__ == "__main__":
             "basetables/distance_from_grid",
             "basetables/target_mean_correlation.csv",
             "basetables/avg_capacity_factor.csv",
+            "basetables/avg_solar_radiation.csv",
+
         ],
         geojson_path="raw/australia_land.json",
         filter_land_only=True,
-        output_path="basetables/suitability_index_basetable_in_land2.csv"
+        output_path="basetables/suitability_index_basetable_solar.csv"
     )
 
     run_pipeline(config)
