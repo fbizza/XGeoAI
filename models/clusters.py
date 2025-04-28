@@ -281,9 +281,8 @@ if __name__ == "__main__":
 
 
 
-    cluster_values = [30, 50]
-    # cluster_values = list(range(1, 101))
-
+    cluster_values = list(range(1, 101))
+    #cluster_values = [30, 50]
 
     generate_multiple_cluster_geojsons(
         data_path="../data/raw",
