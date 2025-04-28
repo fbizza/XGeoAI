@@ -52,54 +52,78 @@ def register_callbacks(app):
     @app.callback(
         Output('slider-1', 'value'),
         Output('input-1', 'value'),
-        Input('slider-1', 'value'),
-        Input('input-1', 'value'),
-    )
-    def sync_slider_1(slider_val, input_val):
-        ctx = callback_context
-        if not ctx.triggered:
-            raise PreventUpdate
-        triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        return (slider_val, slider_val) if triggered_id == 'slider-1' else (input_val, input_val)
-
-    @app.callback(
         Output('slider-2', 'value'),
         Output('input-2', 'value'),
-        Input('slider-2', 'value'),
-        Input('input-2', 'value'),
-    )
-    def sync_slider_2(slider_val, input_val):
-        ctx = callback_context
-        if not ctx.triggered:
-            raise PreventUpdate
-        triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        return (slider_val, slider_val) if triggered_id == 'slider-2' else (input_val, input_val)
-
-    @app.callback(
         Output('slider-3', 'value'),
         Output('input-3', 'value'),
-        Input('slider-3', 'value'),
-        Input('input-3', 'value'),
-    )
-    def sync_slider_3(slider_val, input_val):
-        ctx = callback_context
-        if not ctx.triggered:
-            raise PreventUpdate
-        triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        return (slider_val, slider_val) if triggered_id == 'slider-3' else (input_val, input_val)
-
-    @app.callback(
         Output('slider-4', 'value'),
         Output('input-4', 'value'),
+        Input('slider-1', 'value'),
+        Input('input-1', 'value'),
+        Input('slider-2', 'value'),
+        Input('input-2', 'value'),
+        Input('slider-3', 'value'),
+        Input('input-3', 'value'),
         Input('slider-4', 'value'),
         Input('input-4', 'value'),
+        prevent_initial_call=True
     )
-    def sync_slider_4(slider_val, input_val):
+    def sync_and_balance_weights(s1, i1, s2, i2, s3, i3, s4, i4):
         ctx = callback_context
         if not ctx.triggered:
             raise PreventUpdate
+
         triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        return (slider_val, slider_val) if triggered_id == 'slider-4' else (input_val, input_val)
+
+        values = {
+            'slider-1': s1, 'input-1': i1,
+            'slider-2': s2, 'input-2': i2,
+            'slider-3': s3, 'input-3': i3,
+            'slider-4': s4, 'input-4': i4,
+        }
+
+        # sync slider and input
+        if 'slider' in triggered_id:
+            main_value = values[triggered_id]
+            corresponding_input = triggered_id.replace('slider', 'input')
+            values[corresponding_input] = main_value
+        elif 'input' in triggered_id:
+            main_value = values[triggered_id]
+            corresponding_slider = triggered_id.replace('input', 'slider')
+            values[corresponding_slider] = main_value
+
+        changed_index = int(triggered_id.split('-')[1])
+
+        fixed_value = values[f'slider-{changed_index}']
+
+        remaining = 1.0 - fixed_value
+        if remaining < 0:
+            fixed_value = 1.0
+            remaining = 0.0
+
+        other_indices = [i for i in [1, 2, 3, 4] if i != changed_index]
+        total_other = sum(values[f'slider-{i}'] for i in other_indices)
+
+        if total_other == 0:
+            for i in other_indices:
+                values[f'slider-{i}'] = round(remaining / 3, 2)
+                values[f'input-{i}'] = round(remaining / 3, 2)
+        else:
+            for i in other_indices:
+                proportion = values[f'slider-{i}'] / total_other
+                new_value = proportion * remaining
+                values[f'slider-{i}'] = round(new_value, 2)
+                values[f'input-{i}'] = round(new_value, 2)
+
+        values[f'slider-{changed_index}'] = round(fixed_value, 2)
+        values[f'input-{changed_index}'] = round(fixed_value, 2)
+
+        return (
+            values['slider-1'], values['input-1'],
+            values['slider-2'], values['input-2'],
+            values['slider-3'], values['input-3'],
+            values['slider-4'], values['input-4'],
+        )
 
     # suitability_index callback:
     @app.callback(
@@ -172,6 +196,10 @@ def register_callbacks(app):
             cluster_num = int(cluster_id)
 
         return create_interactive_clusters_map_figure(gdf=gdf, cluster_number=cluster_num)
+
+
+
+
 
 
 
