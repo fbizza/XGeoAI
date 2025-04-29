@@ -4,7 +4,8 @@ from dash.exceptions import PreventUpdate
 from visualization.dash_app.layout.pages import (
     home, mean_correlation_distance, mean_correlation,
     vs_operating_wind_farms, grid, suitability_index, gunn_clusters, clusters,
-    interactive_clusters, avg_wind_speed, avg_wind_capacity_factor, avg_solar_radiation, documentation
+    interactive_clusters, avg_wind_speed, avg_wind_capacity_factor, avg_solar_radiation,
+    backtest, documentation
 )
 from visualization.dash_app.layout.pages.suitability_index import create_map_figure
 from visualization.dash_app.layout.pages.interactive_clusters import create_interactive_clusters_map_figure, enrich_with_distances
@@ -45,6 +46,8 @@ def register_callbacks(app):
             return avg_wind_capacity_factor.layout
         elif pathname == "/avg_solar_radiation":
             return avg_solar_radiation.layout
+        elif pathname == "/backtest":
+            return backtest.layout
         elif pathname == "/documentation":
             return documentation.layout
         return html.Div([html.H1("404 - Page not found")], className='text-center my-4')
