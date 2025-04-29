@@ -70,25 +70,59 @@ def normalize_column(series: pd.Series, invert: bool = True) -> pd.Series:
     normalized = (series - min_val) / (max_val - min_val)
     return 1 - normalized if invert else normalized
 
+def percentile_score(series: pd.Series, invert: bool = True) -> pd.Series:
+    """
+    Assigns a score from 1 to 100 based on which percentile a value falls into.
+    If invert=True, lower values get higher scores (100 = best).
+    If invert=False, higher values get higher scores (100 = best).
+    """
+
+    # compute 101 quantile breakpoints for 100 bins
+    percentiles = series.quantile([i / 100 for i in range(101)]).values
+    percentiles = pd.Series(percentiles).drop_duplicates().values  # remove duplicates to avoid cut errors
+
+    # define score labels: 100 (best) to 1 (worst), or 1 to 100 depending on invert
+    if invert:
+        labels = list(range(100, 0, -1))  # 100 to 1
+    else:
+        labels = list(range(1, 101))      # 1 to 100
+
+    # assign percentiles
+    scored = pd.cut(series, bins=percentiles, labels=labels, include_lowest=True, duplicates="drop")
+    return scored.astype(int)
 
 # ---------- Step 6: Process ----------
 def process_data(df: pd.DataFrame) -> pd.DataFrame:
-    df['normalized_km'] = normalize_column(df['min_distance_to_line_km'], invert=True)
+    # normalization:
+    # df['normalized_km'] = normalize_column(df['min_distance_to_line_km'], invert=True)
+    #
+    # df['normalized_corr'] = normalize_column(df['Mean Correlation'].abs(), invert=True)
+    #
+    # df['normalized_wind_capacity_factor'] = normalize_column(df['avg_capacity_factor'], invert=False)
+    #
+    # df['normalized_solar_radiation'] = normalize_column(df['avg_solar_radiation'], invert=True)
+    #
+    # return df
 
-    df['normalized_corr'] = normalize_column(df['Mean Correlation'].abs(), invert=True)
+    # percentiles:
+    df['score_km'] = percentile_score(df['min_distance_to_line_km'], invert=True)
 
-    df['normalized_wind_capacity_factor'] = normalize_column(df['avg_capacity_factor'], invert=False)
+    df['score_wind_correlation'] = percentile_score(df['Mean Correlation'].abs(), invert=True)
 
-    df['normalized_solar_radiation'] = normalize_column(df['avg_solar_radiation'], invert=True)
+    df['score_wind_capacity'] = percentile_score(df['avg_capacity_factor'], invert=False)
+
+    df['score_solar_radiation'] = percentile_score(df['avg_solar_radiation'], invert=True)
 
     return df
 
 
 # ---------- Step 7: Build Final Table ----------
 def build_basetable(df: pd.DataFrame) -> pd.DataFrame:
-    return df[['Latitude', 'Longitude', 'normalized_km', 'normalized_corr', 'normalized_wind_capacity_factor',
-               'Mean Correlation', 'min_distance_to_line_km','avg_capacity_factor', 'normalized_solar_radiation',
-               'avg_solar_radiation']]
+    return df[['Latitude', 'Longitude',
+               #'normalized_km', 'normalized_corr', 'normalized_wind_capacity_factor', 'normalized_solar_radiation',
+               'Mean Correlation', 'min_distance_to_line_km','avg_capacity_factor',
+               'avg_solar_radiation',
+               'score_km', 'score_wind_correlation', 'score_wind_capacity', 'score_solar_radiation',]]
 
 
 # ---------- Step 8: Save ----------
@@ -133,7 +167,7 @@ if __name__ == "__main__":
         ],
         geojson_path="raw/australia_land.json",
         filter_land_only=True,
-        output_path="basetables/suitability_index_basetable_solar.csv"
+        output_path="basetables/suitability_index_basetable_percentiles.csv"
     )
 
     run_pipeline(config)

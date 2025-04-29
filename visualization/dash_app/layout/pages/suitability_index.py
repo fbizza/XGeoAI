@@ -5,14 +5,14 @@ from visualization.plotting_functions import *
 
 grid_df = pd.read_csv('../../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
 locations_df = pd.read_csv('../../data/basetables/distance_from_grid')
-suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_solar.csv')
+suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_percentiles.csv')
 
-
+# score_km,score_wind_correlation,score_wind_capacity,score_solar_radiation
 def add_linear_combination_column(df, weight_km, weight_corr, weight_wind_capacity_factor, weight_solar_radiation):
-    df['suitability_index'] = ((df['normalized_km'] * weight_km) +
-                               (df['normalized_corr'] * weight_corr) +
-                               (df['normalized_wind_capacity_factor'] * weight_wind_capacity_factor) +
-                               (df['normalized_solar_radiation'] * weight_solar_radiation))
+    df['suitability_index'] = ((df['score_km'] * weight_km) +
+                               (df['score_wind_correlation'] * weight_corr) +
+                               (df['score_wind_capacity'] * weight_wind_capacity_factor) +
+                               (df['score_solar_radiation'] * weight_solar_radiation))
     return df
 
 
