@@ -38,7 +38,14 @@ app.layout = html.Div([
         # dbc.Button("Button 3", id="btn-3", color="secondary", className="menu-btn"),
     ]),
     sidebar,
-    html.Div(id="page-content", className="content")
+
+    html.Div(id="sidepanel", className="sidepanel collapsed", children=[
+        html.Button("✕", id="btn-close-panel", className="close-btn", n_clicks=0),
+        html.H4("Details"),
+        html.Div(id="sidepanel-content")
+    ]),
+
+    html.Div(id="page-content", className="content"),
 ])
 
 register_callbacks(app)

@@ -113,7 +113,7 @@ layout = html.Div([
             # Slider 3 Wind Capacity Factor
             dbc.Col([
                             html.Div([
-                                html.Label("Average Wind Capacity Factor", className="text-center w-100 mb-2"),
+                                html.Label("Wind Capacity Factor", className="text-center w-100 mb-2"),
                                 dcc.Slider(
                                     id='slider-3',
                                     min=0,
@@ -167,8 +167,6 @@ layout = html.Div([
             ], width=3),
 
         ], justify='center', className="mb-4"),
-
-
 
         dcc.Graph(id='map-figure', figure=fig, style={'height': '70vh', 'width': '100%'})
     ])

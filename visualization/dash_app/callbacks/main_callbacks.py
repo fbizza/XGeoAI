@@ -1,5 +1,6 @@
-from dash import html, Input, Output, State, callback_context
+from dash import html, Input, Output, State, ctx
 import geopandas as gpd
+
 from dash.exceptions import PreventUpdate
 from visualization.dash_app.layout.pages import (
     home, mean_correlation_distance, mean_correlation,
@@ -9,6 +10,7 @@ from visualization.dash_app.layout.pages import (
 )
 from visualization.dash_app.layout.pages.suitability_index import create_map_figure
 from visualization.dash_app.layout.pages.interactive_clusters import create_interactive_clusters_map_figure, enrich_with_distances
+from visualization.dash_app.layout.pages.details_panel import generate_details_panel_content
 
 
 def register_callbacks(app):
@@ -201,25 +203,26 @@ def register_callbacks(app):
         return create_interactive_clusters_map_figure(gdf=gdf, cluster_number=cluster_num)
 
 
-    # clicks on the suitability index map
-    import json
+    # clicks on the suitability index map, it opens a sidepanel with details of the clicked point
     @app.callback(
+        Output('sidepanel', 'className'),
+        Output('sidepanel-content', 'children'),
         Input('map-figure', 'clickData'),
+        Input('btn-close-panel', 'n_clicks'),
+        State('sidepanel', 'className'),
         prevent_initial_call=True
     )
-    def display_click_data(clickData):
-        if clickData:
-            point = clickData['points'][0]
-            customdata = point.get('customdata', [])
-            print("Clicked point data:")
-            print(f"Latitude: {point['lat']}")
-            print(f"Longitude: {point['lon']}")
-            print(f"Custom Data [0]: {customdata[0]}")
-            print(f"Custom Data [1]: {customdata[1]}")
-            print(f"Custom Data [2]: {customdata[2]}")
-            print(f"color: {point['marker.color']}")
-            print("Full clickData:")
-            print(json.dumps(clickData, indent=2))
+    def toggle_details_panel(clickData, close_clicks, current_class):
+        triggered_id = ctx.triggered_id
+
+        if triggered_id == "btn-close-panel":
+            return "sidepanel collapsed", ""
+
+        if triggered_id == "map-figure" and clickData:
+            content = generate_details_panel_content(clickData['points'][0])
+            return "sidepanel show", content
+
+        raise PreventUpdate
 
 
 
