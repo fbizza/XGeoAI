@@ -5,13 +5,13 @@ import numpy as np
 
 def create_figure_1():
 
-
+    #TODO: add proper distributions figures
     data = np.random.normal(loc=0, scale=1, size=500)
 
     fig = go.Figure()
     fig.add_trace(go.Histogram(
         x=data,
-        marker_color='#17a2b8',  # Cyan-ish, already used in your theme
+        marker_color='#17a2b8',
         opacity=0.8,
         hoverlabel=dict(bgcolor="#2c2c3c", font_color="white")
     ))

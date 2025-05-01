@@ -168,6 +168,6 @@ layout = html.Div([
 
         ], justify='center', className="mb-4"),
 
-        dcc.Graph(id='map-figure', figure=fig, style={'height': '70vh', 'width': '100%'})
+        dcc.Graph(id='map-figure', figure=fig, config={"displayModeBar": False}, style={'height': '70vh', 'width': '100%'})
     ])
 ])
