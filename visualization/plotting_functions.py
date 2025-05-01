@@ -38,7 +38,41 @@ def create_scattermap_figure(df, value_column_name=None, marker_size=5, colorsca
             cmax=cmax,
             cmid=cmid,
         ),
-        name=column_name
+        name=column_name,
+    ))
+
+    return fig
+
+def create_suitability_index_scattermap_figure(df, value_column_name=None, marker_size=5, colorscale='RdBu', uniform_color=None,
+                             cmin=None, cmax=None, cmid=None, opacity=0.8):
+    if value_column_name:
+        column_name = value_column_name
+    else:
+        other_columns = [col for col in df.columns if col not in ['Latitude', 'Longitude']]
+        if not other_columns:
+            raise ValueError("No suitable columns found in the dataframe for plotting.")
+
+        column_name = other_columns[0]
+
+    custom_columns = ['Latitude', "Longitude", "suitability_index"]
+    df['custom_data_combined'] = df[custom_columns].values.tolist()
+
+    fig = go.Figure(go.Scattermap(
+        lat=df['Latitude'],
+        lon=df['Longitude'],
+        mode='markers',
+        marker=dict(
+            size=marker_size,
+            color=uniform_color if uniform_color else df[column_name],
+            colorscale=colorscale if not uniform_color else None,
+            colorbar=dict(title=column_name) if not uniform_color else None,
+            opacity=opacity,
+            cmin=cmin,
+            cmax=cmax,
+            cmid=cmid,
+        ),
+        name=column_name,
+        customdata=df['custom_data_combined'],
     ))
 
     return fig

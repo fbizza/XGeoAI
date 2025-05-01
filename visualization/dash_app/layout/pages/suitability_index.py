@@ -22,12 +22,12 @@ def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weigh
                                        weight_corr,
                                        weight_wind_capacity_factor,
                                        weight_solar_radiation)
-    fig = create_scattermap_figure(
+    fig = create_suitability_index_scattermap_figure(
         df=df,
         value_column_name="suitability_index",
         colorscale="RdBu",
         opacity=0.5,
-        marker_size=7
+        marker_size=7,
     )
     fig.update_layout(
         map=dict(

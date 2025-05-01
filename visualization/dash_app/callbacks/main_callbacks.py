@@ -201,6 +201,28 @@ def register_callbacks(app):
         return create_interactive_clusters_map_figure(gdf=gdf, cluster_number=cluster_num)
 
 
+    # clicks on the suitability index map
+    import json
+    @app.callback(
+        Input('map-figure', 'clickData'),
+        prevent_initial_call=True
+    )
+    def display_click_data(clickData):
+        if clickData:
+            point = clickData['points'][0]
+            customdata = point.get('customdata', [])
+            print("Clicked point data:")
+            print(f"Latitude: {point['lat']}")
+            print(f"Longitude: {point['lon']}")
+            print(f"Custom Data [0]: {customdata[0]}")
+            print(f"Custom Data [1]: {customdata[1]}")
+            print(f"Custom Data [2]: {customdata[2]}")
+            print(f"color: {point['marker.color']}")
+            print("Full clickData:")
+            print(json.dumps(clickData, indent=2))
+
+
+
 
 
 
