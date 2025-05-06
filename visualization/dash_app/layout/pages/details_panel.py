@@ -60,18 +60,20 @@ def create_figure_4():
     return dcc.Graph(figure=fig)
 
 def generate_details_panel_content(point):
+    # custom data can be changed from the "create_suitability_index_scattermap_figure" function in plotting_functions.py
     customdata = point.get('customdata', [])
     lat = point.get('lat')
     lon = point.get('lon')
     color = point.get('marker.color')
 
     return html.Div([
-        html.P(f"Latitude: {lat}"),
-        html.P(f"Longitude: {lon}"),
-        html.P(f"Custom Data 0: {customdata[0]}"),
-        html.P(f"Custom Data 1: {customdata[1]}"),
-        html.P(f"Custom Data 2: {customdata[2]}"),
-        html.P(f"Color: {color}"),
+        html.P(f"Latitude: {customdata[0]}"),
+        html.P(f"Longitude: {customdata[1]}"),
+        html.P(f"Suitability index: {customdata[2]}"),
+        html.P(f"Score distance from grid: {customdata[3]}"),
+        html.P(f"Score wind correlation: {customdata[4]}"),
+        html.P(f"Score wind capacity factor: {customdata[5]}"),
+        html.P(f"Score solar radiation: {customdata[6]}"),
 
         create_figure_1(),
         create_figure_2(),
