@@ -41,7 +41,6 @@ app.layout = html.Div([
 
     html.Div(id="sidepanel", className="sidepanel collapsed", children=[
         html.Button("✕", id="btn-close-panel", className="close-btn", n_clicks=0),
-        html.H4("Details"),
         html.Div(id="sidepanel-content")
     ]),
 

@@ -77,7 +77,7 @@ def create_distribution_figure(
         plot_bgcolor="#1e1e2f",
         paper_bgcolor="#1e1e2f",
         font=dict(color="white"),
-        margin=dict(l=40, r=20, t=100, b=20),  # More top space for multi-line titles
+        margin=dict(l=40, r=20, t=100, b=20),
         xaxis=dict(
             title=x_axis_label or column_name,
             showgrid=False,
@@ -106,21 +106,86 @@ def create_distribution_figure(
     )
 
 
+def score_style(score, emphasis=False):
+    if score >= 85:
+        color = "#2ecc71"  # Excellent
+    elif score >= 65:
+        color = "#27ae60"  # Very Good
+    elif score >= 50:
+        color = "#f1c40f"  # Good
+    elif score >= 30:
+        color = "#e67e22"  # Fair
+    elif score >= 15:
+        color = "#e74c3c"  # Poor
+    else:
+        color = "#c0392b"  # Very Poor
+
+    style = {
+        "backgroundColor": color,
+        "color": "white",
+        "padding": "4px 12px" if emphasis else "2px 8px",
+        "borderRadius": "6px" if emphasis else "4px",
+        "fontWeight": "bold",
+        "minWidth": "40px",
+        "textAlign": "center",
+        "fontSize": "1.2em" if emphasis else "0.9em",
+        "boxShadow": "0 0 8px rgba(0,0,0,0.4)" if emphasis else "",
+        "marginTop": "5px"
+    }
+    return style
+
 def generate_details_panel_content(point):
-    # custom data can be changed from the "create_suitability_index_scattermap_figure" function in plotting_functions.py
     customdata = point.get('customdata', [])
     lat = point.get('lat')
     lon = point.get('lon')
-    color = point.get('marker.color')
 
     return html.Div([
-        html.P(f"Latitude: {customdata[0]}"),
-        html.P(f"Longitude: {customdata[1]}"),
-        html.P(f"Suitability index: {customdata[2]:.1f}"),
-        html.P(f"Score distance from grid: {customdata[3]}"),
-        html.P(f"Score wind correlation: {customdata[4]}"),
-        html.P(f"Score wind capacity factor: {customdata[5]}"),
-        html.P(f"Score solar radiation: {customdata[6]}"),
+        html.H4("Location Details", style={"marginBottom": "10px", "color": "white"}),
+
+        html.Div([
+            html.Div(["Latitude: ", html.Span(f"{customdata[0]}", style={"fontWeight": "bold"})]),
+            html.Div(["Longitude: ", html.Span(f"{customdata[1]}", style={"fontWeight": "bold"})]),
+        ], style={"marginBottom": "15px", "color": "white"}),
+
+        html.Div([
+            html.Div("Suitability Index", style={
+                "textAlign": "center",
+                "fontSize": "1.1em",
+                "fontWeight": "600",
+                "marginBottom": "4px",
+                "color": "white"
+            }),
+            html.Div(f"{customdata[2]:.1f}", style={
+                **score_style(customdata[2], emphasis=True),
+                "margin": "0 auto",
+                "textAlign": "center",
+                "width": "fit-content"
+            }),
+        ], style={"margin": "20px 0"}),
+
+        html.H5("Suitability Scores", style={"marginBottom": "5px", "color": "white"}),
+
+        html.Div([
+            html.Div([
+                html.Span("Distance from Grid:", style={"flex": "1"}),
+                html.Span(f"{customdata[3]}", style=score_style(customdata[3]))
+            ], style={"display": "flex", "marginBottom": "4px"}),
+
+            html.Div([
+                html.Span("Wind Correlation:", style={"flex": "1"}),
+                html.Span(f"{customdata[4]}", style=score_style(customdata[4]))
+            ], style={"display": "flex", "marginBottom": "4px"}),
+
+            html.Div([
+                html.Span("Wind Capacity Factor:", style={"flex": "1"}),
+                html.Span(f"{customdata[5]}", style=score_style(customdata[5]))
+            ], style={"display": "flex", "marginBottom": "4px"}),
+
+            html.Div([
+                html.Span("Solar Radiation:", style={"flex": "1"}),
+                html.Span(f"{customdata[6]}", style=score_style(customdata[6]))
+            ], style={"display": "flex", "marginBottom": "4px"}),
+        ], style={"marginBottom": "20px", "color": "white"}),
 
         create_distribution_figure(
             df=suitability_index_df,
@@ -150,6 +215,4 @@ def generate_details_panel_content(point):
             title='Correlation with Operating<br>Wind Farms',
             highlight_value=customdata[9],
         ),
-
-
     ])
