@@ -12,12 +12,13 @@ def create_distribution_figure(
     column_name,
     x_axis_label=None,
     title=None,
-    highlight_value=None
+    highlight_value=None,
 ):
     import pandas as pd
     import numpy as np
     import plotly.graph_objects as go
     from dash import dcc
+
 
     if column_name not in df.columns:
         raise ValueError(f"Column '{column_name}' not found in DataFrame.")
@@ -39,10 +40,8 @@ def create_distribution_figure(
         name='Distribution'
     ))
 
-
     if highlight_value is not None:
         highlight_y = max_density * 1.05 if max_density > 0 else 0.1
-        text_y_offset = highlight_y if highlight_y > 0 else 0.6
 
         fig.add_trace(go.Scatter(
             x=[highlight_value, highlight_value],
@@ -53,25 +52,32 @@ def create_distribution_figure(
         ))
 
         fig.add_annotation(
-            x=highlight_value + 0.05,
-            y=text_y_offset,
-            text=f"Clicked location: {highlight_value}",
+            x=highlight_value,
+            y=highlight_y,
+            text=f"Clicked location: {highlight_value:.1f}",
             showarrow=True,
             arrowhead=2,
             arrowsize=1.5,
             arrowcolor="red",
             font=dict(color="white", family="Segoe UI", size=9),
             align="center",
-            ax=0,
-            ay=-20
         )
 
+
+    title_text = title or f"Distribution of {column_name}"
+
     fig.update_layout(
-        title=title or f"Distribution of {column_name}",
+        title=dict(
+            text=title_text,
+            x=0.5,
+            xanchor='center',
+            yanchor='top',
+            font=dict(color='#17a2b8')
+        ),
         plot_bgcolor="#1e1e2f",
         paper_bgcolor="#1e1e2f",
         font=dict(color="white"),
-        margin=dict(l=40, r=20, t=70, b=20),
+        margin=dict(l=40, r=20, t=100, b=20),  # More top space for multi-line titles
         xaxis=dict(
             title=x_axis_label or column_name,
             showgrid=False,
@@ -90,7 +96,6 @@ def create_distribution_figure(
         ),
         bargap=0.05,
         showlegend=False,
-        title_font=dict(size=18, color='white', family='Segoe UI'),
         hovermode=False
     )
 
@@ -100,64 +105,6 @@ def create_distribution_figure(
         style={"height": "300px", "border": "none"}
     )
 
-
-
-
-# def create_figure_1():
-#
-#     #TODO: add proper distributions figures
-#     data = np.random.normal(loc=0, scale=1, size=500)
-#
-#     fig = go.Figure()
-#     fig.add_trace(go.Histogram(
-#         x=data,
-#         marker_color='#17a2b8',
-#         opacity=0.8,
-#         hoverlabel=dict(bgcolor="#2c2c3c", font_color="white")
-#     ))
-#
-#     fig.update_layout(
-#         title="Distribution 1",
-#         plot_bgcolor="#1e1e2f",
-#         paper_bgcolor="#1e1e2f",
-#         font=dict(color="white"),
-#         margin=dict(l=20, r=20, t=40, b=20),
-#         xaxis=dict(
-#             showgrid=False,
-#             zeroline=False,
-#             showline=False,
-#             color="white"
-#         ),
-#         yaxis=dict(
-#             showgrid=False,
-#             zeroline=False,
-#             showline=False,
-#             color="white"
-#         ),
-#         bargap=0.05,
-#         showlegend=False,
-#         title_font=dict(size=18, color='white', family='Segoe UI')
-#     )
-#
-#     return dcc.Graph(figure=fig, config={"displayModeBar": False}, style={"height": "300px", "border": "none"})
-
-def create_figure_2():
-    data = np.random.normal(loc=0, scale=1, size=500)
-    fig = px.histogram(data, nbins=30, title="Distribution 2")
-    fig.update_layout(template="plotly_dark")
-    return dcc.Graph(figure=fig)
-
-def create_figure_3():
-    data = np.random.normal(loc=0, scale=1, size=500)
-    fig = px.histogram(data, nbins=30, title="Distribution 3")
-    fig.update_layout(template="plotly_dark")
-    return dcc.Graph(figure=fig)
-
-def create_figure_4():
-    data = np.random.normal(loc=0, scale=1, size=500)
-    fig = px.histogram(data, nbins=30, title="Distribution 4")
-    fig.update_layout(template="plotly_dark")
-    return dcc.Graph(figure=fig)
 
 def generate_details_panel_content(point):
     # custom data can be changed from the "create_suitability_index_scattermap_figure" function in plotting_functions.py
@@ -175,15 +122,34 @@ def generate_details_panel_content(point):
         html.P(f"Score wind capacity factor: {customdata[5]}"),
         html.P(f"Score solar radiation: {customdata[6]}"),
 
-
+        create_distribution_figure(
+            df=suitability_index_df,
+            column_name='avg_capacity_factor',
+            x_axis_label='Capacity Factor',
+            title='Average Capacity Factor',
+            highlight_value=customdata[8],
+        ),
+        create_distribution_figure(
+            df=suitability_index_df,
+            column_name='avg_solar_radiation',
+            x_axis_label="Irradiance (W/m²)",
+            title='Average Solar Radiation',
+            highlight_value=customdata[10],
+        ),
         create_distribution_figure(
             df=suitability_index_df,
             column_name='min_distance_to_line_km',
-            x_axis_label='Distance from grid (KMs)',
-            title='Distance from electrical grid',
+            x_axis_label='Distance from Grid (km)',
+            title='Distance from Electrical Grid',
             highlight_value=customdata[7],
         ),
-        create_figure_2(),
-        create_figure_3(),
-        create_figure_4(),
+        create_distribution_figure(
+            df=suitability_index_df,
+            column_name='Mean Correlation',
+            x_axis_label='Correlation',
+            title='Correlation with Operating<br>Wind Farms',
+            highlight_value=customdata[9],
+        ),
+
+
     ])
