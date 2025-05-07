@@ -108,17 +108,18 @@ def create_distribution_figure(
 
 def score_style(score, emphasis=False):
     if score >= 85:
-        color = "#2ecc71"  # Excellent
+        color = "#00796B"  # Excellent (Teal Blue)
     elif score >= 65:
-        color = "#27ae60"  # Very Good
+        color = "#43A047"  # Very Good (Lime Green)
     elif score >= 50:
-        color = "#f1c40f"  # Good
+        color = "#FBC02D"  # Good (Amber)
     elif score >= 30:
-        color = "#e67e22"  # Fair
+        color = "#FB8C00"  # Fair (Deep Orange)
     elif score >= 15:
-        color = "#e74c3c"  # Poor
+        color = "#E53935"  # Poor (Tomato)
     else:
-        color = "#c0392b"  # Very Poor
+        color = "#B71C1C"  # Very Poor (Dark Red)
+
 
     style = {
         "backgroundColor": color,
@@ -143,9 +144,27 @@ def generate_details_panel_content(point):
         html.H4("Location Details", style={"marginBottom": "10px", "color": "white"}),
 
         html.Div([
-            html.Div(["Latitude: ", html.Span(f"{customdata[0]}", style={"fontWeight": "bold"})]),
-            html.Div(["Longitude: ", html.Span(f"{customdata[1]}", style={"fontWeight": "bold"})]),
-        ], style={"marginBottom": "15px", "color": "white"}),
+            html.Table([
+                html.Tr([
+                    html.Th("Latitude",
+                            style={"textAlign": "left", "padding": "6px", "color": "#bbb", "fontWeight": "normal"}),
+                    html.Td(f"{customdata[0]:.2f}", style={"padding": "6px", "color": "white", "fontWeight": "bold"})
+                ]),
+                html.Tr([
+                    html.Th("Longitude",
+                            style={"textAlign": "left", "padding": "6px", "color": "#bbb", "fontWeight": "normal"}),
+                    html.Td(f"{customdata[1]:.2f}", style={"padding": "6px", "color": "white", "fontWeight": "bold"})
+                ])
+            ], style={
+                "width": "100%",
+                "borderCollapse": "collapse",
+                "backgroundColor": "#2a2a3c",
+                "borderRadius": "6px",
+                "overflow": "hidden",
+                "marginBottom": "15px",
+                "boxShadow": "0 0 5px rgba(0,0,0,0.3)"
+            })
+        ]),
 
         html.Div([
             html.Div("Suitability Index", style={
@@ -215,4 +234,5 @@ def generate_details_panel_content(point):
             title='Correlation with Operating<br>Wind Farms',
             highlight_value=customdata[9],
         ),
+
     ])
