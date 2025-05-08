@@ -224,6 +224,8 @@ def register_callbacks(app):
 
         raise PreventUpdate
 
+    #TODO: callback to highlight selected point and callback to synch sliders with suitability score
+
 
 
 
