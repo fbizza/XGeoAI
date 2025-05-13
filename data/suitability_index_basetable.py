@@ -2,16 +2,42 @@ import pandas as pd
 import geopandas as gpd
 from typing import List, Optional
 
+from shapely.geometry import Point
+
+def assign_state_column(df: pd.DataFrame, geojson_data: str) -> pd.DataFrame:
+    """
+    Adds a 'state' column to a DataFrame based on spatial lookup using GeoJSON data.
+    Parameters:
+        df (pd.DataFrame): Must contain 'Latitude' and 'Longitude' columns.
+        geojson_data (str): Path to GeoJSON file.
+    Returns:
+        pd.DataFrame: DataFrame with an added 'state' column.
+    """
+    states_gdf = gpd.read_file(geojson_data).to_crs(epsg=4326)
+
+    df = df.copy()
+    df['geometry'] = [Point(xy) for xy in zip(df['Longitude'], df['Latitude'])]
+    points_gdf = gpd.GeoDataFrame(df, geometry='geometry', crs="EPSG:4326")
+
+    joined = gpd.sjoin(points_gdf, states_gdf[['STATE_NAME', 'geometry']], how='left', predicate='within')
+    joined = joined.drop_duplicates(subset=df.index.name or joined.index.name)
+
+    result_df = joined.drop(columns=['geometry', 'index_right'])
+    result_df = result_df.rename(columns={'STATE_NAME': 'state'})
+
+    return result_df
 
 # ---------- Config ----------
 class PipelineConfig:
     def __init__(self,
                  file_paths: List[str],
                  geojson_path: Optional[str] = None,
+                 state_geojson_path: Optional[str] = None,
                  filter_land_only: bool = False,
                  output_path: str = "basetables/suitability_index_basetable.csv"):
         self.file_paths = file_paths
         self.geojson_path = geojson_path
+        self.state_geojson_path = state_geojson_path
         self.filter_land_only = filter_land_only
         self.output_path = output_path
 
@@ -150,6 +176,10 @@ def run_pipeline(config: PipelineConfig):
 
     basetable = build_basetable(processed_df)
 
+    if config.state_geojson_path:
+        print("Assigning state column...")
+        basetable = assign_state_column(basetable, config.state_geojson_path)
+
     save_basetable(basetable, config.output_path)
 
     print("Pipeline complete. Output saved to:", config.output_path)
@@ -157,17 +187,18 @@ def run_pipeline(config: PipelineConfig):
 
 
 if __name__ == "__main__":
-    config = PipelineConfig(
-        file_paths=[
-            "basetables/distance_from_grid",
-            "basetables/target_mean_correlation.csv",
-            "basetables/avg_capacity_factor.csv",
-            "basetables/avg_solar_radiation.csv",
+    if __name__ == "__main__":
+        config = PipelineConfig(
+            file_paths=[
+                "basetables/distance_from_grid",
+                "basetables/target_mean_correlation.csv",
+                "basetables/avg_capacity_factor.csv",
+                "basetables/avg_solar_radiation.csv",
+            ],
+            geojson_path="raw/australia_land.json",  # used for land-only filter
+            state_geojson_path="processed/australian_states.geojson",  # used to assign state
+            filter_land_only=True,
+            output_path="basetables/suitability_index_basetable_v2.csv"
+        )
 
-        ],
-        geojson_path="raw/australia_land.json",
-        filter_land_only=True,
-        output_path="basetables/suitability_index_basetable_percentiles.csv"
-    )
-
-    run_pipeline(config)
+        run_pipeline(config)
