@@ -85,19 +85,24 @@ def create_suitability_index_scattermap_figure(df, value_column_name=None, marke
         lat_sel = selected_point["lat"]
         lon_sel = selected_point["lon"]
 
-        fig.add_trace(go.Scattermap(
+        highlighted_point = go.Scattermap(
             lat=[lat_sel],
             lon=[lon_sel],
-            mode='markers',
+            mode='markers+text',
+            text="Selected Point",
+            textposition="bottom right",
+            textfont=dict(size=9, color="black", family="Open Sans Bold"),
             marker=dict(
-                size=15,
-                color='yellow',
-                symbol='star',
-                opacity=1,
+                size=10,
+                color='black',
+                symbol='circle',
+                opacity=0.8,
+                showscale=False
             ),
-            name="Selected Point",
-            hoverinfo='skip'
-        ))
+            hoverinfo="none"
+        )
+        fig.add_trace(highlighted_point)
+
 
     return fig
 
