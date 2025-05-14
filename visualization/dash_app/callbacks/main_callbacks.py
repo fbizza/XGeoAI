@@ -131,34 +131,66 @@ def register_callbacks(app):
         )
 
     # suitability_index callback:
+
+
+    from dash import ctx
+
+    from dash import ctx
+
     @app.callback(
         Output('map-figure', 'figure'),
         Input('input-1', 'value'),
         Input('input-2', 'value'),
         Input('input-3', 'value'),
         Input('input-4', 'value'),
-        State('map-figure', 'relayoutData')  # to keep the same zoom of the figure after update
+        Input('map-figure', 'clickData'),
+        Input('btn-close-panel', 'n_clicks'),
+        State('sidepanel', 'className'),
+        State('map-figure', 'relayoutData'),
+        State('map-figure', 'figure')
     )
-    def update_map(input_1_value, input_2_value, input_3_value, input_4_value, relayout_data):
+    def update_map(input_1_value, input_2_value, input_3_value, input_4_value,
+                   clickData, close_cliks, sidepanel_class, relayout_data, current_figure):
+
         zoom = 2.5
         center = {'lat': -29, 'lon': 135}
-
 
         if relayout_data:
             zoom = relayout_data.get('map.zoom', zoom)
             center = relayout_data.get('map.center', center)
 
-        weight_km = input_2_value
-        weight_corr = input_1_value
-        weight_wind_capacity_factor = input_3_value
-        weight_solar_radiation = input_4_value
+        triggered = ctx.triggered_id
+        selected_point = None
 
-        return create_map_figure(weight_km,
-                                 weight_corr,
-                                 weight_wind_capacity_factor,
-                                 weight_solar_radiation,
-                                 zoom,
-                                 center=center)
+        # If the user just clicked a map point
+        if triggered == "map-figure" and clickData:
+            selected_point = {
+                "lat": clickData["points"][0]["lat"],
+                "lon": clickData["points"][0]["lon"]
+            }
+
+        # If the panel is open and the user is closing it
+        elif triggered == "btn-close-panel" and sidepanel_class == "sidepanel show":
+            selected_point = None
+
+        # Otherwise retain the previously selected point
+        else:
+            for trace in current_figure.get("data", []):
+                if trace.get("name") == "Selected Point":
+                    lat = trace["lat"][0]
+                    lon = trace["lon"][0]
+                    selected_point = {"lat": lat, "lon": lon}
+                    break
+
+        return create_map_figure(
+            input_2_value,
+            input_1_value,
+            input_3_value,
+            input_4_value,
+            zoom,
+            center=center,
+            selected_point=selected_point
+        )
 
 
     # interactive_clusters_callback:
