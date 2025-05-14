@@ -123,6 +123,8 @@ input[type=number] {
     z-index: 1000;
     overflow-y: auto;
     color: white;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 2); /* enhanced shadow */
+    /*box-shadow: -2px 0 12px rgba(255, 255, 255, 0.2); /* soft white glow */
 }
 
 /* Show the panel */
