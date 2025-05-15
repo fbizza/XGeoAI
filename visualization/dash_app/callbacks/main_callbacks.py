@@ -63,6 +63,8 @@ def register_callbacks(app):
         Output('input-3', 'value'),
         Output('slider-4', 'value'),
         Output('input-4', 'value'),
+        Output('slider-5', 'value'),
+        Output('input-5', 'value'),
         Input('slider-1', 'value'),
         Input('input-1', 'value'),
         Input('slider-2', 'value'),
@@ -71,9 +73,11 @@ def register_callbacks(app):
         Input('input-3', 'value'),
         Input('slider-4', 'value'),
         Input('input-4', 'value'),
+        Input('slider-5', 'value'),
+        Input('input-5', 'value'),
         prevent_initial_call=True
     )
-    def sync_and_balance_weights(s1, i1, s2, i2, s3, i3, s4, i4):
+    def sync_and_balance_weights(s1, i1, s2, i2, s3, i3, s4, i4, s5, i5):
         ctx = callback_context
         if not ctx.triggered:
             raise PreventUpdate
@@ -85,6 +89,7 @@ def register_callbacks(app):
             'slider-2': s2, 'input-2': i2,
             'slider-3': s3, 'input-3': i3,
             'slider-4': s4, 'input-4': i4,
+            'slider-5': s5, 'input-5': i5,
         }
 
         # sync slider and input
@@ -106,13 +111,13 @@ def register_callbacks(app):
             fixed_value = 1.0
             remaining = 0.0
 
-        other_indices = [i for i in [1, 2, 3, 4] if i != changed_index]
+        other_indices = [i for i in [1, 2, 3, 4, 5] if i != changed_index]
         total_other = sum(values[f'slider-{i}'] for i in other_indices)
 
         if total_other == 0:
             for i in other_indices:
-                values[f'slider-{i}'] = round(remaining / 3, 2)
-                values[f'input-{i}'] = round(remaining / 3, 2)
+                values[f'slider-{i}'] = round(remaining / 4, 2)
+                values[f'input-{i}'] = round(remaining / 4, 2)
         else:
             for i in other_indices:
                 proportion = values[f'slider-{i}'] / total_other
@@ -128,6 +133,7 @@ def register_callbacks(app):
             values['slider-2'], values['input-2'],
             values['slider-3'], values['input-3'],
             values['slider-4'], values['input-4'],
+            values['slider-5'], values['input-5'],
         )
 
     # suitability_index callback:
@@ -143,13 +149,14 @@ def register_callbacks(app):
         Input('input-2', 'value'),
         Input('input-3', 'value'),
         Input('input-4', 'value'),
+        Input('input-5', 'value'),
         Input('map-figure', 'clickData'),
         Input('btn-close-panel', 'n_clicks'),
         State('sidepanel', 'className'),
         State('map-figure', 'relayoutData'),
         State('map-figure', 'figure')
     )
-    def update_map(input_1_value, input_2_value, input_3_value, input_4_value,
+    def update_map(input_1_value, input_2_value, input_3_value, input_4_value, input_5_value,
                    clickData, close_cliks, sidepanel_class, relayout_data, current_figure):
 
         zoom = 2.5
@@ -187,6 +194,7 @@ def register_callbacks(app):
             input_1_value,
             input_3_value,
             input_4_value,
+            input_5_value,
             zoom,
             center=center,
             selected_point=selected_point

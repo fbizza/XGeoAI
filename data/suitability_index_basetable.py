@@ -139,7 +139,7 @@ def process_data(df: pd.DataFrame) -> pd.DataFrame:
 
     df['score_solar_radiation'] = percentile_score(df['avg_solar_radiation'], invert=True)
 
-    df['score_distance_nature_land'] = percentile_score(df['min_distance_nature_land_km'], invert=True)
+    df['score_distance_nature_land'] = percentile_score(df['min_distance_nature_land_km'], invert=False)
 
     return df
 

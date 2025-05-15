@@ -6,20 +6,22 @@ from visualization.plotting_functions import *
 suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_v4.csv')
 
 # score_km,score_wind_correlation,score_wind_capacity,score_solar_radiation
-def add_linear_combination_column(df, weight_km, weight_corr, weight_wind_capacity_factor, weight_solar_radiation):
+def add_linear_combination_column(df, weight_km, weight_corr, weight_wind_capacity_factor, weight_solar_radiation, weight_distance_nature_land):
     df['suitability_index'] = ((df['score_km'] * weight_km) +
                                (df['score_wind_correlation'] * weight_corr) +
                                (df['score_wind_capacity'] * weight_wind_capacity_factor) +
-                               (df['score_solar_radiation'] * weight_solar_radiation))
+                               (df['score_solar_radiation'] * weight_solar_radiation) +
+                               (df['score_distance_nature_land'] * weight_distance_nature_land))
     return df
 
 
-def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weight_solar_radiation, zoom=2.5, center={'lat': -29, 'lon': 135}, selected_point=None):
+def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weight_solar_radiation, weight_distance_natue_land, zoom=2.5, center={'lat': -29, 'lon': 135}, selected_point=None):
     df = add_linear_combination_column(suitability_index_df,
                                        weight_km,
                                        weight_corr,
                                        weight_wind_capacity_factor,
-                                       weight_solar_radiation)
+                                       weight_solar_radiation,
+                                       weight_distance_natue_land)
     fig = create_suitability_index_scattermap_figure(
         df=df,
         value_column_name="suitability_index",
@@ -40,7 +42,7 @@ def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weigh
     return fig
 
 
-fig = create_map_figure(weight_km=0.15, weight_corr=0.15, weight_wind_capacity_factor=0.6, weight_solar_radiation=0.1)
+fig = create_map_figure(weight_km=0.15, weight_corr=0.15, weight_wind_capacity_factor=0.6, weight_solar_radiation=0.1, weight_distance_natue_land=0.0)
 
 
 layout = html.Div([
@@ -160,6 +162,34 @@ layout = html.Div([
                     )
                 ])
             ], width=3),
+
+            # Slider 5 Distance from nature land
+            dbc.Col([
+                            html.Div([
+                                html.Label("Distance Nature Land", className="text-center w-100 mb-2"),
+                                dcc.Slider(
+                                    id='slider-5',
+                                    min=0,
+                                    max=1,
+                                    value=0.0,
+                                    tooltip={"placement": "top"},
+                                    marks=None
+                                ),
+                                html.Div(
+                                    dcc.Input(
+                                        id='input-5',
+                                        type='number',
+                                        min=0,
+                                        max=1,
+                                        step=0.01,
+                                        value=0.0,
+                                        className='input-box',
+                                        style={"width": "15%", "textAlign": "center"}
+                                    ),
+                                    className="d-flex justify-content-center mt-2"
+                                )
+                            ])
+                        ], width=3),
 
         ], justify='center', className="mb-4"),
 
