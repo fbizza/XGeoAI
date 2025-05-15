@@ -102,19 +102,19 @@ def percentile_score(series: pd.Series, invert: bool = True) -> pd.Series:
     If invert=True, lower values get higher scores (100 = best).
     If invert=False, higher values get higher scores (100 = best).
     """
-
     # compute 101 quantile breakpoints for 100 bins
     percentiles = series.quantile([i / 100 for i in range(101)]).values
     percentiles = pd.Series(percentiles).drop_duplicates().values  # remove duplicates to avoid cut errors
 
-    # define score labels: 100 (best) to 1 (worst), or 1 to 100 depending on invert
+    # adjust labels to match bins - 1
+    num_bins = len(percentiles) - 1
     if invert:
-        labels = list(range(100, 0, -1))  # 100 to 1
+        labels = list(range(num_bins, 0, -1))  # e.g., [100, 99, ..., 1]
     else:
-        labels = list(range(1, 101))      # 1 to 100
+        labels = list(range(1, num_bins + 1))  # e.g., [1, 2, ..., 100]
 
     # assign percentiles
-    scored = pd.cut(series, bins=percentiles, labels=labels, include_lowest=True, duplicates="drop")
+    scored = pd.cut(series, bins=percentiles, labels=labels, include_lowest=True)
     return scored.astype(int)
 
 # ---------- Step 6: Process ----------
@@ -139,6 +139,8 @@ def process_data(df: pd.DataFrame) -> pd.DataFrame:
 
     df['score_solar_radiation'] = percentile_score(df['avg_solar_radiation'], invert=True)
 
+    df['score_distance_nature_land'] = percentile_score(df['min_distance_nature_land_km'], invert=True)
+
     return df
 
 
@@ -147,8 +149,8 @@ def build_basetable(df: pd.DataFrame) -> pd.DataFrame:
     return df[['Latitude', 'Longitude',
                #'normalized_km', 'normalized_corr', 'normalized_wind_capacity_factor', 'normalized_solar_radiation',
                'Mean Correlation', 'min_distance_to_line_km','avg_capacity_factor',
-               'avg_solar_radiation',
-               'score_km', 'score_wind_correlation', 'score_wind_capacity', 'score_solar_radiation',]]
+               'avg_solar_radiation', "min_distance_nature_land_km",
+               'score_km', 'score_wind_correlation', 'score_wind_capacity', 'score_solar_radiation', "score_distance_nature_land"]]
 
 
 # ---------- Step 8: Save ----------
@@ -194,11 +196,12 @@ if __name__ == "__main__":
                 "basetables/target_mean_correlation.csv",
                 "basetables/avg_capacity_factor.csv",
                 "basetables/avg_solar_radiation.csv",
+                "basetables/distance_from_nature_lands.csv"
             ],
             geojson_path="raw/australia_land.json",  # used for land-only filter
             state_geojson_path="processed/australian_states.geojson",  # used to assign state
             filter_land_only=True,
-            output_path="basetables/suitability_index_basetable_v2.csv"
+            output_path="basetables/suitability_index_basetable_v4.csv"
         )
 
         run_pipeline(config)

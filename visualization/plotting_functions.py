@@ -78,6 +78,7 @@ def create_suitability_index_scattermap_figure(df, value_column_name=None, marke
         ),
         name=column_name,
         customdata=df['custom_data_combined'],
+        hoverinfo="none"
     ))
 
     # Add a highlighted point if selected
@@ -104,6 +105,10 @@ def create_suitability_index_scattermap_figure(df, value_column_name=None, marke
         fig.add_trace(highlighted_point)
 
 
+    # fig.update_traces(
+    #     hoverinfo="text",
+    #     hovertemplate="Lat: %{lat}<br>Lon: %{lon}<extra></extra>",
+    # )
     return fig
 
 def create_lines_figure(df, latitude_column_name, longitude_column_name):

@@ -3,9 +3,7 @@ import dash_bootstrap_components as dbc
 from visualization.plotting_functions import *
 
 
-grid_df = pd.read_csv('../../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
-locations_df = pd.read_csv('../../data/basetables/distance_from_grid')
-suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_v2.csv')
+suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_v4.csv')
 
 # score_km,score_wind_correlation,score_wind_capacity,score_solar_radiation
 def add_linear_combination_column(df, weight_km, weight_corr, weight_wind_capacity_factor, weight_solar_radiation):
