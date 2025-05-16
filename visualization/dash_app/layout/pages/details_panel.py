@@ -1,11 +1,8 @@
-from dash import html, dcc
-import plotly.express as px
-import plotly.graph_objects as go
-import numpy as np
+from dash import html
 import pandas as pd
 
-suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_v4.csv')
-column_name ='min_distance_to_line_km'
+suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_v5.csv')
+
 
 def create_distribution_figure(
     df,

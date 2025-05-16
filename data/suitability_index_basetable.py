@@ -1,5 +1,6 @@
 import pandas as pd
 import geopandas as gpd
+import numpy as np
 from typing import List, Optional
 
 from shapely.geometry import Point
@@ -26,6 +27,32 @@ def assign_state_column(df: pd.DataFrame, geojson_data: str) -> pd.DataFrame:
     result_df = result_df.rename(columns={'STATE_NAME': 'state'})
 
     return result_df
+
+def assign_pareto_tiers(df: pd.DataFrame, score_columns: List[str]) -> pd.DataFrame:
+    data = df[score_columns].values
+    n = data.shape[0]
+    pareto_tiers = np.full(n, -1, dtype=int)
+
+    current_tier = 0
+    remaining_indices = np.arange(n)
+
+    while len(remaining_indices) > 0:
+        current_data = data[remaining_indices]
+        is_pareto = np.ones(current_data.shape[0], dtype=bool)
+
+        for i, point in enumerate(current_data):
+            if is_pareto[i]:
+                is_dominated = np.all(current_data >= point, axis=1) & np.any(current_data > point, axis=1)
+                is_pareto[is_dominated] = False
+
+        tier_indices = remaining_indices[is_pareto]
+        pareto_tiers[tier_indices] = current_tier
+
+        remaining_indices = remaining_indices[~is_pareto]
+        current_tier += 1
+
+    df['pareto_tier'] = pareto_tiers
+    return df
 
 # ---------- Config ----------
 class PipelineConfig:
@@ -133,27 +160,20 @@ def percentile_score(series: pd.Series, invert: bool = True) -> pd.Series:
 
 # ---------- Step 6: Process ----------
 def process_data(df: pd.DataFrame) -> pd.DataFrame:
-    # normalization:
-    # df['normalized_km'] = normalize_column(df['min_distance_to_line_km'], invert=True)
-    #
-    # df['normalized_corr'] = normalize_column(df['Mean Correlation'].abs(), invert=True)
-    #
-    # df['normalized_wind_capacity_factor'] = normalize_column(df['avg_capacity_factor'], invert=False)
-    #
-    # df['normalized_solar_radiation'] = normalize_column(df['avg_solar_radiation'], invert=True)
-    #
-    # return df
-
-    # percentiles:
     df['score_km'] = percentile_score(df['min_distance_to_line_km'], invert=True)
-
     df['score_wind_correlation'] = percentile_score(df['Mean Correlation'].abs(), invert=True)
-
     df['score_wind_capacity'] = percentile_score(df['avg_capacity_factor'], invert=False)
-
     df['score_solar_radiation'] = percentile_score(df['avg_solar_radiation'], invert=True)
-
     df['score_distance_nature_land'] = percentile_score(df['min_distance_nature_land_km'], invert=False)
+
+    score_columns = [
+        'score_km',
+        'score_wind_correlation',
+        'score_wind_capacity',
+        'score_solar_radiation',
+        'score_distance_nature_land'
+    ]
+    df = assign_pareto_tiers(df, score_columns)
 
     return df
 
@@ -161,10 +181,11 @@ def process_data(df: pd.DataFrame) -> pd.DataFrame:
 # ---------- Step 7: Build Final Table ----------
 def build_basetable(df: pd.DataFrame) -> pd.DataFrame:
     return df[['Latitude', 'Longitude',
-               #'normalized_km', 'normalized_corr', 'normalized_wind_capacity_factor', 'normalized_solar_radiation',
-               'Mean Correlation', 'min_distance_to_line_km','avg_capacity_factor',
+               'Mean Correlation', 'min_distance_to_line_km', 'avg_capacity_factor',
                'avg_solar_radiation', "min_distance_nature_land_km",
-               'score_km', 'score_wind_correlation', 'score_wind_capacity', 'score_solar_radiation', "score_distance_nature_land"]]
+               'score_km', 'score_wind_correlation', 'score_wind_capacity',
+               'score_solar_radiation', "score_distance_nature_land",
+               'pareto_tier']]
 
 
 # ---------- Step 8: Save ----------
@@ -215,7 +236,7 @@ if __name__ == "__main__":
             geojson_path="raw/australia_land.json",  # used for land-only filter
             state_geojson_path="processed/australian_states.geojson",  # used to assign state
             filter_land_only=True,
-            output_path="basetables/suitability_index_basetable_v4.csv"
+            output_path="basetables/suitability_index_basetable_v5.csv"
         )
 
         run_pipeline(config)
