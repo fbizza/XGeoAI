@@ -20,6 +20,7 @@ sidebar = html.Div([
                 dbc.NavLink("Average Wind Capacity Factor", href="/avg_wind_capacity_factor", active="exact"),
                 dbc.NavLink("Average Solar Radiation", href="/avg_solar_radiation", active="exact"),
                 dbc.NavLink("Backtest", href="/backtest", active="exact"),
+                dbc.NavLink("Pareto", href="/pareto", active="exact"),
                 dbc.NavLink("Documentation", href="/documentation", active="exact"),
             ],
             vertical=True,

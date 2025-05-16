@@ -6,7 +6,7 @@ from visualization.dash_app.layout.pages import (
     home, mean_correlation_distance, mean_correlation,
     vs_operating_wind_farms, grid, suitability_index, gunn_clusters, clusters,
     interactive_clusters, avg_wind_speed, avg_wind_capacity_factor, avg_solar_radiation,
-    backtest, documentation
+    backtest, pareto, documentation
 )
 from visualization.dash_app.layout.pages.suitability_index import create_map_figure
 from visualization.dash_app.layout.pages.interactive_clusters import create_interactive_clusters_map_figure, enrich_with_distances
@@ -50,6 +50,8 @@ def register_callbacks(app):
             return avg_solar_radiation.layout
         elif pathname == "/backtest":
             return backtest.layout
+        elif pathname == "/pareto":
+            return pareto.layout
         elif pathname == "/documentation":
             return documentation.layout
         return html.Div([html.H1("404 - Page not found")], className='text-center my-4')
