@@ -1,8 +1,13 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 from visualization.plotting_functions import *
+import os
+from config import get_data_path
+import pandas as pd
 
-df = pd.read_csv("../../data/basetables/mean_wind_correlation_distance.csv")
+data_path = get_data_path('basetables', 'mean_wind_correlation_distance.csv')
+df = pd.read_csv(data_path)
+df = pd.read_csv(data_path)
 
 fig = create_scattermap_figure(df, marker_size=7, colorscale='RdBu', uniform_color=False)
 

@@ -1,8 +1,11 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 from visualization.plotting_functions import *
+from config import get_data_path
+import pandas as pd
 
-df = pd.read_csv("../../data/basetables/all_locations_mean_correlation.csv")
+data_path = get_data_path('basetables', 'all_locations_mean_correlation.csv')
+df = pd.read_csv(data_path)
 
 fig = create_scattermap_figure(df, marker_size=7, colorscale='RdBu', uniform_color=False, cmid=0)
 
