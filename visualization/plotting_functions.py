@@ -56,7 +56,7 @@ def create_suitability_index_scattermap_figure(df, value_column_name=None, marke
 
     custom_data_columns = ["Latitude", "Longitude", "suitability_index", "score_km", "score_wind_correlation",
                            "score_wind_capacity", "score_solar_radiation", "min_distance_to_line_km",
-                           "avg_capacity_factor", "Mean Correlation", "avg_solar_radiation"]
+                           "avg_capacity_factor", "Mean Correlation", "avg_solar_radiation", "score_distance_nature_land", "min_distance_nature_land_km"]
     df['custom_data_combined'] = df[custom_data_columns].values.tolist()
 
 

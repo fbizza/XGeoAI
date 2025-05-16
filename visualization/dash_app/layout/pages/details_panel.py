@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
 
-suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_percentiles.csv')
+suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_v4.csv')
 column_name ='min_distance_to_line_km'
 
 def create_distribution_figure(
@@ -135,6 +135,7 @@ def score_style(score, emphasis=False):
     }
     return style
 
+#CustomData from create_suitability_index_scattermap_figure in plotting_functions.py
 def generate_details_panel_content(point):
     customdata = point.get('customdata', [])
     lat = point.get('lat')
@@ -188,22 +189,28 @@ def generate_details_panel_content(point):
             html.Div([
                 html.Span("Distance from Grid:", style={"flex": "1"}),
                 html.Span(f"{customdata[3]}", style=score_style(customdata[3]))
-            ], style={"display": "flex", "marginBottom": "4px"}),
+            ], style={"display": "flex", "marginBottom": "4px", "alignItems": "center"}),
 
             html.Div([
                 html.Span("Wind Correlation:", style={"flex": "1"}),
                 html.Span(f"{customdata[4]}", style=score_style(customdata[4]))
-            ], style={"display": "flex", "marginBottom": "4px"}),
+            ], style={"display": "flex", "marginBottom": "4px", "alignItems": "center"}),
 
             html.Div([
                 html.Span("Wind Capacity Factor:", style={"flex": "1"}),
                 html.Span(f"{customdata[5]}", style=score_style(customdata[5]))
-            ], style={"display": "flex", "marginBottom": "4px"}),
+            ], style={"display": "flex", "marginBottom": "4px", "alignItems": "center"}),
 
             html.Div([
                 html.Span("Solar Radiation:", style={"flex": "1"}),
                 html.Span(f"{customdata[6]}", style=score_style(customdata[6]))
-            ], style={"display": "flex", "marginBottom": "4px"}),
+            ], style={"display": "flex", "marginBottom": "4px", "alignItems": "center"}),
+
+            html.Div([
+                html.Span("Distance from Nature Land:", style={"flex": "1"}),
+                html.Span(f"{customdata[11]}", style=score_style(customdata[11]))
+            ], style={"display": "flex", "marginBottom": "4px", "alignItems": "center"}),
+
         ], style={"marginBottom": "20px", "color": "white"}),
 
         create_distribution_figure(
@@ -223,7 +230,7 @@ def generate_details_panel_content(point):
         create_distribution_figure(
             df=suitability_index_df,
             column_name='min_distance_to_line_km',
-            x_axis_label='Distance from Grid (km)',
+            x_axis_label='Distance (km)',
             title='Distance from Electrical Grid',
             highlight_value=customdata[7],
         ),
@@ -233,6 +240,13 @@ def generate_details_panel_content(point):
             x_axis_label='Correlation',
             title='Correlation with Operating<br>Wind Farms',
             highlight_value=customdata[9],
+        ),
+        create_distribution_figure(
+            df=suitability_index_df,
+            column_name='min_distance_nature_land_km',
+            x_axis_label='Distance (km)',
+            title='Distance from Nature Land',
+            highlight_value=customdata[12],
         ),
 
     ])

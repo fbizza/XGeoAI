@@ -96,26 +96,40 @@ def normalize_column(series: pd.Series, invert: bool = True) -> pd.Series:
     normalized = (series - min_val) / (max_val - min_val)
     return 1 - normalized if invert else normalized
 
+
 def percentile_score(series: pd.Series, invert: bool = True) -> pd.Series:
     """
     Assigns a score from 1 to 100 based on which percentile a value falls into.
     If invert=True, lower values get higher scores (100 = best).
     If invert=False, higher values get higher scores (100 = best).
+    Ensures final scores always span 1–100 even if duplicate quantiles reduce bins.
     """
-    # compute 101 quantile breakpoints for 100 bins
-    percentiles = series.quantile([i / 100 for i in range(101)]).values
-    percentiles = pd.Series(percentiles).drop_duplicates().values  # remove duplicates to avoid cut errors
+    # Step 1: Compute quantiles
+    raw_percentiles = series.quantile([i / 100 for i in range(101)])
+    percentiles = raw_percentiles.values
 
-    # adjust labels to match bins - 1
+    # Step 2: Drop duplicates
+    percentiles = pd.Series(percentiles).drop_duplicates().values
     num_bins = len(percentiles) - 1
-    if invert:
-        labels = list(range(num_bins, 0, -1))  # e.g., [100, 99, ..., 1]
-    else:
-        labels = list(range(1, num_bins + 1))  # e.g., [1, 2, ..., 100]
 
-    # assign percentiles
-    scored = pd.cut(series, bins=percentiles, labels=labels, include_lowest=True)
-    return scored.astype(int)
+    # Step 3: Check for issues
+    if num_bins < 100:
+        print(f"⚠️ Only {num_bins} unique bins (instead of 100). Scores will be rescaled to 1–100.")
+
+    if num_bins < 2:
+        print(f"❌ Not enough unique values to assign percentile scores. Returning all 100s.")
+        return pd.Series([100] * len(series), index=series.index)
+
+    # Step 4: Create labels
+    labels = list(range(num_bins, 0, -1)) if invert else list(range(1, num_bins + 1))
+
+    # Step 5: Bin the data
+    binned = pd.cut(series, bins=percentiles, labels=labels, include_lowest=True)
+    binned = binned.astype(float)  # convert to float for scaling
+
+    # Step 6: Rescale to 1–100
+    scaled = (binned - binned.min()) / (binned.max() - binned.min()) * 99 + 1
+    return scaled.round().astype(int)
 
 # ---------- Step 6: Process ----------
 def process_data(df: pd.DataFrame) -> pd.DataFrame:
@@ -179,7 +193,7 @@ def run_pipeline(config: PipelineConfig):
     basetable = build_basetable(processed_df)
 
     if config.state_geojson_path:
-        print("Assigning state column...")
+        print("Assigning Australian state column...")
         basetable = assign_state_column(basetable, config.state_geojson_path)
 
     save_basetable(basetable, config.output_path)
