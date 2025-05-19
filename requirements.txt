@@ -1,3 +1,4 @@
+gunicorn
 cdsapi==0.7.5
 dash_bootstrap_components==2.0.2
 geopandas==1.0.1
