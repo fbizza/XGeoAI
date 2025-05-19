@@ -11,7 +11,7 @@ from visualization.dash_app.layout.pages import (
 from visualization.dash_app.layout.pages.suitability_index import create_map_figure
 from visualization.dash_app.layout.pages.interactive_clusters import create_interactive_clusters_map_figure, enrich_with_distances
 from visualization.dash_app.layout.pages.details_panel import generate_details_panel_content
-
+from config import get_data_path
 
 def register_callbacks(app):
     @app.callback(
@@ -227,7 +227,9 @@ def register_callbacks(app):
         triggered = [t["prop_id"] for t in callback_context.triggered]
 
         # Define the file path based on the cluster count
-        file_path = f"../../data/processed/wind_clusters/{cluster_count}_clusters.geojson"
+        from config import get_data_path
+
+        file_path = get_data_path('processed/wind_clusters', f'{cluster_count}_clusters.geojson')
 
         try:
             gdf = gpd.read_file(file_path)

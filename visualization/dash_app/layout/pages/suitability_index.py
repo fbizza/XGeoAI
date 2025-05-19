@@ -2,8 +2,10 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 from visualization.plotting_functions import *
 
+from config import get_data_path
 
-suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_v5.csv')
+suitability_index_df_data_path = get_data_path('basetables', 'suitability_index_basetable_v5.csv')
+suitability_index_df = pd.read_csv(suitability_index_df_data_path)
 
 # score_km,score_wind_correlation,score_wind_capacity,score_solar_radiation
 def add_linear_combination_column(df, weight_km, weight_corr, weight_wind_capacity_factor, weight_solar_radiation, weight_distance_nature_land):

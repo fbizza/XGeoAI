@@ -4,6 +4,10 @@ import geopandas as gpd
 import plotly.express as px
 import json
 import pandas as pd
+from config import get_data_path
+
+clusters_15_data_path = get_data_path('processed/wind_clusters', '15_clusters.geojson')
+clusters_15 = gpd.read_file(clusters_15_data_path)
 
 def enrich_with_distances(gdf: pd.DataFrame) -> pd.DataFrame:
     """
@@ -28,11 +32,9 @@ def enrich_with_distances(gdf: pd.DataFrame) -> pd.DataFrame:
 
     return enriched_gdf
 
-gdf = gpd.read_file('../../data/processed/wind_clusters/15_clusters.geojson')
-
 fig = px.choropleth_map(
-    gdf,
-    geojson=json.loads(gdf.to_json()),
+    clusters_15,
+    geojson=json.loads(clusters_15.to_json()),
     locations="cluster_id",
     featureidkey="properties.cluster_id",
     color="cohesion",

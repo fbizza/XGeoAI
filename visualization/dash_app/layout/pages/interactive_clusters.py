@@ -4,6 +4,12 @@ import geopandas as gpd
 import plotly.express as px
 import json
 import pandas as pd
+from config import get_data_path
+
+gdf_path = get_data_path('processed/wind_clusters', '30_clusters.geojson')
+gdf = gpd.read_file(gdf_path)
+
+
 
 def enrich_with_distances(gdf: pd.DataFrame) -> pd.DataFrame:
     """
@@ -80,9 +86,7 @@ def create_interactive_clusters_map_figure(gdf, cluster_number):
 
     return fig
 
-gdf = gpd.read_file('../../data/processed/wind_clusters/30_clusters.geojson')
 gdf = enrich_with_distances(gdf)
-
 fig = create_interactive_clusters_map_figure(gdf=gdf, cluster_number=1)
 
 

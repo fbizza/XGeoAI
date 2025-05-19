@@ -1,7 +1,9 @@
 from dash import html
 import pandas as pd
+from config import get_data_path
 
-suitability_index_df = pd.read_csv('../../data/basetables/suitability_index_basetable_v5.csv')
+df_path = get_data_path('basetables', 'suitability_index_basetable_v5.csv')
+suitability_index_df = pd.read_csv(df_path)
 
 
 def create_distribution_figure(

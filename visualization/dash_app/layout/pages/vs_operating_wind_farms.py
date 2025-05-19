@@ -2,9 +2,13 @@ import pandas as pd
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 from visualization.plotting_functions import *
+from config import get_data_path
 
-correlation_df = pd.read_csv("../../data/basetables/target_mean_correlation.csv")
-windfarms_df = pd.read_csv("../../data/processed/wind-farms-with-ERA5_coordinates.csv")
+correlation_df_data_path = get_data_path('basetables', 'target_mean_correlation.csv')
+windfarms_df_data_path = get_data_path('processed', 'wind-farms-with-ERA5_coordinates.csv')
+
+correlation_df = pd.read_csv(correlation_df_data_path)
+windfarms_df = pd.read_csv(windfarms_df_data_path)
 
 correlation_fig = create_scattermap_figure(correlation_df, marker_size=7, colorscale='RdBu', uniform_color=False,
                                            cmin=-0.2, cmax=0.7)

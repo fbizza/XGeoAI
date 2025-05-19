@@ -2,6 +2,10 @@ import plotly.express as px
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 from visualization.plotting_functions import *
+from config import get_data_path
+
+df_path = get_data_path('processed', 'victorian-wind-farms-with-ERA5_coordinates.csv')
+windfarms_df = pd.read_csv(df_path)
 
 
 def add_wind_farms (df):
@@ -35,7 +39,7 @@ def add_wind_farms (df):
     )
     return fig
 
-windfarms_df = pd.read_csv("../../data/processed/victorian-wind-farms-with-ERA5_coordinates.csv")
+
 
 
 # windfarms_fig = create_scattermap_figure(windfarms_df, marker_size=5, value_column_name="Asset", uniform_color="#17A2B8")

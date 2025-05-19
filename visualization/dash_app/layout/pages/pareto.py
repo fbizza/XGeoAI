@@ -2,7 +2,10 @@ import plotly.express as px
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 from visualization.plotting_functions import *
+from config import get_data_path
 
+df_path = get_data_path('basetables', 'suitability_index_basetable_v5.csv')
+pareto_df = pd.read_csv(df_path)
 
 def pareto_tiers_fig(df):
 
@@ -35,7 +38,7 @@ def pareto_tiers_fig(df):
     )
     return fig
 
-pareto_df = pd.read_csv("../../data/basetables/suitability_index_basetable_v5.csv")
+
 
 
 # windfarms_fig = create_scattermap_figure(windfarms_df, marker_size=5, value_column_name="Asset", uniform_color="#17A2B8")

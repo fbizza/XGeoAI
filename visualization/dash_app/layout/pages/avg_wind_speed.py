@@ -1,8 +1,10 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 from visualization.plotting_functions import *
+from config import get_data_path
 
-df = pd.read_csv("../../data/basetables/avg_wind_speed_land_only.csv")
+df_path = get_data_path('basetables', 'avg_wind_speed_land_only.csv')
+df = pd.read_csv(df_path)
 
 fig = create_scattermap_figure(df, marker_size=5, colorscale='RdBu', uniform_color=False)
 

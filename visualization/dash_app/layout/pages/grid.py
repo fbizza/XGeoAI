@@ -2,9 +2,13 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 import pandas as pd
 from visualization.plotting_functions import *
+from config import get_data_path
 
-grid_df = pd.read_csv('../../data/processed/Electricity_Transmission_Lines_Dash_Friendly.csv')
-locations_df = pd.read_csv('../../data/basetables/distance_from_grid')
+gird_df_data_path = get_data_path('processed', 'Electricity_Transmission_Lines_Dash_Friendly.csv')
+locations_df_data_path = get_data_path('basetables', 'distance_from_grid')
+
+grid_df = pd.read_csv(gird_df_data_path)
+locations_df = pd.read_csv(locations_df_data_path)
 
 
 
