@@ -7,7 +7,7 @@ from visualization.dash_app.callbacks.main_callbacks import register_callbacks
 app = Dash(__name__,
            external_stylesheets=[dbc.themes.DARKLY],
            suppress_callback_exceptions=True)
-
+server = app.server
 app.title = "XGeoAI"
 app.layout = html.Div([
     dcc.Location(id="url"),
