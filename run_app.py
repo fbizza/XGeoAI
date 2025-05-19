@@ -1,4 +1,4 @@
 from visualization.dash_app.app import app
 
 
-app.run(debug=False, port=10000)
+app.server.run(debug=False, host='0.0.0.0')
