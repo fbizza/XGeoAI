@@ -48,6 +48,8 @@ def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weigh
         opacity=0.3,
         marker_size=7.5,
         selected_point=selected_point,
+        cmin=0,
+        cmax=100,
     )
     fig.update_layout(
         map=dict(center=center, zoom=zoom, style='dark'),
