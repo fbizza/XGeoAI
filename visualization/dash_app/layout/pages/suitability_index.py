@@ -55,7 +55,7 @@ layout = html.Div([
             # Slider 1 block (Wind correlation)
             dbc.Col([
                 html.Div([
-                    html.Label("Wind correlation", className="text-center w-100 mb-2"),
+                    html.Label("Correlation with Existing Farms", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
                     dcc.Slider(
                         id='slider-1',
                         min=0,
@@ -74,17 +74,17 @@ layout = html.Div([
                             step=0.01,
                             value=0.15,
                             className='input-box',
-                            style={"width": "15%", "textAlign": "center"}
+                            style={"width": "30%", "textAlign": "center"}
                         ),
                         className="d-flex justify-content-center mt-2"
                     )
                 ])
-            ], width=3),
+            ], width=2),
 
             # Slider 2 block (Distance from grid)
             dbc.Col([
                 html.Div([
-                    html.Label("Distance from grid", className="text-center w-100 mb-2"),
+                    html.Label("Distance to Electrical Grid", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
                     dcc.Slider(
                         id='slider-2',
                         min=0,
@@ -102,17 +102,17 @@ layout = html.Div([
                             step=0.01,
                             value=0.15,
                             className='input-box',
-                            style={"width": "15%", "textAlign": "center"}
+                            style={"width": "30%", "textAlign": "center"}
                         ),
                         className="d-flex justify-content-center mt-2"
                     )
                 ])
-            ], width=3),
+            ], width=2),
 
             # Slider 3 Wind Capacity Factor
             dbc.Col([
                             html.Div([
-                                html.Label("Wind Capacity Factor", className="text-center w-100 mb-2"),
+                                html.Label("Wind Capacity Factor", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
                                 dcc.Slider(
                                     id='slider-3',
                                     min=0,
@@ -130,17 +130,17 @@ layout = html.Div([
                                         step=0.01,
                                         value=0.6,
                                         className='input-box',
-                                        style={"width": "15%", "textAlign": "center"}
+                                        style={"width": "30%", "textAlign": "center"}
                                     ),
                                     className="d-flex justify-content-center mt-2"
                                 )
                             ])
-                        ], width=3),
+                        ], width=2),
 
             # Slider 4 block (Solar Radiation)
             dbc.Col([
                 html.Div([
-                    html.Label("Solar Radiation", className="text-center w-100 mb-2"),
+                    html.Label("Solar Radiation", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
                     dcc.Slider(
                         id='slider-4',
                         min=0,
@@ -158,17 +158,17 @@ layout = html.Div([
                             step=0.01,
                             value=0.1,
                             className='input-box',
-                            style={"width": "15%", "textAlign": "center"}
+                            style={"width": "30%", "textAlign": "center"}
                         ),
                         className="d-flex justify-content-center mt-2"
                     )
                 ])
-            ], width=3),
+            ], width=2),
 
             # Slider 5 Distance from nature land
             dbc.Col([
                             html.Div([
-                                html.Label("Distance Nature Land", className="text-center w-100 mb-2"),
+                                html.Label("Distance to Nature Land", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
                                 dcc.Slider(
                                     id='slider-5',
                                     min=0,
@@ -186,12 +186,12 @@ layout = html.Div([
                                         step=0.01,
                                         value=0.0,
                                         className='input-box',
-                                        style={"width": "15%", "textAlign": "center"}
+                                        style={"width": "30%", "textAlign": "center"}
                                     ),
                                     className="d-flex justify-content-center mt-2"
                                 )
                             ])
-                        ], width=3),
+                        ], width=2),
 
         ], justify='center', className="mb-4"),
 

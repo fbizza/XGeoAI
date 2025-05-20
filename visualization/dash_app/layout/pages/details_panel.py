@@ -186,12 +186,12 @@ def generate_details_panel_content(point):
 
         html.Div([
             html.Div([
-                html.Span("Distance from Grid:", style={"flex": "1"}),
+                html.Span("Distance to Electrical Grid:", style={"flex": "1"}),
                 html.Span(f"{customdata[3]}", style=score_style(customdata[3]))
             ], style={"display": "flex", "marginBottom": "4px", "alignItems": "center"}),
 
             html.Div([
-                html.Span("Wind Correlation:", style={"flex": "1"}),
+                html.Span("Correlation with Existing Farms:", style={"flex": "1"}),
                 html.Span(f"{customdata[4]}", style=score_style(customdata[4]))
             ], style={"display": "flex", "marginBottom": "4px", "alignItems": "center"}),
 
@@ -206,7 +206,7 @@ def generate_details_panel_content(point):
             ], style={"display": "flex", "marginBottom": "4px", "alignItems": "center"}),
 
             html.Div([
-                html.Span("Distance from Nature Land:", style={"flex": "1"}),
+                html.Span("Distance to Nature Land:", style={"flex": "1"}),
                 html.Span(f"{customdata[11]}", style=score_style(customdata[11]))
             ], style={"display": "flex", "marginBottom": "4px", "alignItems": "center"}),
 
