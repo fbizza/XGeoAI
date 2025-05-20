@@ -7,6 +7,7 @@ from config import get_data_path
 suitability_index_df_data_path = get_data_path('basetables', 'suitability_index_basetable_v5.csv')
 suitability_index_df = pd.read_csv(suitability_index_df_data_path)
 
+
 # score_km,score_wind_correlation,score_wind_capacity,score_solar_radiation
 def add_linear_combination_column(df, weight_km, weight_corr, weight_wind_capacity_factor, weight_solar_radiation, weight_distance_nature_land):
     df['suitability_index'] = ((df['score_km'] * weight_km) +
@@ -18,7 +19,7 @@ def add_linear_combination_column(df, weight_km, weight_corr, weight_wind_capaci
 
 
 def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weight_solar_radiation, weight_distance_natue_land, zoom=2.5,
-                      center={'lat': -29, 'lon': 135}, selected_point=None, selected_state=None, suitability_threshold=None):
+                      center={'lat': -29, 'lon': 135}, selected_point=None, selected_state=None, suitability_threshold=None, pareto_tier=None):
     df = add_linear_combination_column(suitability_index_df,
                                        weight_km,
                                        weight_corr,
@@ -40,6 +41,10 @@ def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weigh
 
     if suitability_threshold and suitability_threshold > 0:
         df = df[df['suitability_index'] >= suitability_threshold]
+
+    if pareto_tier != -1:
+        df = df[df['pareto_tier'] <= pareto_tier]
+
 
     fig = create_suitability_index_scattermap_figure(
         df=df,
@@ -127,8 +132,34 @@ layout = html.Div([
                         className="d-flex justify-content-center mt-2"
                     )
                 ])
-            ], width=3)
+            ], width=3),
+
+            # Slider for Pareto tiers
+            dbc.Col([
+                html.Div([
+                    html.Label("Maximum Pareto Tier", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
+                    dcc.Slider(
+                        id='pareto-slider',
+                        min=-1,
+                        max=14,
+                        step=1,
+                        value=-1,
+                        tooltip={"always_visible": True, "transform": "hideValue", "placement": "top"},
+                        marks = {
+                            **{i: {"label": f"{i}"} for i in range(15)},
+                            0: {"label": "0", "style": {"color": "green"}},
+                            14: {"label": "14", "style": {"color": "red"}}
+                        }
+                    ),
+
+                ])
+            ], width=3),
+
+
+
         ], justify='center', className="mb-4"),
+
+
 
 
         #-------------------VARIABLES---------------------##

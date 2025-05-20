@@ -148,8 +148,9 @@ def register_callbacks(app):
         Input('input-3', 'value'),
         Input('input-4', 'value'),
         Input('input-5', 'value'),
-        Input('state-dropdown', 'value'),  # NEW
-        Input('suitability-threshold-input', 'value'),  # NEW
+        Input('state-dropdown', 'value'),
+        Input('suitability-threshold-input', 'value'),
+        Input('pareto-slider', 'value'),
         Input('map-figure', 'clickData'),
         Input('btn-close-panel', 'n_clicks'),
         State('sidepanel', 'className'),
@@ -157,7 +158,7 @@ def register_callbacks(app):
         State('map-figure', 'figure')
     )
     def update_map(input_1_value, input_2_value, input_3_value, input_4_value, input_5_value,
-                   selected_state, suitability_threshold,
+                   selected_state, suitability_threshold, pareto_tier,
                    clickData, close_cliks, sidepanel_class, relayout_data, current_figure):
 
         zoom = 2.5
@@ -197,10 +198,11 @@ def register_callbacks(app):
             input_4_value,
             input_5_value,
             zoom,
-            center=center,
-            selected_point=selected_point,
-            selected_state=selected_state,  # NEW PARAM
-            suitability_threshold=suitability_threshold  # NEW PARAM
+            center,
+            selected_point,
+            selected_state,
+            suitability_threshold,
+            pareto_tier,
         )
 
 
