@@ -17,13 +17,15 @@ def add_linear_combination_column(df, weight_km, weight_corr, weight_wind_capaci
     return df
 
 
-def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weight_solar_radiation, weight_distance_natue_land, zoom=2.5, center={'lat': -29, 'lon': 135}, selected_point=None):
+def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weight_solar_radiation, weight_distance_natue_land, zoom=2.5,
+                      center={'lat': -29, 'lon': 135}, selected_point=None, selected_state=None, suitability_threshold=None):
     df = add_linear_combination_column(suitability_index_df,
                                        weight_km,
                                        weight_corr,
                                        weight_wind_capacity_factor,
                                        weight_solar_radiation,
-                                       weight_distance_natue_land)
+                                       weight_distance_natue_land,
+                                       )
     custom_colorscale = [
         [0.0, "#B71C1C"],  # Very Poor
         [0.2, "#E53935"],  # Poor
@@ -33,12 +35,18 @@ def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weigh
         [1.0, "#00796B"],  # Excellent
     ]
 
+    if selected_state and selected_state != 'all':
+        df = df[df['state'] == selected_state]
+
+    if suitability_threshold and suitability_threshold > 0:
+        df = df[df['suitability_index'] >= suitability_threshold]
+
     fig = create_suitability_index_scattermap_figure(
         df=df,
         value_column_name="suitability_index",
         colorscale=custom_colorscale,
         opacity=0.3,
-        marker_size=8,
+        marker_size=7.5,
         selected_point=selected_point,
     )
     fig.update_layout(
@@ -60,6 +68,68 @@ layout = html.Div([
     dbc.Container([
         html.H1("Suitability Index", className='text-center my-4'),
 
+        #-------------------CONSTRAINTS---------------------##
+        dbc.Row([
+            # Dropdown for selecting Australian states
+            dbc.Col([
+                html.Div([
+                    html.Label("Select Region", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
+                    dcc.Dropdown(
+                        id='state-dropdown',
+                        options=[
+                            {'label': 'All Australia', 'value': 'all'},
+                            {'label': 'New South Wales', 'value': 'New South Wales'},
+                            {'label': 'Victoria', 'value': 'Victoria'},
+                            {'label': 'Queensland', 'value': 'Queensland'},
+                            {'label': 'South Australia', 'value': 'South Australia'},
+                            {'label': 'Western Australia', 'value': 'Western Australia'},
+                            {'label': 'Tasmania', 'value': 'Tasmania'}
+                        ],
+                        value='all',
+                        clearable=False,
+                        className='dropdown-box',
+                        style={
+                            "backgroundColor": "white",
+                            "color": "#17A2B8",
+                            "border": "1px solid #ced4da",
+                            "borderRadius": "0.25rem"
+                        },
+                    )
+                ])
+            ], width=3),
+
+            # Slider for suitability index threshold
+            dbc.Col([
+                html.Div([
+                    html.Label("Suitability Threshold", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
+                    dcc.Slider(
+                        id='suitability-threshold-slider',
+                        min=0,
+                        max=100,
+                        step=1,
+                        value=0,
+                        tooltip={"placement": "top"},
+                        marks=None
+                    ),
+                    html.Div(
+                        dcc.Input(
+                            id='suitability-threshold-input',
+                            type='number',
+                            min=0,
+                            max=100,
+                            step=1,
+                            value=0,
+                            className='input-box',
+                            style={"width": "20%", "textAlign": "center"}
+                        ),
+                        className="d-flex justify-content-center mt-2"
+                    )
+                ])
+            ], width=3)
+        ], justify='center', className="mb-4"),
+
+
+        #-------------------VARIABLES---------------------##
         dbc.Row([
             # Slider 1 block (Wind correlation)
             dbc.Col([
@@ -203,6 +273,8 @@ layout = html.Div([
                         ], width=2),
 
         ], justify='center', className="mb-4"),
+
+
 
         dcc.Graph(id='map-figure', figure=fig, config={"displayModeBar": False}, style={'height': '70vh', 'width': '100%'})
     ])

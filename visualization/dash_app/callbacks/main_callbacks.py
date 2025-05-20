@@ -139,10 +139,6 @@ def register_callbacks(app):
         )
 
     # suitability_index callback:
-
-
-    from dash import ctx
-
     from dash import ctx
 
     @app.callback(
@@ -152,6 +148,8 @@ def register_callbacks(app):
         Input('input-3', 'value'),
         Input('input-4', 'value'),
         Input('input-5', 'value'),
+        Input('state-dropdown', 'value'),  # NEW
+        Input('suitability-threshold-input', 'value'),  # NEW
         Input('map-figure', 'clickData'),
         Input('btn-close-panel', 'n_clicks'),
         State('sidepanel', 'className'),
@@ -159,6 +157,7 @@ def register_callbacks(app):
         State('map-figure', 'figure')
     )
     def update_map(input_1_value, input_2_value, input_3_value, input_4_value, input_5_value,
+                   selected_state, suitability_threshold,
                    clickData, close_cliks, sidepanel_class, relayout_data, current_figure):
 
         zoom = 2.5
@@ -199,7 +198,9 @@ def register_callbacks(app):
             input_5_value,
             zoom,
             center=center,
-            selected_point=selected_point
+            selected_point=selected_point,
+            selected_state=selected_state,  # NEW PARAM
+            suitability_threshold=suitability_threshold  # NEW PARAM
         )
 
 
@@ -265,6 +266,29 @@ def register_callbacks(app):
         if triggered_id == "map-figure" and clickData:
             content = generate_details_panel_content(clickData['points'][0])
             return "sidepanel show", content
+
+        raise PreventUpdate
+
+
+    @app.callback(
+        Output('suitability-threshold-slider', 'value'),
+        Output('suitability-threshold-input', 'value'),
+        Input('suitability-threshold-slider', 'value'),
+        Input('suitability-threshold-input', 'value'),
+    )
+    def sync_slider_input(slider_val, input_val):
+        ctx = callback_context
+        if not ctx.triggered:
+            raise PreventUpdate
+
+        triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+        if triggered_id == 'suitability-threshold-slider':
+            return slider_val, slider_val
+        elif triggered_id == 'suitability-threshold-input':
+            # Clamp input value within 0–100
+            valid_val = max(0, min(100, input_val if input_val is not None else 0))
+            return valid_val, valid_val
 
         raise PreventUpdate
 
