@@ -24,12 +24,21 @@ def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weigh
                                        weight_wind_capacity_factor,
                                        weight_solar_radiation,
                                        weight_distance_natue_land)
+    custom_colorscale = [
+        [0.0, "#B71C1C"],  # Very Poor
+        [0.2, "#E53935"],  # Poor
+        [0.4, "#FB8C00"],  # Fair
+        [0.6, "#FBC02D"],  # Good
+        [0.8, "#43A047"],  # Very Good
+        [1.0, "#00796B"],  # Excellent
+    ]
+
     fig = create_suitability_index_scattermap_figure(
         df=df,
         value_column_name="suitability_index",
-        colorscale="Blues",
-        opacity=0.85,
-        marker_size=6.5,
+        colorscale=custom_colorscale,
+        opacity=0.3,
+        marker_size=8,
         selected_point=selected_point,
     )
     fig.update_layout(
