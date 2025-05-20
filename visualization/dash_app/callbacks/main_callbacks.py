@@ -294,6 +294,18 @@ def register_callbacks(app):
 
         raise PreventUpdate
 
+    @app.callback(
+        Output('sidepanel', 'className', allow_duplicate=True),
+        Output('sidepanel-content', 'children', allow_duplicate=True),
+        Input('btn-close-panel', 'n_clicks'),
+        State('sidepanel', 'className'),
+        prevent_initial_call=True,
+    )
+    def close_sidepanel(n_clicks, current_class):
+        if n_clicks:
+            return "sidepanel collapsed", ""
+        raise PreventUpdate
+
     #TODO: callback to highlight selected point and callback to synch sliders with suitability score
 
 
