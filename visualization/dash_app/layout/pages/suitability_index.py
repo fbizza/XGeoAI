@@ -27,9 +27,9 @@ def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weigh
     fig = create_suitability_index_scattermap_figure(
         df=df,
         value_column_name="suitability_index",
-        colorscale="RdBu",
-        opacity=0.5,
-        marker_size=7,
+        colorscale="Blues",
+        opacity=0.85,
+        marker_size=6.5,
         selected_point=selected_point,
     )
     fig.update_layout(
