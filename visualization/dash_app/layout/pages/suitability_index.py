@@ -35,7 +35,7 @@ def create_map_figure(weight_km, weight_corr, weight_wind_capacity_factor, weigh
     fig.update_layout(
         map=dict(center=center, zoom=zoom, style='dark'),
         paper_bgcolor="#121212",
-        margin=dict(l=0, r=0, t=0, b=0),
+        margin=dict(l=40, r=0, t=0, b=0),
     )
     fig.update_traces(marker_reversescale=False, selector=dict(type='scattermap'))
     fig.update_traces(marker_colorbar_title_font_color="white", selector=dict(type='scattermap'))
