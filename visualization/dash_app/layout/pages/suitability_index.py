@@ -145,10 +145,10 @@ layout = html.Div([
                         step=1,
                         value=-1,
                         tooltip={"always_visible": True, "transform": "hideValue", "placement": "top"},
-                        marks = {
-                            **{i: {"label": f"{i}"} for i in range(15)},
-                            0: {"label": "0", "style": {"color": "green"}},
-                            14: {"label": "14", "style": {"color": "red"}}
+                        marks={
+                            **{i: {"label": f"{i}", "style": {"fontSize": "10px"}} for i in range(15)},
+                            0: {"label": "0", "style": {"color": "green", "fontSize": "10px"}},
+                            14: {"label": "14", "style": {"color": "red", "fontSize": "10px"}}
                         }
                     ),
 
