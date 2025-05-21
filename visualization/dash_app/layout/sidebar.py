@@ -13,6 +13,7 @@ sidebar = html.Div([
                 dbc.NavLink("Vs Operating Wind Farms", href="/vs_operating_wind_farms", active="exact"),
                 dbc.NavLink("Grid", href="/grid", active="exact"),
                 dbc.NavLink("Suitability Index", href="/suitability_index", active="exact"),
+                dbc.NavLink("Lime Explainer", href="/lime_explainer", active="exact"),
                 dbc.NavLink("Gunn's Clusters", href="/gunn_clusters", active="exact"),
                 dbc.NavLink("Clusters", href="/clusters", active="exact"),
                 dbc.NavLink("Interactive Clusters", href="/interactive_clusters", active="exact"),

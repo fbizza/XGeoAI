@@ -1,0 +1,134 @@
+from dash import html, dcc
+import dash_bootstrap_components as dbc
+from visualization.plotting_functions import *
+import plotly.graph_objects as go
+from config import get_data_path
+
+suitability_index_df_data_path = get_data_path('basetables', 'suitability_index_basetable_v5.csv')
+df = pd.read_csv(suitability_index_df_data_path)
+
+
+def create_simple_map(selected_point=None, zoom=3,
+                      center={'lat': -29, 'lon': 135}, default_point_lat=-23.75, default_point_lon=144.25):
+    fig = go.Figure(go.Scattermap(
+        lat=df['Latitude'],
+        lon=df['Longitude'],
+        mode='markers',
+        marker=dict(size=4, color='blue'),
+        customdata=df[['Latitude', 'Longitude']].values,
+        hoverinfo='text',
+        text=[f"Lat: {lat}, Lon: {lon}" for lat, lon in zip(df['Latitude'], df['Longitude'])],
+    ))
+
+    if selected_point:
+        fig.add_trace(go.Scattermap(
+            lat=[selected_point['lat']],
+            lon=[selected_point['lon']],
+            mode='markers+text',
+            text="Selected Point",
+            textposition="bottom right",
+            textfont=dict(size=11, color="white", family="Open Sans Bold"),
+            marker=dict(
+                size=7,
+                color='white',
+                symbol='circle',
+                opacity=1,
+                showscale=False
+            ),
+            hoverinfo="none"
+
+        ))
+
+    if default_point_lat and not selected_point:
+        fig.add_trace(go.Scattermap(
+            lat=[default_point_lat],
+            lon=[default_point_lon],
+            mode='markers+text',
+            text="Selected Point",
+            textposition="bottom right",
+            textfont=dict(size=11, color="white", family="Open Sans Bold"),
+            marker=dict(
+                size=7,
+                color='white',
+                symbol='circle',
+                opacity=1,
+                showscale=False
+            ),
+            hoverinfo="none"
+        ))
+
+
+    fig.update_layout(
+        map=dict(center=center, zoom=zoom, style='dark'),
+        paper_bgcolor="#121212",
+        margin=dict(l=40, r=0, t=0, b=0),
+    )
+    fig.update_layout(showlegend=False)
+    return fig
+
+fig = create_simple_map()
+
+layout = html.Div([
+    dbc.Container([
+        html.H1("Lime Explainer", className='text-center my-4'),
+
+        dbc.Row([
+            dbc.Col([
+                html.Div([
+                    html.Label("Enter Point Identifier", className="text-center w-100 mb-2",
+                               style={"maxHeight": "3em", "minHeight": "3em", "fontWeight": "bold"}),
+                    dbc.Row([
+                        dbc.Col([
+                            html.Label("Latitude", className="text-center w-100 mb-1",
+                                       style={"fontWeight": "500"}),
+                            dcc.Input(
+                                id='latitude-input-lime',
+                                type='text',
+                                value=f"{-23.75:.2f}",
+                                className='form-control',
+                                style={
+                                    "textAlign": "center",
+                                    "border": "1px solid #ced4da",
+                                    "borderRadius": "0.25rem",
+                                    "padding": "0.375rem 0.75rem"
+                                }
+                            )
+                        ], width=6),
+
+                        dbc.Col([
+                            html.Label("Longitude", className="text-center w-100 mb-1",
+                                       style={"fontWeight": "500"}),
+                            dcc.Input(
+                                id='longitude-input-lime',
+                                type='text',
+                                value=f"{144.25:.2f}",
+                                className='form-control',
+                                style={
+                                    "textAlign": "center",
+                                    "border": "1px solid #ced4da",
+                                    "borderRadius": "0.25rem",
+                                    "padding": "0.375rem 0.75rem"
+                                }
+                            )
+                        ], width=6)
+                    ], className='mb-3'),
+                    dbc.Button(
+                        "Explain Selected Point",
+                        id='explain-btn',
+                        className='w-100',
+                        style={
+                            "backgroundColor": "#17a2b8",
+                            "color": "white",
+                            "fontWeight": "bold",
+                            "border": "none"
+                        }
+                    )
+                ])
+            ], width=4),
+        ], justify='center', className="mb-4"),
+
+
+
+        dcc.Graph(id='lime-map-figure', figure=fig, config={"displayModeBar": False, 'scrollZoom': False}, style={'height': '70vh', 'width': '100%'})
+    ])
+])
