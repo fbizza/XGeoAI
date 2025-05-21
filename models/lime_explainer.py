@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 from config import get_data_path
 
 # Constants and loading model/data done once
-CSV_PATH = get_data_path('basetables', 'suitability_index_basetable_v5.csv')
+CSV_PATH = get_data_path('basetables', 'suitability_index_basetable_v6.csv')
 MODEL_PATH = get_data_path('models', 'random_forest_model.pkl')
 
 FEATURES = [
@@ -20,9 +20,9 @@ LONGITUDE_COL = 'Longitude'
 
 # Load model and data once, keep global
 clf = joblib.load(MODEL_PATH)
-df = pd.read_csv(CSV_PATH)
-df.rename(columns={'Mean Correlation': 'mean_correlation_with_existing_farms'}, inplace=True)
-X = df[FEATURES]
+lime_df = pd.read_csv(CSV_PATH)
+lime_df.rename(columns={'Mean Correlation': 'mean_correlation_with_existing_farms'}, inplace=True)
+X = lime_df[FEATURES]
 
 explainer = LimeTabularExplainer(
     training_data=X.values,
@@ -37,7 +37,7 @@ def explain_with_lime(lat, lon):
     """
     Explain prediction at given lat, lon and show LIME + prediction probability.
     """
-    row = df.loc[(df[LATITUDE_COL] == lat) & (df[LONGITUDE_COL] == lon)]
+    row = lime_df.loc[(lime_df[LATITUDE_COL] == lat) & (lime_df[LONGITUDE_COL] == lon)]
 
     if row.empty:
         raise ValueError(f"No point found at coordinates ({lat}, {lon}).")
@@ -80,7 +80,6 @@ def explain_with_lime(lat, lon):
         margin=dict(l=150, r=40, t=50, b=40)
     )
 
-    lime_fig.show()
 
     # === Plot Probability Bar ===
     prob_fig = go.Figure(go.Bar(
@@ -100,7 +99,8 @@ def explain_with_lime(lat, lon):
         margin=dict(l=150, r=40, t=50, b=40)
     )
 
-    prob_fig.show()
+
+    return lime_fig, prob_fig
 
 
-explain_with_lime(-28.25, 116.25)
+#explain_with_lime(-28.25, 116.25)

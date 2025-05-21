@@ -1,10 +1,27 @@
 from dash import html
 import pandas as pd
 from config import get_data_path
-
+from models.lime_explainer import explain_with_lime
+from dash import dcc
 df_path = get_data_path('basetables', 'suitability_index_basetable_v5.csv')
 suitability_index_df = pd.read_csv(df_path)
 
+def generate_lime_content(lat, lon):
+    lime_fig, prob_fig = explain_with_lime(lat, lon)
+    content = html.Div([
+        html.H5("Explain Button Clicked"),
+        dcc.Graph(
+            figure=lime_fig,
+            config={"displayModeBar": False, "staticPlot": True},
+            style={"height": "300px", "border": "none"}
+        ),
+        dcc.Graph(
+            figure=prob_fig,
+            config={"displayModeBar": False, "staticPlot": True},
+            style={"height": "300px", "border": "none"}
+        )
+    ])
+    return content
 
 def create_distribution_figure(
     df,

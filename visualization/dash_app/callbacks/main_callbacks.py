@@ -11,7 +11,7 @@ from visualization.dash_app.layout.pages import (
 from visualization.dash_app.layout.pages.suitability_index import create_map_figure
 from visualization.dash_app.layout.pages.lime_explainer import create_simple_map
 from visualization.dash_app.layout.pages.interactive_clusters import create_interactive_clusters_map_figure, enrich_with_distances
-from visualization.dash_app.layout.pages.details_panel import generate_details_panel_content
+from visualization.dash_app.layout.pages.details_panel import generate_details_panel_content, generate_lime_content
 from config import get_data_path
 
 def register_callbacks(app):
@@ -317,16 +317,19 @@ def register_callbacks(app):
         Input('lime-map-figure', 'clickData')
     )
     def update_map_on_click_lime(clickData):
+        default_lat = -23.75
+        default_lon = 144.25
         selected_point = None
+        lat = default_lat
+        lon = default_lon
 
-        if clickData and clickData.get('points'):
+        if clickData and clickData.get('points') and len(clickData['points']) > 0:
             point = clickData['points'][0]
-            selected_point = {
-                'lat': point['lat'],
-                'lon': point['lon']
-            }
+            lat = point['lat']
+            lon = point['lon']
+            selected_point = {'lat': lat, 'lon': lon}
 
-        return create_simple_map(selected_point), str(point['lat']), str(point['lon'])
+        return create_simple_map(selected_point), f"{lat:.2f}", f"{lon:.2f}"
 
 
     # details panel of lime page
@@ -352,16 +355,13 @@ def register_callbacks(app):
             if explain_clicks is None or explain_clicks == 0:
                 raise PreventUpdate
 
-            content = html.Div([
-                html.H5("Explain Button Clicked"),
-                html.P("Explanation content will go here."),
-            ])
-            point = clickData['points'][0]
-            selected_point = {
-                'lat': point['lat'],
-                'lon': point['lon']
-            }
-            print(selected_point)
+            if clickData and clickData.get('points') and len(clickData['points']) > 0:
+                point = clickData['points'][0]
+                content = generate_lime_content(point['lat'], point['lon'])
+            else:
+                content = generate_lime_content(-23.75, 144.25)  # fallback/default point
+
+
             return "sidepanel show", content
 
         raise PreventUpdate
