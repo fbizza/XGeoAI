@@ -4,17 +4,19 @@ from visualization.plotting_functions import *
 import plotly.graph_objects as go
 from config import get_data_path
 
-suitability_index_df_data_path = get_data_path('basetables', 'suitability_index_basetable_v5.csv')
+suitability_index_df_data_path = get_data_path('basetables', 'suitability_index_basetable_v6.csv')
 df = pd.read_csv(suitability_index_df_data_path)
-
+marker_colors = ["#00796B" if val == 1 else '#B71C1C' for val in df['is_suitable_model']]
 
 def create_simple_map(selected_point=None, zoom=3,
                       center={'lat': -29, 'lon': 135}, default_point_lat=-23.75, default_point_lon=144.25):
+
+
     fig = go.Figure(go.Scattermap(
         lat=df['Latitude'],
         lon=df['Longitude'],
         mode='markers',
-        marker=dict(size=4, color='blue'),
+        marker=dict(size=6, color=marker_colors),
         customdata=df[['Latitude', 'Longitude']].values,
         hoverinfo='text',
         text=[f"Lat: {lat}, Lon: {lon}" for lat, lon in zip(df['Latitude'], df['Longitude'])],
@@ -80,38 +82,51 @@ layout = html.Div([
                     dbc.Row([
                         dbc.Col([
                             html.Label("Latitude", className="text-center w-100 mb-1",
-                                       style={"fontWeight": "500"}),
+                                       style={"fontWeight": "500", "fontSize": "0.85rem"}),
                             dcc.Input(
                                 id='latitude-input-lime',
                                 type='text',
                                 value=f"{-23.75:.2f}",
                                 className='form-control',
+                                disabled=True,
+                                readOnly=True,
                                 style={
                                     "textAlign": "center",
                                     "border": "1px solid #ced4da",
                                     "borderRadius": "0.25rem",
-                                    "padding": "0.375rem 0.75rem"
+                                    "padding": "0.25rem 0.5rem",
+                                    "fontSize": "0.85rem",
+                                    "height": "30px",
+                                    "backgroundColor": "#e9ecef",
+                                    "userSelect": "none"
                                 }
                             )
                         ], width=6),
 
                         dbc.Col([
                             html.Label("Longitude", className="text-center w-100 mb-1",
-                                       style={"fontWeight": "500"}),
+                                       style={"fontWeight": "500", "fontSize": "0.85rem"}),
                             dcc.Input(
                                 id='longitude-input-lime',
                                 type='text',
                                 value=f"{144.25:.2f}",
                                 className='form-control',
+                                disabled=True,
+                                readOnly=True,
                                 style={
                                     "textAlign": "center",
                                     "border": "1px solid #ced4da",
                                     "borderRadius": "0.25rem",
-                                    "padding": "0.375rem 0.75rem"
+                                    "padding": "0.25rem 0.5rem",
+                                    "fontSize": "0.85rem",
+                                    "height": "30px",
+                                    "backgroundColor": "#e9ecef",
+                                    "userSelect": "none"
                                 }
                             )
                         ], width=6)
                     ], className='mb-3'),
+
                     dbc.Button(
                         "Explain Selected Point",
                         id='explain-btn',

@@ -309,6 +309,7 @@ def register_callbacks(app):
             return "sidepanel collapsed", ""
         raise PreventUpdate
 
+    # lat and lon boxes of selected lime point
     @app.callback(
         Output('lime-map-figure', 'figure'),
         Output('latitude-input-lime', 'value'),
@@ -326,6 +327,44 @@ def register_callbacks(app):
             }
 
         return create_simple_map(selected_point), str(point['lat']), str(point['lon'])
+
+
+    # details panel of lime page
+    @app.callback(
+        Output('sidepanel', 'className', allow_duplicate=True),
+        Output('sidepanel-content', 'children', allow_duplicate=True),
+        Input('lime-map-figure', 'clickData'),
+        Input('explain-btn', 'n_clicks'),
+        Input('btn-close-panel', 'n_clicks'),
+        State('sidepanel', 'className'),
+        prevent_initial_call=True
+    )
+    def toggle_lime_sidepanel(clickData, explain_clicks, close_clicks, current_class):
+        triggered_id = ctx.triggered_id
+
+        # Close sidepanel on close button click
+        if triggered_id == "btn-close-panel":
+            return "sidepanel collapsed", ""
+
+        # Open sidepanel on Explain button click
+        if triggered_id == "explain-btn":
+            # Check if explain_clicks is None or 0 (button never clicked)
+            if explain_clicks is None or explain_clicks == 0:
+                raise PreventUpdate
+
+            content = html.Div([
+                html.H5("Explain Button Clicked"),
+                html.P("Explanation content will go here."),
+            ])
+            point = clickData['points'][0]
+            selected_point = {
+                'lat': point['lat'],
+                'lon': point['lon']
+            }
+            print(selected_point)
+            return "sidepanel show", content
+
+        raise PreventUpdate
 
     #TODO: callback to highlight selected point and callback to synch sliders with suitability score
 
