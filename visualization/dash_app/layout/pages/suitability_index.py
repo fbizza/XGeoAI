@@ -80,7 +80,7 @@ layout = html.Div([
             # Dropdown for selecting Australian states
             dbc.Col([
                 html.Div([
-                    html.Label("Select Region", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
+                    html.Label("Select State", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em", "fontWeight": "bold"}),
                     dcc.Dropdown(
                         id='state-dropdown',
                         options=[
@@ -108,7 +108,7 @@ layout = html.Div([
             # Slider for suitability index threshold
             dbc.Col([
                 html.Div([
-                    html.Label("Suitability Threshold", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
+                    html.Label("Suitability Threshold", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em", "fontWeight": "bold"}),
                     dcc.Slider(
                         id='suitability-threshold-slider',
                         min=0,
@@ -137,14 +137,14 @@ layout = html.Div([
             # Slider for Pareto tiers
             dbc.Col([
                 html.Div([
-                    html.Label("Maximum Pareto Tier", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
+                    html.Label("Maximum Pareto Tier", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em", "fontWeight": "bold"}),
                     dcc.Slider(
                         id='pareto-slider',
-                        min=-1,
+                        min=0,
                         max=14,
                         step=1,
-                        value=-1,
-                        tooltip={"always_visible": True, "transform": "hideValue", "placement": "top"},
+                        value=14,
+                        tooltip={"always_visible": False, "placement": "top"},
                         marks={
                             **{i: {"label": f"{i}", "style": {"fontSize": "10px"}} for i in range(15)},
                             0: {"label": "0", "style": {"color": "green", "fontSize": "10px"}},
@@ -153,7 +153,7 @@ layout = html.Div([
                     ),
 
                 ])
-            ], width=3),
+            ], width=4),
 
 
 
@@ -167,7 +167,7 @@ layout = html.Div([
             # Slider 1 block (Wind correlation)
             dbc.Col([
                 html.Div([
-                    html.Label("Correlation with Existing Farms", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
+                    html.Label("Correlation with Existing Farms", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em", "fontWeight": "bold"}),
                     dcc.Slider(
                         id='slider-1',
                         min=0,
@@ -196,7 +196,7 @@ layout = html.Div([
             # Slider 2 block (Distance from grid)
             dbc.Col([
                 html.Div([
-                    html.Label("Distance to Electrical Grid", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
+                    html.Label("Distance to Electrical Grid", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em", "fontWeight": "bold"}),
                     dcc.Slider(
                         id='slider-2',
                         min=0,
@@ -224,7 +224,7 @@ layout = html.Div([
             # Slider 3 Wind Capacity Factor
             dbc.Col([
                             html.Div([
-                                html.Label("Wind Capacity Factor", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
+                                html.Label("Wind Capacity Factor", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em", "fontWeight": "bold"}),
                                 dcc.Slider(
                                     id='slider-3',
                                     min=0,
@@ -252,7 +252,7 @@ layout = html.Div([
             # Slider 4 block (Solar Radiation)
             dbc.Col([
                 html.Div([
-                    html.Label("Solar Radiation", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
+                    html.Label("Solar Radiation", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em", "fontWeight": "bold"}),
                     dcc.Slider(
                         id='slider-4',
                         min=0,
@@ -280,7 +280,7 @@ layout = html.Div([
             # Slider 5 Distance from nature land
             dbc.Col([
                             html.Div([
-                                html.Label("Distance to Nature Land", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em"}),
+                                html.Label("Distance to Nature Land", className="text-center w-100 mb-2", style={"maxHeight": "3em", "minHeight": "3em", "fontWeight": "bold"}),
                                 dcc.Slider(
                                     id='slider-5',
                                     min=0,
