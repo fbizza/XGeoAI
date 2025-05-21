@@ -51,8 +51,7 @@ def explain_with_lime(lat, lon):
     predicted_class = clf.predict(instance)[0]
     class_names = ['Not Suitable', 'Suitable']
 
-
-    # === LIME Explanation ===
+    ## === LIME Explanation ===
     exp = explainer.explain_instance(
         data_row=instance.flatten(),
         predict_fn=lambda x: clf.predict_proba(pd.DataFrame(x, columns=FEATURES)),
@@ -60,47 +59,79 @@ def explain_with_lime(lat, lon):
     )
 
     explanation_data = exp.as_list()
-    labels, contributions = zip(*explanation_data)
+
+    # Short Y-ticks like Feature 1, Feature 2, etc.
+    short_labels = [f"Feature {i+1}" for i in range(len(explanation_data))]
+    full_labels = [label for label, _ in explanation_data]
+    contributions = [contrib for _, contrib in explanation_data]
 
     # === Plot LIME Contributions ===
     lime_fig = go.Figure(go.Bar(
         x=contributions,
-        y=labels,
+        y=short_labels,
         orientation='h',
-        marker_color=['green' if v > 0 else 'red' for v in contributions],
+        marker_color=['#2ecc71' if v > 0 else '#e74c3c' for v in contributions],
         text=[f"{v:.2f}" for v in contributions],
-        textposition='outside'
+        textposition='auto'
     ))
 
     lime_fig.update_layout(
-        title=f'LIME Explanation for Point @ ({lat}, {lon})',
-        xaxis_title='Contribution to Prediction',
-        yaxis={'autorange': 'reversed'},
-        template='plotly_white',
-        margin=dict(l=150, r=40, t=50, b=40)
+        title=dict(
+            text='LIME Explanation',
+            x=0.5,
+            xanchor='center',
+            font=dict(color='#17a2b8')
+        ),
+        xaxis=dict(
+            title='Contribution to Prediction',
+            color='white',
+            zeroline=True,
+            zerolinecolor='white',
+            range=[-max(abs(min(contributions)), max(contributions)) * 1.2,
+                   max(abs(min(contributions)), max(contributions)) * 1.2],  # symmetrical range
+        ),
+        yaxis=dict(
+            autorange='reversed',
+            color='white',
+        ),
+        plot_bgcolor='#1e1e2f',
+        paper_bgcolor='#1e1e2f',
+        font=dict(color='white'),
+        margin=dict(l=0, r=0, t=100, b=60),  # more space on left
+        height=360,
+        showlegend=False
     )
 
 
-    # === Plot Probability Bar ===
+    # === Plot Vertical Probability Bars ===
     prob_fig = go.Figure(go.Bar(
-        x=probs,
-        y=class_names,
-        orientation='h',
-        marker_color='steelblue',
+        x=class_names,
+        y=probs,
+        marker_color='#17a2b8',
         text=[f"{p:.2f}" for p in probs],
-        textposition='outside'
+        textposition='auto'
     ))
 
     prob_fig.update_layout(
-        title=f'Prediction Probabilities @ ({lat}, {lon})',
-        xaxis_title='Probability',
-        yaxis={'autorange': 'reversed'},
-        template='plotly_white',
-        margin=dict(l=150, r=40, t=50, b=40)
+        title=dict(
+            text='Prediction Probabilities',
+            x=0.5,
+            xanchor='center',
+            font=dict(color='#17a2b8')
+        ),
+        yaxis_title='Probability',
+        xaxis=dict(color='white'),
+        yaxis=dict(color='white', range=[0, 1]),
+        plot_bgcolor='#1e1e2f',
+        paper_bgcolor='#1e1e2f',
+        font=dict(color='white'),
+        margin=dict(t=50, b=50),
+        showlegend=False
     )
 
+    return lime_fig, prob_fig, full_labels
 
-    return lime_fig, prob_fig
+
 
 
 #explain_with_lime(-28.25, 116.25)

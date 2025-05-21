@@ -7,20 +7,27 @@ df_path = get_data_path('basetables', 'suitability_index_basetable_v5.csv')
 suitability_index_df = pd.read_csv(df_path)
 
 def generate_lime_content(lat, lon):
-    lime_fig, prob_fig = explain_with_lime(lat, lon)
+    lime_fig, prob_fig, full_labels = explain_with_lime(lat, lon)
+
+    explanation_list = html.Ul([
+        html.Li(f"Feature {i+1}: {desc}") for i, desc in enumerate(full_labels)
+    ], style={"color": "white", "fontSize": "12px", "marginTop": "10px"})
+
     content = html.Div([
-        html.H5("Explain Button Clicked"),
-        dcc.Graph(
-            figure=lime_fig,
-            config={"displayModeBar": False, "staticPlot": True},
-            style={"height": "300px", "border": "none"}
-        ),
+        html.H5("Lime Details"),
         dcc.Graph(
             figure=prob_fig,
             config={"displayModeBar": False, "staticPlot": True},
-            style={"height": "300px", "border": "none"}
-        )
+            style={"height": "210px", "border": "none"}
+        ),
+        dcc.Graph(
+            figure=lime_fig,
+            config={"displayModeBar": False, "staticPlot": True},
+            style={"height": "360px", "border": "none"}
+        ),
+        explanation_list
     ])
+
     return content
 
 def create_distribution_figure(
