@@ -92,12 +92,12 @@ def create_suitability_index_scattermap_figure(df, value_column_name=None, marke
             mode='markers+text',
             text="Selected Point",
             textposition="bottom right",
-            textfont=dict(size=9, color="black", family="Open Sans Bold"),
+            textfont=dict(size=11, color="white", family="Open Sans Bold"),
             marker=dict(
-                size=10,
-                color='black',
+                size=11,
+                color='white',
                 symbol='circle',
-                opacity=0.8,
+                opacity=1,
                 showscale=False
             ),
             hoverinfo="none"
