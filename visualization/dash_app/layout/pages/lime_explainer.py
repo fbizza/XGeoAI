@@ -6,7 +6,7 @@ from config import get_data_path
 
 suitability_index_df_data_path = get_data_path('basetables', 'suitability_index_basetable_v6.csv')
 df = pd.read_csv(suitability_index_df_data_path)
-marker_colors = ["#00796B" if val == 1 else '#B71C1C' for val in df['is_suitable_model']]
+marker_colors = ['#2ecc71' if val == 1 else '#e74c3c' for val in df['is_suitable_model']]
 
 def create_simple_map(selected_point=None, zoom=3,
                       center={'lat': -29, 'lon': 135}, default_point_lat=-23.75, default_point_lon=144.25):
@@ -16,7 +16,8 @@ def create_simple_map(selected_point=None, zoom=3,
         lat=df['Latitude'],
         lon=df['Longitude'],
         mode='markers',
-        marker=dict(size=6, color=marker_colors),
+        opacity=0.6,
+        marker=dict(size=6.5, color=marker_colors),
         customdata=df[['Latitude', 'Longitude']].values,
         hoverinfo='text',
         text=[f"Lat: {lat}, Lon: {lon}" for lat, lon in zip(df['Latitude'], df['Longitude'])],

@@ -2,6 +2,7 @@ import pandas as pd
 import joblib
 from lime.lime_tabular import LimeTabularExplainer
 import plotly.graph_objects as go
+import re
 from config import get_data_path
 
 # Constants and loading model/data done once
@@ -31,6 +32,25 @@ explainer = LimeTabularExplainer(
     mode='classification',
     random_state=29
 )
+
+
+
+def extract_and_map_features(conditions):
+    feature_name_map = {
+        "avg_capacity_factor": "Average Wind Capacity Factor",
+        "min_distance_to_line_km": "Distance to Electrical Line",
+        "mean_correlation_with_existing_farms": "Wind Correlation wit Existing Farms",
+        "min_distance_nature_land_km": "Distance to Natural Land",
+        "avg_solar_radiation": "Average Solar Radiation",
+    }
+
+    mapped = []
+    for condition in conditions:
+        for feature in feature_name_map:
+            if feature in condition:
+                mapped.append(feature_name_map[feature])
+                break  # Preserve order by stopping at first match
+    return mapped
 
 
 def explain_with_lime(lat, lon):
@@ -87,27 +107,33 @@ def explain_with_lime(lat, lon):
             color='white',
             zeroline=True,
             zerolinecolor='white',
+            zerolinewidth=2,
+            showgrid=False,
             range=[-max(abs(min(contributions)), max(contributions)) * 1.2,
-                   max(abs(min(contributions)), max(contributions)) * 1.2],  # symmetrical range
+                   max(abs(min(contributions)), max(contributions)) * 1.2],
         ),
         yaxis=dict(
             autorange='reversed',
             color='white',
+            showline=False,
+            tickfont=dict(color='white')
         ),
         plot_bgcolor='#1e1e2f',
         paper_bgcolor='#1e1e2f',
         font=dict(color='white'),
-        margin=dict(l=0, r=0, t=100, b=60),  # more space on left
+        margin=dict(l=0, r=0, t=50, b=60),
         height=360,
         showlegend=False
     )
 
 
     # === Plot Vertical Probability Bars ===
+    colors = ['#2ecc71' if cls == 'Suitable' else '#e74c3c' for cls in class_names]
+
     prob_fig = go.Figure(go.Bar(
         x=class_names,
         y=probs,
-        marker_color='#17a2b8',
+        marker_color=colors,
         text=[f"{p:.2f}" for p in probs],
         textposition='auto'
     ))
@@ -129,8 +155,7 @@ def explain_with_lime(lat, lon):
         showlegend=False
     )
 
-    return lime_fig, prob_fig, full_labels
-
+    return lime_fig, prob_fig, extract_and_map_features(full_labels)
 
 
 

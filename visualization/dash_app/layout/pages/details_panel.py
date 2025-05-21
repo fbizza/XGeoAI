@@ -18,7 +18,7 @@ def generate_lime_content(lat, lon):
         dcc.Graph(
             figure=prob_fig,
             config={"displayModeBar": False, "staticPlot": True},
-            style={"height": "210px", "border": "none"}
+            style={"height": "240px", "border": "none"}
         ),
         dcc.Graph(
             figure=lime_fig,
