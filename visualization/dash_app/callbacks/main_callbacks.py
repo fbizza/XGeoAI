@@ -317,8 +317,8 @@ def register_callbacks(app):
         Input('lime-map-figure', 'clickData')
     )
     def update_map_on_click_lime(clickData):
-        default_lat = -23.75
-        default_lon = 144.25
+        default_lat = -20.0
+        default_lon = 142.0
         selected_point = None
         lat = default_lat
         lon = default_lon
@@ -359,7 +359,7 @@ def register_callbacks(app):
                 point = clickData['points'][0]
                 content = generate_lime_content(point['lat'], point['lon'])
             else:
-                content = generate_lime_content(-23.75, 144.25)  # fallback/default point
+                content = generate_lime_content(-20.0, 142.0)  # fallback/default point
 
 
             return "sidepanel show", content

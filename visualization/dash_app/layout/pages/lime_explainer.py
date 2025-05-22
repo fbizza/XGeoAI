@@ -9,7 +9,7 @@ df = pd.read_csv(suitability_index_df_data_path)
 marker_colors = ['#2ecc71' if val == 1 else '#e74c3c' for val in df['is_suitable_model']]
 
 def create_simple_map(selected_point=None, zoom=3,
-                      center={'lat': -29, 'lon': 135}, default_point_lat=-23.75, default_point_lon=144.25):
+                      center={'lat': -29, 'lon': 135}, default_point_lat=-20.0, default_point_lon=142.0):
 
 
     fig = go.Figure(go.Scattermap(
@@ -87,7 +87,7 @@ layout = html.Div([
                             dcc.Input(
                                 id='latitude-input-lime',
                                 type='text',
-                                value=f"{-23.75:.2f}",
+                                value=f"{-20.0:.2f}",
                                 className='form-control',
                                 disabled=True,
                                 readOnly=True,
@@ -110,7 +110,7 @@ layout = html.Div([
                             dcc.Input(
                                 id='longitude-input-lime',
                                 type='text',
-                                value=f"{144.25:.2f}",
+                                value=f"{142.0:.2f}",
                                 className='form-control',
                                 disabled=True,
                                 readOnly=True,
