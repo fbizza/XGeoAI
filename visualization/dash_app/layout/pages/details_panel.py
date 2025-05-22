@@ -3,15 +3,31 @@ import pandas as pd
 from config import get_data_path
 from models.lime_explainer import explain_with_lime
 from dash import dcc
+
 df_path = get_data_path('basetables', 'suitability_index_basetable_v5.csv')
 suitability_index_df = pd.read_csv(df_path)
 
 def generate_lime_content(lat, lon):
     lime_fig, prob_fig, full_labels = explain_with_lime(lat, lon)
 
-    explanation_list = html.Ul([
-        html.Li(f"Feature {i+1}: {desc}") for i, desc in enumerate(full_labels)
-    ], style={"color": "white", "fontSize": "12px", "marginTop": "10px"})
+    explanation_list = html.Div(
+        [
+            html.Div([
+                html.Div(f"Feature {i + 1}", style={
+                    "fontWeight": "bold",
+                    "color": "#17a2b8",
+                    "textAlign": "center"
+                }),
+                html.Div(desc, style={
+                    "fontWeight": "normal",
+                    "color": "white",
+                    "textAlign": "center",
+                    "marginBottom": "5px"
+                })
+            ]) for i, desc in enumerate(full_labels)
+        ],
+        style={"fontSize": "12px", "marginTop": "10px"}
+    )
 
     content = html.Div([
         html.H5("Lime Details"),

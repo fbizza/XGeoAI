@@ -74,12 +74,16 @@ fig = create_simple_map()
 layout = html.Div([
     dbc.Container([
         html.H1("Lime Explainer", className='text-center my-4'),
-
+        html.P([
+            "This interactive map shows areas classified by an AI model as ",
+            html.Span("suitable", style={'color': '#2ecc71', 'fontWeight': 'bold'}),
+            " or ",
+            html.Span("not suitable", style={'color': '#e74c3c', 'fontWeight': 'bold'}),
+            " for wind farm development. Click on a location to see an explanation of the model’s decision, generated using LIME (Local Interpretable Model-agnostic Explanations)."
+        ], className='text-center my-2', style={'fontSize': '0.9rem', 'fontWeight': 'bold'}),
         dbc.Row([
             dbc.Col([
                 html.Div([
-                    html.Label("Enter Point Identifier", className="text-center w-100 mb-2",
-                               style={"maxHeight": "3em", "minHeight": "3em", "fontWeight": "bold"}),
                     dbc.Row([
                         dbc.Col([
                             html.Label("Latitude", className="text-center w-100 mb-1",

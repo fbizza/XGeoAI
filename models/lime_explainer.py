@@ -2,10 +2,9 @@ import pandas as pd
 import joblib
 from lime.lime_tabular import LimeTabularExplainer
 import plotly.graph_objects as go
-import re
 from config import get_data_path
 
-# Constants and loading model/data done once
+
 CSV_PATH = get_data_path('basetables', 'suitability_index_basetable_v6.csv')
 MODEL_PATH = get_data_path('models', 'random_forest_model.pkl')
 
@@ -19,7 +18,6 @@ FEATURES = [
 LATITUDE_COL = 'Latitude'
 LONGITUDE_COL = 'Longitude'
 
-# Load model and data once, keep global
 clf = joblib.load(MODEL_PATH)
 lime_df = pd.read_csv(CSV_PATH)
 lime_df.rename(columns={'Mean Correlation': 'mean_correlation_with_existing_farms'}, inplace=True)
@@ -39,7 +37,7 @@ def extract_and_map_features(conditions):
     feature_name_map = {
         "avg_capacity_factor": "Average Wind Capacity Factor",
         "min_distance_to_line_km": "Distance to Electrical Line",
-        "mean_correlation_with_existing_farms": "Wind Correlation wit Existing Farms",
+        "mean_correlation_with_existing_farms": "Wind Correlation with Existing Farms",
         "min_distance_nature_land_km": "Distance to Natural Land",
         "avg_solar_radiation": "Average Solar Radiation",
     }
@@ -66,9 +64,8 @@ def explain_with_lime(lat, lon):
 
     instance = row.iloc[0][FEATURES].values.reshape(1, -1)
 
-    # Predict probabilities
+
     probs = clf.predict_proba(instance)[0]
-    predicted_class = clf.predict(instance)[0]
     class_names = ['Not Suitable', 'Suitable']
 
     ## === LIME Explanation ===
@@ -97,13 +94,13 @@ def explain_with_lime(lat, lon):
 
     lime_fig.update_layout(
         title=dict(
-            text='LIME Explanation',
+            text='<b>LIME Explanation <br> (contributions to prediction)</b>',
             x=0.5,
             xanchor='center',
             font=dict(color='#17a2b8')
         ),
         xaxis=dict(
-            title='Contribution to Prediction',
+            #title='Contribution to Prediction',
             color='white',
             zeroline=True,
             zerolinecolor='white',
@@ -121,7 +118,7 @@ def explain_with_lime(lat, lon):
         plot_bgcolor='#1e1e2f',
         paper_bgcolor='#1e1e2f',
         font=dict(color='white'),
-        margin=dict(l=0, r=0, t=50, b=60),
+        margin=dict(l=0, r=0, t=90, b=20),
         height=360,
         showlegend=False
     )
@@ -140,7 +137,7 @@ def explain_with_lime(lat, lon):
 
     prob_fig.update_layout(
         title=dict(
-            text='Prediction Probabilities',
+            text='<b>Prediction Probabilities</b>',
             x=0.5,
             xanchor='center',
             font=dict(color='#17a2b8')
