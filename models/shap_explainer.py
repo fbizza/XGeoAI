@@ -33,7 +33,19 @@ shap_explainer = shap.TreeExplainer(clf_shap)
 
 
 def plot_shap_bar_plotly(lat, lon):
-    # Find the row for the given lat, lon
+    feature_name_map = {
+        "avg_capacity_factor": "Average Wind Capacity Factor",
+        "min_distance_to_line_km": "Distance to Electrical Line",
+        "mean_correlation_with_existing_farms": "Wind Correlation with Existing Farms",
+        "min_distance_nature_land_km": "Distance to Natural Land",
+        "avg_solar_radiation": "Average Solar Radiation",
+    }
+
+    def wrap_label(text, max_words=2):
+        """Insert <br> every `max_words` to wrap long labels."""
+        words = text.split()
+        return "<br>".join([" ".join(words[i:i + max_words]) for i in range(0, len(words), max_words)])
+
     row = df_shap.loc[np.isclose(df_shap[LATITUDE_COL], lat) & np.isclose(df_shap[LONGITUDE_COL], lon)]
     if row.empty:
         raise ValueError(f"No point found at coordinates ({lat}, {lon}).")
@@ -41,7 +53,6 @@ def plot_shap_bar_plotly(lat, lon):
         print("Warning: Multiple rows matched. Using the first one.")
     instance = row.iloc[0][FEATURES_SHAP].values.reshape(1, -1)
 
-    # Get shap_values for class 1 (binary case)
     shap_values_full = shap_explainer.shap_values(instance)
     if shap_values_full.ndim == 3:
         shap_values_instance = shap_values_full[0, :, 1]
@@ -51,35 +62,57 @@ def plot_shap_bar_plotly(lat, lon):
     shap_values = shap_values_instance
     features = FEATURES_SHAP
 
+    wrapped_features = [wrap_label(feature_name_map.get(f, f)) for f in features]
     colors = ['#2ecc71' if val > 0 else '#e74c3c' for val in shap_values]
+    texts = [f"{val:+.2f}" for val in shap_values]
+
+    sorted_indices = np.argsort(-np.abs(shap_values))
+    shap_values_sorted = [shap_values[i] for i in sorted_indices]
+    wrapped_features_sorted = [wrapped_features[i] for i in sorted_indices]
+    colors_sorted = [colors[i] for i in sorted_indices]
+    texts_sorted = [texts[i] for i in sorted_indices]
 
     fig = go.Figure(go.Bar(
-        x=shap_values,
-        y=features,
+        x=shap_values_sorted,
+        y=wrapped_features_sorted,
         orientation='h',
-        marker_color=colors,
-        text=[f"{val:+.2f}" for val in shap_values],
-        textposition='auto',  # <-- Let Plotly handle placement
-        insidetextanchor='start',  # Safer for small/negative bars
+        marker_color=colors_sorted,
+        text=texts_sorted,
+        textposition='auto',
+        insidetextanchor='start',
     ))
 
-    # Add buffer to both ends of x-axis
-    x_buffer = 0.1 * (np.max(np.abs(shap_values)) or 1)
-    x_min = np.min(shap_values) - x_buffer
-    x_max = np.max(shap_values) + x_buffer
+    max_val = max(abs(np.min(shap_values)), abs(np.max(shap_values)))
+    x_range = [-max_val * 1.2, max_val * 1.2]
 
     fig.update_layout(
-        title=f"SHAP Values for point ({lat}, {lon})",
-        xaxis=dict(
-            title="SHAP Value",
-            range=[x_min, x_max],
-            zeroline=True,
-            zerolinecolor='gray',
-            zerolinewidth=1
+        title=dict(
+            text=f"<b>SHAP Explanation</b>",
+            x=0.5,
+            xanchor='center',
+            font=dict(color='#17a2b8')
         ),
-        template='plotly_white',
-        margin=dict(l=150, r=50, t=50, b=50)
+        xaxis=dict(
+            color='white',
+            zeroline=True,
+            zerolinecolor='white',
+            zerolinewidth=2,
+            showgrid=False,
+            range=x_range
+        ),
+        yaxis=dict(
+            autorange='reversed',
+            color='white',
+            tickfont=dict(color='white', size=10),  # Smaller font
+            showline=False
+        ),
+        plot_bgcolor='#1e1e2f',
+        paper_bgcolor='#1e1e2f',
+        font=dict(color='white'),
+        margin=dict(l=0, r=0, t=90, b=20),
+        height=360,
+        showlegend=False
     )
+    return fig
 
-    fig.show()
-plot_shap_bar_plotly(-23.5, 124)
+#plot_shap_bar_plotly(-23.5, 124)

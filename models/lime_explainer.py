@@ -47,14 +47,25 @@ def extract_and_map_features(conditions):
         for feature in feature_name_map:
             if feature in condition:
                 mapped.append(feature_name_map[feature])
-                break  # Preserve order by stopping at first match
+                break
     return mapped
 
 
 def explain_with_lime(lat, lon):
-    """
-    Explain prediction at given lat, lon and show LIME + prediction probability.
-    """
+
+    feature_name_map = {
+        "avg_capacity_factor": "Average Wind Capacity Factor",
+        "min_distance_to_line_km": "Distance to Electrical Line",
+        "mean_correlation_with_existing_farms": "Wind Correlation with Existing Farms",
+        "min_distance_nature_land_km": "Distance to Natural Land",
+        "avg_solar_radiation": "Average Solar Radiation",
+    }
+
+    def wrap_label(text, max_words=2):
+        # to not use too much horizontal space
+        words = text.split()
+        return "<br>".join([" ".join(words[i:i + max_words]) for i in range(0, len(words), max_words)])
+
     row = lime_df.loc[(lime_df[LATITUDE_COL] == lat) & (lime_df[LONGITUDE_COL] == lon)]
 
     if row.empty:
@@ -64,11 +75,9 @@ def explain_with_lime(lat, lon):
 
     instance = row.iloc[0][FEATURES].values.reshape(1, -1)
 
-
     probs = clf.predict_proba(instance)[0]
     class_names = ['Not Suitable', 'Suitable']
 
-    ## === LIME Explanation ===
     exp = explainer.explain_instance(
         data_row=instance.flatten(),
         predict_fn=lambda x: clf.predict_proba(pd.DataFrame(x, columns=FEATURES)),
@@ -76,16 +85,22 @@ def explain_with_lime(lat, lon):
     )
 
     explanation_data = exp.as_list()
-
-    # Short Y-ticks like Feature 1, Feature 2, etc.
-    short_labels = [f"Feature {i+1}" for i in range(len(explanation_data))]
     full_labels = [label for label, _ in explanation_data]
     contributions = [contrib for _, contrib in explanation_data]
 
-    # === Plot LIME Contributions ===
+    mapped_labels = []
+    for label in full_labels:
+        for raw_feature, pretty in feature_name_map.items():
+            if raw_feature in label:
+                mapped_labels.append(wrap_label(pretty))
+                break
+        else:
+            mapped_labels.append(label)  # fallback to raw if no match
+
+    # LIME feature importance figure
     lime_fig = go.Figure(go.Bar(
         x=contributions,
-        y=short_labels,
+        y=mapped_labels,
         orientation='h',
         marker_color=['#2ecc71' if v > 0 else '#e74c3c' for v in contributions],
         text=[f"{v:.2f}" for v in contributions],
@@ -94,13 +109,12 @@ def explain_with_lime(lat, lon):
 
     lime_fig.update_layout(
         title=dict(
-            text='<b>LIME Explanation <br> (contributions to prediction)</b>',
+            text='<b>LIME Explanation</b>',
             x=0.5,
             xanchor='center',
             font=dict(color='#17a2b8')
         ),
         xaxis=dict(
-            #title='Contribution to Prediction',
             color='white',
             zeroline=True,
             zerolinecolor='white',
@@ -112,8 +126,8 @@ def explain_with_lime(lat, lon):
         yaxis=dict(
             autorange='reversed',
             color='white',
-            showline=False,
-            tickfont=dict(color='white')
+            tickfont=dict(color='white', size=10),  # 👈 Smaller font
+            showline=False
         ),
         plot_bgcolor='#1e1e2f',
         paper_bgcolor='#1e1e2f',
@@ -123,8 +137,7 @@ def explain_with_lime(lat, lon):
         showlegend=False
     )
 
-
-    # === Plot Vertical Probability Bars ===
+    # classification probabilities
     colors = ['#2ecc71' if cls == 'Suitable' else '#e74c3c' for cls in class_names]
 
     prob_fig = go.Figure(go.Bar(
@@ -152,7 +165,8 @@ def explain_with_lime(lat, lon):
         showlegend=False
     )
 
-    return lime_fig, prob_fig, extract_and_map_features(full_labels)
+    return lime_fig, prob_fig, mapped_labels
+
 
 
 
