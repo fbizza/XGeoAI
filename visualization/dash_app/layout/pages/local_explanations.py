@@ -75,11 +75,12 @@ layout = html.Div([
     dbc.Container([
         html.H1("Local Explainers", className='text-center my-4'),
         html.P([
-            "This interactive map shows areas classified by an AI model as ",
+            "This interactive map displays areas identified by an AI model as ",
             html.Span("suitable", style={'color': '#2ecc71', 'fontWeight': 'bold'}),
             " or ",
             html.Span("not suitable", style={'color': '#e74c3c', 'fontWeight': 'bold'}),
-            " for wind farm development. Click on a location to see an explanation of the model’s decision, generated using LIME (Local Interpretable Model-agnostic Explanations)."
+            " for wind farm development. Click on a location to explore the model’s decision, explained using LIME (Local Interpretable Model-agnostic Explanations) and SHAP (SHapley Additive exPlanations), "
+            "two widely used techniques for interpreting AI predictions."
         ], className='text-center my-2', style={'fontSize': '0.9rem', 'fontWeight': 'bold'}),
         dbc.Row([
             dbc.Col([
