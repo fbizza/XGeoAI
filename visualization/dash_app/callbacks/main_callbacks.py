@@ -4,12 +4,12 @@ import geopandas as gpd
 from dash.exceptions import PreventUpdate
 from visualization.dash_app.layout.pages import (
     home, mean_correlation_distance, mean_correlation,
-    vs_operating_wind_farms, grid, suitability_index, lime_explainer, gunn_clusters, clusters,
+    vs_operating_wind_farms, grid, suitability_index, local_explanations, gunn_clusters, clusters,
     interactive_clusters, avg_wind_speed, avg_wind_capacity_factor, avg_solar_radiation,
     backtest, pareto, documentation
 )
 from visualization.dash_app.layout.pages.suitability_index import create_map_figure
-from visualization.dash_app.layout.pages.lime_explainer import create_simple_map
+from visualization.dash_app.layout.pages.local_explanations import create_simple_map
 from visualization.dash_app.layout.pages.interactive_clusters import create_interactive_clusters_map_figure, enrich_with_distances
 from visualization.dash_app.layout.pages.details_panel import generate_details_panel_content, generate_lime_content
 from config import get_data_path
@@ -37,8 +37,8 @@ def register_callbacks(app):
             return grid.layout
         elif pathname == "/suitability_index":
             return suitability_index.layout
-        elif pathname == "/lime_explainer":
-            return lime_explainer.layout
+        elif pathname == "/local_explanations":
+            return local_explanations.layout
         elif pathname == "/gunn_clusters":
             return gunn_clusters.layout
         elif pathname == "/clusters":

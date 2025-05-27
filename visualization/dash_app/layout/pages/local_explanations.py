@@ -73,7 +73,7 @@ fig = create_simple_map()
 
 layout = html.Div([
     dbc.Container([
-        html.H1("Lime Explainer", className='text-center my-4'),
+        html.H1("Local Explainers", className='text-center my-4'),
         html.P([
             "This interactive map shows areas classified by an AI model as ",
             html.Span("suitable", style={'color': '#2ecc71', 'fontWeight': 'bold'}),

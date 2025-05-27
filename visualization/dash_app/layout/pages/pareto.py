@@ -24,8 +24,8 @@ def pareto_tiers_fig(df):
              "<b>%{customdata[0]}</b>",
             "Pareto tier: %{customdata[0]}",
         ]),
-        marker={'size': 5, #'color': 'lightseagreen'
-        }
+        marker={'size': 6,
+        },
 )
     fig.update_layout(
         hoverlabel=dict(
@@ -37,19 +37,6 @@ def pareto_tiers_fig(df):
         paper_bgcolor="#121212",
     )
     return fig
-
-
-
-
-# windfarms_fig = create_scattermap_figure(windfarms_df, marker_size=5, value_column_name="Asset", uniform_color="#17A2B8")
-# windfarms_fig.update_traces(name='Wind Farms')  # set the name for the legend
-
-# correlation_fig.update_traces(marker_colorbar_title_font_color="white", selector=dict(type='scattermap'))
-# correlation_fig.update_traces(marker_colorbar_tickfont_color="white", selector=dict(type='scattermap'))
-# correlation_fig.update_traces(marker_reversescale=True, selector=dict(type='scattermap'))
-# correlation_fig.update_traces(name='Correlation')  # set the name for the legend
-
-# fig.update_traces(marker_showscale=False, selector=dict(type='scattermap')) # to remove colorscale
 
 fig = pareto_tiers_fig(pareto_df)
 
