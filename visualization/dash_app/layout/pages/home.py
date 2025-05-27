@@ -145,56 +145,146 @@ layout = html.Div([
 
             # Solar radiation
             html.Div([
-                html.H5("Distance to Electrical Grid and to Nature Land", className="text-center mt-3"),
-
+                html.H5("Solar Radiation", className="text-center mt-3"),
                 html.Div([
                     html.P([
-                        "FCHe ci scrivo"
-                    ], style={"fontSize": "0.9rem", "margin": "0 auto", "maxWidth": "750px"}),
-                ], style={"textAlign": "center"})
+                        "Solar radiation is calculated in terms of surface irradiance (W/m²) and is included as an example of how the same metric can act as either a benefit or a cost in the suitability index, depending on the development goals."
+                    ], style={"fontSize": "0.9rem", "margin": "0 auto"}),
+
+                    html.Ul([
+                        html.Li([
+                            html.Span("Cost: ", style={"color": "red", "fontWeight": "bold"}),
+                            "High irradiance might indicate that a location is better suited for photovoltaic development rather than wind energy. In this case, high solar radiation is penalized."
+                        ]),
+                        html.Li([
+                            html.Span("Benefit: ", style={"color": "green", "fontWeight": "bold"}),
+                            "If the objective is to co-locate wind and solar farms, then high irradiance is a positive factor, increasing the site's overall suitability."
+                        ])
+                    ], style={
+                        "fontSize": "0.9rem",
+                        "marginTop": "1rem",
+                        "marginLeft": "auto",
+                        "marginRight": "auto",
+                        "maxWidth": "750px",
+                        "textAlign": "left",
+                        "listStylePosition": "inside"
+                    })
+                ], style={"textAlign": "center"}),
+                    html.P([
+                    "In this demo this variable is treated as a cost. Meaning that locations with lower solar irradiance will have higher suitability scores. The data source used for computing mean solar irradiance is: ",
+                    html.A("ECMWF Reanalysis 5th Generation (ERA5)",
+                           href="https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=overview",
+                           target="_blank", style={"textDecoration": "underline"}),
+                    " dataset, with 0.25° spatial and 1-hour temporal resolution."
+                ], className="text-center", style={"fontSize": "0.9rem"})
             ], style={"marginBottom": "5rem"}),
 
-
-
-            html.H4("Model fittizio", className="text-center mt-3"),
-            html.P([
-                html.Span("Solar radiation", style={"fontWeight": "bold"}),
-                " is included to assess environmental conditions and potential for hybrid energy systems. "
-                "It also provides insight into climate and land use characteristics."
-            ]),
-            html.H4("Scoring and normalization", className="text-center mt-3"),
-            html.P([
-                html.Span("Solar radiation", style={"fontWeight": "bold"}),
-                " is included to assess environmental conditions and potential for hybrid energy systems. "
-                "It also provides insight into climate and land use characteristics."
-            ])
         ]),
 
-# Data Sources
+        # Suitability Index
         html.Div([
-            html.H2("Data Sources", className="my-3", style={"color": "#17A2B8"}),
+            html.H2("Suitability Index", className="my-3", style={"color": "#17A2B8"}),
+
             html.P([
-                "The predictions are based on a combination of geospatial and meteorological datasets, including:"
-            ]),
-            html.Ul([
-                html.Li([
-                    html.Span("ERA5 reanalysis data", style={"fontWeight": "bold"}),
-                    " from ECMWF for wind speed and temperature"
+                "The Suitability Index provides a single interpretable metric that reflects how appropriate a given location is for wind farm development. "
+                "It is computed as a linear combination of the five normalized variables described above, using the weights defined by the user. "
+                "These weights are set via sliders or input fields and always sum to 1."
+            ], style={"fontSize": "0.9rem"}),
+
+            html.P([
+                "Since the input variables differ in units, distributions, and scales, a score normalization system is used to ensure comparability and improve explainability. "
+                "Each variable is converted into a score ranging from 0 to 100 using percentiles. "
+                "For example, if a location is closer to the electrical grid than 76% of other locations, it will receive a score of 77/100 for the 'distance to grid' metric. "
+                "This transformation allows for consistent comparison and clearer interpretations."
+            ], style={"fontSize": "0.9rem",}),
+
+            html.Div([
+                html.Img(
+                    src="/assets/images/percentile_scores.png",
+                    style={
+                        "display": "block",
+                        "margin": "1.5rem auto 1rem auto",
+                        "maxWidth": "750px",
+                        "height": "auto"
+                    }
+                ),
+                html.P("Percentile score normalization: each variable is transformed to a 0–100 scale. Then linearly combined with the other variables.",
+                       className="text-center mt-2", style={"fontSize": "0.8rem", "color": "#aaa"})
+            ], className="my-3"),
+
+            html.P([
+                "Once each variable is normalized into a percentile score, they are linearly combined using the custom user defined weights to calculate the final Suitability Index for each location. "
+            ], style={"fontSize": "0.9rem"})
+        ], style={"marginBottom": "5rem"}),
+
+        # AI Model
+        html.Div([
+            html.H2("AI Model", className="my-3", style={"color": "#17A2B8"}),
+
+            html.P([
+                "The goal of this tool is not to deliver the most accurate model for wind farm siting, but rather to demonstrate how explainable XAI techniques can be integrated to provide local explanations of each location's suitability. "
+                "To support this, the model is trained using only the five variables introduced earlier, and the training data is synthetically generated."
+            ], style={"fontSize": "0.9rem"}),
+
+            html.P([
+                "The synthetic dataset is built using a suitability index computed with the following weights, plus a small random noise added to each variable (with a mean offset of 10%):"
+            ], style={"fontSize": "0.9rem"}),
+
+            html.Div([
+                html.Div([
+                    html.Span("Distance to electrical grid: ", style={"fontWeight": "bold"}),
+                    "0.4"
                 ]),
-                html.Li([
-                    html.Span("NASA POWER Project", style={"fontWeight": "bold"}),
-                    " for solar radiation measurements"
+                html.Div([
+                    html.Span("Wind correlation with existing farms: ", style={"fontWeight": "bold"}),
+                    "0.2"
                 ]),
-                html.Li([
-                    html.Span("SRTM elevation data", style={"fontWeight": "bold"}),
-                    " for terrain analysis"
+                html.Div([
+                    html.Span("Wind capacity factor: ", style={"fontWeight": "bold"}),
+                    "0.2"
                 ]),
-                html.Li([
-                    html.Span("OpenStreetMap", style={"fontWeight": "bold"}),
-                    " for land use and proximity to infrastructure"
+                html.Div([
+                    html.Span("Solar radiation: ", style={"fontWeight": "bold"}),
+                    "0.05"
                 ]),
-            ])
+                html.Div([
+                    html.Span("Distance to protected nature land: ", style={"fontWeight": "bold"}),
+                    "0.15"
+                ])
+            ], style={
+                "fontSize": "0.9rem",
+                "margin": "0 auto 1rem auto",
+                "maxWidth": "750px",
+                "textAlign": "center"
+            }),
+            html.P([
+                "Based on this weighted suitability score, the top 20% of locations are labeled as suitable (positive examples), and the remaining 80% as not suitable (negative examples). "
+                "A Random Forest classifier is then trained on this dataset, achieving precision, recall, and accuracy all above 90%."
+            ], style={"fontSize": "0.9rem"}),
+
+            html.P([
+                "Of course, this is a simplification. Real-world models are typically trained on highly imbalanced datasets and involve more complex data pipelines. "
+                "Here, the design is intentionally simplified to keep the focus on exploring and understanding model predictions using XAI."
+            ], style={"fontSize": "0.9rem"})
         ], className="mb-4"),
+
+        # Lime
+html.Div([
+            html.H2("Lime hints", className="my-3", style={"color": "#17A2B8"}),
+
+            html.Div([
+                html.Img(
+                    src="/assets/images/lime.png",
+                    style={
+                        "display": "block",
+                        "margin": "1.5rem auto 1rem auto",
+                        "maxWidth": "750px",
+                        "height": "auto"
+                    }
+                ),
+            ], className="my-3"),
+
+        ], style={"marginBottom": "5rem"}),
 
     ], fluid=True)
 ])
