@@ -107,16 +107,55 @@ layout = html.Div([
                            target="_blank", style={"textDecoration": "underline"}),
                     " dataset, with 0.25° spatial and 1-hour temporal resolution."
                 ], className="text-center", style={"fontSize": "0.9rem"})
-            ]),
+            ], style={"marginBottom": "5rem"}),
+
+            # Distances
+            html.Div([
+                html.H5("Distance to Electrical Grid and to Nature Land", className="text-center mt-3"),
+
+                html.Div([
+                    html.P([
+                        "For the electrical grid, the goal is to minimize the distance in order to reduce connection costs and transmission losses. "
+                        "Conversely, distance to natural land should be maximized."
+                    ], style={"fontSize": "0.9rem", "margin": "0 auto"}),
+
+                    html.Ul([
+                        html.Li([
+                            html.Span("Electrical grid data from: "),
+                            html.A("Australian Digital Atlas",
+                                   href="https://digital.atlas.gov.au/datasets/70f23e91102a4d6899a776d093fa08ef_2/explore",
+                                   target="_blank", style={"textDecoration": "underline"})
+                        ]),
+                        html.Li([
+                            html.Span("Protected nature land data from: "),
+                            html.A("Australian Protected Areas Database",
+                                   href="https://www.dcceew.gov.au/environment/land/nrs/science/capad",
+                                   target="_blank", style={"textDecoration": "underline"})
+                        ])
+                    ], style={
+                        "fontSize": "0.9rem",
+                        "margin": "1rem 11rem 0 auto",
+                        "maxWidth": "750px",
+                        "textAlign": "left",
+                        "listStylePosition": "inside"
+                    })
+                ], style={"textAlign": "center"})
+            ], style={"marginBottom": "5rem"}),
+
+
+            # Solar radiation
+            html.Div([
+                html.H5("Distance to Electrical Grid and to Nature Land", className="text-center mt-3"),
+
+                html.Div([
+                    html.P([
+                        "FCHe ci scrivo"
+                    ], style={"fontSize": "0.9rem", "margin": "0 auto", "maxWidth": "750px"}),
+                ], style={"textAlign": "center"})
+            ], style={"marginBottom": "5rem"}),
 
 
 
-            html.H4("Solar Radiation", className="text-center mt-3"),
-            html.P([
-                html.Span("Solar radiation", style={"fontWeight": "bold"}),
-                " is included to assess environmental conditions and potential for hybrid energy systems. "
-                "It also provides insight into climate and land use characteristics."
-            ]),
             html.H4("Model fittizio", className="text-center mt-3"),
             html.P([
                 html.Span("Solar radiation", style={"fontWeight": "bold"}),
