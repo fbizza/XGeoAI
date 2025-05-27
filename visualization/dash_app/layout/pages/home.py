@@ -54,7 +54,7 @@ layout = html.Div([
 
                 html.Div([
                     html.Img(
-                        src="/assets/images/correlation_matrix.png",
+                        src="/assets/images/correlation_matrix_v2.png",
                         style={
                             "display": "block",
                             "margin": "0 auto",
