@@ -26,8 +26,8 @@ def compute_distance(points_path, lines_path, destination_path):
     return result_df
 
 if __name__ == "__main__":
-    points_path = '../../../data/processed/australian-LGAs-centroids.csv'
-    lines_path = '../../../data/raw/Electricity_Transmission_Lines.geojson'
-    destination_path = '../../../data/processed/LGAs-centroids-distance-to-grid.csv'
+    points_path = '../../../../data/processed/australian-LGAs-centroids.csv'
+    lines_path = '../../../../data/raw/Electricity_Transmission_Lines.geojson'
+    destination_path = '../../../../data/processed/LGAs-centroids-distance-to-grid.csv'
 
     compute_distance(points_path, lines_path, destination_path)

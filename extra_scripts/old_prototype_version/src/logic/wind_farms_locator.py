@@ -65,7 +65,7 @@ if __name__ == "__main__":
     with open(os.path.join(data_folder, 'aus_region_mask_lsmc.pkl'), 'rb') as f:
         lsmc = pickle.load(f)
 
-    file_path = '../../../data/processed/wind-farms.csv'
+    file_path = '../../../../data/processed/wind-farms.csv'
     wind_farms_df = pd.read_csv(file_path)
 
     operating_wind_farms_df = find_operating_wind_farms_locations(wind_farms_df, lsmdf, lsmc)
@@ -74,5 +74,5 @@ if __name__ == "__main__":
     pd.set_option('display.max_columns', None)
     print(operating_wind_farms_df.head())
 
-    output_path = '../../../data/processed/wind-farms-with-ERA5_coordinates.csv'
+    output_path = '../../../../data/processed/wind-farms-with-ERA5_coordinates.csv'
     operating_wind_farms_df.to_csv(output_path, index=False)

@@ -4,11 +4,11 @@ import pandas as pd
 import plotly.graph_objects as go
 
 # Load necessary data
-with open('../../../data/raw/aus_region_mask.pkl', 'rb') as f:
+with open('../../../../data/raw/aus_region_mask.pkl', 'rb') as f:
     lsmdf = pickle.load(f)
-with open('../../../data/raw/aus_region_mask_lsmc.pkl', 'rb') as f:
+with open('../../../../data/raw/aus_region_mask_lsmc.pkl', 'rb') as f:
     lsmc = pickle.load(f)
-with open('../../../data/raw/wind_correlation_matrix.pkl', 'rb') as f:
+with open('../../../../data/raw/wind_correlation_matrix.pkl', 'rb') as f:
     rlsmcs5Wmnavg = pickle.load(f)
 
 # Calculate mean correlations

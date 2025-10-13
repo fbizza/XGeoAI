@@ -10,7 +10,7 @@ from shapely.geometry import Point
 
 # Replace with the path to your downloaded .nc file and GeoJSON file for Australia
 file_path = 'wind-data.nc'
-geojson_file = '../../../data/raw/countries-geojson.geojson'
+geojson_file = '../../../../data/raw/countries-geojson.geojson'
 
 # Open the NetCDF file using xarray
 dataset = xr.open_dataset(file_path)

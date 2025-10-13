@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 
-from old_prototype_version.src.map.utils import load_json, line_coords
+from extra_scripts.old_prototype_version.src.map.utils import load_json, line_coords
 
 def add_wind_farms (df, map_figure):
 

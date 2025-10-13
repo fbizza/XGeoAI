@@ -6,7 +6,7 @@ import random
 def add_lga_id_to_df(destination_path):
 
     try:
-        with open('../../../data/processed/georef-australia-local-government-area-ids.geojson', 'r', encoding='utf-8') as f:
+        with open('../../../../data/processed/georef-australia-local-government-area-ids.geojson', 'r', encoding='utf-8') as f:
             data = json.load(f)
         print("GeoJSON data loaded successfully.")
     except Exception as e:
@@ -14,7 +14,7 @@ def add_lga_id_to_df(destination_path):
         raise
 
     try:
-        df = pd.read_csv('../../../data/processed/LGAs-centroids-distance-to-grid.csv')
+        df = pd.read_csv('../../../../data/processed/LGAs-centroids-distance-to-grid.csv')
         print("Distances df loaded successfully.")
     except Exception as e:
         print(f"Error loading CSV file: {e}")
@@ -53,6 +53,6 @@ def add_lga_id_to_df(destination_path):
     df.to_csv(destination_path, index=False)
 
 if __name__ == "__main__":
-    destination_path = '../../../data/basetables/LGAs-basetable.csv'
+    destination_path = '../../../../data/basetables/LGAs-basetable.csv'
     add_lga_id_to_df(destination_path)
 
