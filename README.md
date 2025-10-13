@@ -23,3 +23,6 @@ git clone https://github.com/fbizza/XGeoAI
 pip install -r requirements.txt
 python run_app.py
 ```
+## Documentation and Methodology
+A more detailed explanation of the methodology, including variable definitions, is available in the Documentation page within the dashboard itself.
+You can access it directly from the dashboard’s main menu once the application is running.
