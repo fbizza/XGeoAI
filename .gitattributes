@@ -1,2 +1,2 @@
-*.ipynb -linguist-detectable
+*.ipynb linguist-detectable=false
 *.json linguist-detectable=false
